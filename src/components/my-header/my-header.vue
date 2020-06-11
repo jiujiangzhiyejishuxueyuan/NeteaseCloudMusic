@@ -1,11 +1,11 @@
 <template>
     <header>
         <div class="header flex container">
-            <div class="logo">
-                <h1>网易云音乐</h1>
+            <div class="logo" @click="$router.replace('/music')">
+                <h1 v-if="$route.path!='/music/search'">网易云音乐</h1>
             </div>
             <div class="header-left">
-                <div class="nav-container flex">
+                <div class="nav-container flex" v-if="$route.path!='/music/search'" >
                     <li
                             class="top-item"
                             :class="{active: $route.path.split('/')[1]=== item.link.replace('/','')}"
@@ -17,7 +17,7 @@
                         <div class="header-channel music" v-if="index==0">
                             <ul class="flex">
                                 <li v-for="(navitem,index) in item.chilren" :key="index">
-                                    <a :href="item.link+navitem.link"
+                                    <a @click.stop="$router.push(item.link+navitem.link)"
                                        class="flex direction-column"
                                     >
                                         <Icon
@@ -34,12 +34,14 @@
             </div>
             <div class="header-right flex justify-end align-center">
                 <div class="header-right-container flex">
-                    <div class="search flex align-center">
+<!--                    搜索-->
+                    <div class="search flex align-center"  v-if="$route.path!='/music/search'">
                         <input type="text" id="search_ipt" placeholder="搜索歌曲、歌手、MV">
-                        <div class="btn-search">
+                        <div class="btn-search" @click="$router.push('/music/search')">
                             <Icon type="ios-search" />
                         </div>
                     </div>
+<!--                    用户信息-->
                     <div class="user">
                         <div class="h-avatar img">
                             <img :src="userInfo.avatarUrl" v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页">
@@ -172,6 +174,7 @@
             height 70px
             line-height 70px
             .logo
+                cursor pointer
                 width 170px
                 height 100%
                 color #000

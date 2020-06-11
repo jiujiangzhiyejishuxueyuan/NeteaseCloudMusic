@@ -11,7 +11,7 @@
                 <div class="album">专辑</div>
             </div>
         </div>
-        <div class="songlist-inner">
+        <div class="songlist-inner" v-if="songlists">
             <div class="scroll">
                 <div class="row flex align-center" :class="{active:song.id===pid}" v-for="(song,index) in songlists" :key="index">
                     <div class="song-check" @click="check(song)">
@@ -30,19 +30,20 @@
                         <a href="" class="text-hv">{{song.name}}</a>
                     </div>
                     <div class="singer">
-                        <a :href="`/music/singer/${art.id}`" v-for="(art,index) in song.ar" :key="index" class="text-hv">
+                        <a :href="`/music/singer/${art.id}`" v-for="(art,index) in (song.ar || song.artists)" :key="index" class="text-hv">
                             {{art.name}}
-                            <span v-if="index+1<song.ar.length">/</span>
+                            <span v-if="index+1<(song.ar || song.artists).length">/</span>
                         </a>
                     </div>
+
                     <div class="album text-hv ellipse">
-                        <a href="" class="text-hv">《{{song.al.name}}》</a>
+                        <a href="" class="text-hv">《{{(song.al || song.album).name}}》</a>
                     </div>
                     <song-control
-                        @onplay="playmusic(song.id)"
-                        @ondelete="$emit('ondelete',index)"
-                        :btns="btns"
-                        :id="song.id"
+                            @onplay="playmusic(song.id)"
+                            @ondelete="$emit('ondelete',index)"
+                            :btns="btns"
+                            :id="song.id"
                     />
                 </div>
             </div>
@@ -101,11 +102,6 @@
         components: {
             songControl
         },
-        data() {
-            return {
-
-            }
-        },
         methods: {
             check(song) {
                 let index = this.value.indexOf(song.id)
@@ -160,7 +156,7 @@
                     this.$Message.success('添加到播放器成功')
                 } else {
                     let a = window.location.href
-                    a = a.split('playlist')[0] + 'player/audio'
+                    a = a.split('music')[0] + 'music/player/audio'
                     window.open(a)
                 }
             }
@@ -206,13 +202,13 @@
             overflow scroll
         /*滚动条整体样式*/
         .songlist-inner::-webkit-scrollbar
-            width: 10px;
+            width: 8px;
             height: 0;
         /*滚动条滑块*/
         .songlist-inner::-webkit-scrollbar-thumb
             border-radius: 10px;
-            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-            background: #333;
+            -webkit-box-shadow: none
+            background: rgba(255,255,255,0.2);
         /*滚动条轨道*/
         .songlist-inner::-webkit-scrollbar-track
             -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);

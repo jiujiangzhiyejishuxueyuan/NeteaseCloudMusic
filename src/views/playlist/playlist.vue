@@ -20,7 +20,7 @@
                             <li v-for="(item,index) in tag.list" :key="index">
                                 <a class="text-hv"
                                    :class="{'active':$route.query.cat==item.name}"
-                                   :href="`/music/playlist?cat=${filterCat(item.name)}`"
+                                   @click="$router.push(`/music/playlist?cat=${filterCat(item.name)}`)"
                                 >
                                     {{item.name}}
                                 </a>
@@ -54,38 +54,14 @@
                 <div class="songlist-title flex justify-between">
                     <div class="type">
                         <h1>{{this.cat}}</h1>
-                        <a v-if="$route.query.cat" href="/music/playlist" class="text-hv"><Icon type="ios-close" /></a>
+                        <a v-if="$route.query.cat" @click="$router.replace('/music/playlist')" class="text-hv"><Icon type="ios-close" /></a>
                     </div>
                 </div>
-                <div class="songlist-inner">
-                    <ul class="flex flex-wrap">
-                        <li v-for="(playlist,index) in songlists.playlists" :key="index">
-                            <div class="content img-scale-hover">
-                                <div class="cover relative">
-                                    <a :href="`/music/playlist/${playlist.id}`">
-                                        <div class="img-box img-scale ">
-                                            <img :src="playlist.coverImgUrl">
-                                        </div>
-                                    </a>
-                                    <div class="btn-play absolute-center">
-                                        <img src="../../static/imgs/btn-play.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="info ellipse ">
-                                    <a class="text-hv">{{playlist.name}}</a>
-                                </div>
-                                <div class="play-count">
-                                    <Icon type="ios-headset" />
-                                    {{playlist.playCount | playCount}}
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <play-list :playlists="songlists.playlists"/>
                 <Page
                         :total="songlists.total"
                         :page-size="25"
-                        @on-change="changePage"
+                        @on-change="(page)=>$router.replace(`/music/playlist?page=${page}&cat=${filterCat(cat)}`)"
                         :current="parseInt($route.query.page)||1"
                 />
             </div>
@@ -95,8 +71,11 @@
 
 <script>
     import {reqHotTags, reqplaylist, reqTags} from "@/api";
-
+    import playList from '@/components/play-list/play-list'
     export default {
+        components: {
+            playList
+        },
         data() {
             return {
                 hotTags:[],
@@ -132,7 +111,6 @@
                 })
             })
             this.hotTags = hotTags.tags
-            this.cat = this.$route.query.cat || '全部'
             this.render()
         },
         watch:{
@@ -151,6 +129,7 @@
                 }
             },
             render(page) {
+                this.cat = this.$route.query.cat || '全部'
                 page = page || this.$route.query.page || 1
                 this.recursionCount = 0
                 reqplaylist(25,(page-1)*25,this.filterCat(this.cat)).then(res => {
@@ -158,16 +137,14 @@
                 })
 
             },
-            changePage(page) {
-                this.$router.replace(`/music/playlist?page=${page}&cat=${this.filterCat(this.cat)}`)
-            },
             filterCat(cat) {
                 cat = cat.replace(/%/g,"%25")
                 cat = cat.replace(/#/g,"%23")
                 cat = cat.replace(/&/g,"%26")
                 cat = cat.replace(/\//g,"%2F")
                 return cat
-            }
+            },
+
         }
     }
 </script>
@@ -246,40 +223,6 @@
 
 
 
-
-        .songlist-inner
-            margin-bottom 40px
-            ul li
-                width 20%
-                margin-bottom 20px
-                .content
-                    padding 0 14px
-                    &:hover .btn-play
-                        opacity 1
-                    .img-box
-                        width 100%
-                    .btn-play
-                        z-index 20
-                        transition all .4s
-                        opacity 0
-                        width 60px
-                        height 60px
-                        line-height 60px
-                        border-radius 50%
-                        cursor pointer
-                        &:hover
-                            background #000
-
-                .info
-                    text-align left
-                    margin-top 15px
-                    font-size 16px
-
-                .play-count
-                    padding 3px 0
-                    font-size 14px
-                    color #999
-                    text-align left
 
 
 </style>

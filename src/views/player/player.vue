@@ -1,7 +1,7 @@
 <template>
     <div class="player-audio">
         <div class="player-header flex justify-between">
-            <div class="logo">
+            <div class="logo" @click="$router.replace('/music')">
 
             </div>
             <div class="right">
@@ -12,12 +12,12 @@
             <div class="left"></div>
             <div class="center">
                 <div class="menu-toolbar flex">
-                    <div class="button text-hv">
+                    <div class="button text-hv" :class="{active:checked.length}">
                         <Icon type="ios-add-circle-outline"/>
                         添加到歌单
                     </div>
 
-                    <div class="button text-hv" @click="batchDelete">
+                    <div class="button text-hv" @click="batchDelete" :class="{active:checked.length}">
                         <Icon type="ios-trash"/>
                         删除
                     </div>
@@ -37,22 +37,22 @@
                     />
                 </div>
             </div>
-            <div class="right">
+            <div class="right flex direction-column">
                 <div class="song-cover">
                     <img :src="song.al.picUrl" alt="" v-if="song.al">
                 </div>
                 <div class="song-info" v-if="song.name">
-                    <p class="song_name ">歌曲名: <a href="" class="text-hv ellipse">{{song.name}}</a></p>
-                    <p v-for="(singer,index) in song.ar" :key="index" class="song_name">
+                    <p class="song_name ">歌曲名: <span class="ellipse">{{song.name}}</span></p>
+                    <p class="song_name">
                         歌手名:
-                        <a href="" class="text-hv ellipse">
+                        <span class="ellipse" v-for="(singer,index) in song.ar" :key="index">
                             {{singer.name}}
-                            <span v-if="index==song.ar.length">/</span>
-                        </a>
+                            <span v-if="index!=song.ar.length-1">/</span>
+                        </span>
                     </p>
                     <p class="album">
                         专辑名
-                        <a href="" class="ellipse text-hv">{{song.al.name}}</a>
+                        <span class="ellipse">{{song.al.name}}</span>
                     </p>
                 </div>
                 <lyric
@@ -263,6 +263,10 @@
                     }).catch(()=> console.log('未找到歌曲',id))
                     reqSongUrl(id).then(res => {
                         this.url = res.data[0].url
+                        if(!this.url) {
+                            this.$Message.error('获取播放链接失败')
+                            this.changeMusic(this.nextId)
+                        }
                         console.log('切歌 '+this.song.name)
                     })
                     reqSonglyric(id).then(res => {
@@ -284,8 +288,8 @@
                         }
                     })
                 } else {
-                    this.song = {}
                     this.url = ''
+                    this.song = {}
                     this.progress = 0
                     this.isplay = false
                 }
@@ -377,6 +381,9 @@
         height 100vh
         overflow hidden
 
+        .my-song-list .row
+            padding 10px 20px
+
         .ivu-slider-wrap
             height 3px
             background #615f5f
@@ -417,6 +424,7 @@
                     width 240px
 
                     div
+                        cursor pointer
                         margin 0 10px
 
                     .play-pause
@@ -504,6 +512,7 @@
             padding 0 40px
 
             .logo
+                cursor pointer
                 width 180px
                 height 100%
                 background url("../../static/imgs/topbar.png")
@@ -520,8 +529,9 @@
                 width 200px
 
             .right
-                width 240px
+                max-width 280px
                 margin-right 100px
+                overflow hidden
                 color #999
 
                 a

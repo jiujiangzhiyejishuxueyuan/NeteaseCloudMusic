@@ -1,5 +1,5 @@
 <template>
-    <div class="lyric">
+    <div class="lyric" ref="lyricbox">
         <div class="lyric-inner" ref="lyric" :style="trans">
             <p
                     v-for="(lyric,index) in lyrics"
@@ -31,21 +31,26 @@
             }
         },
         computed: {
+            //当前歌词下标
             currentLyricNum() {
                 const {lyrics} = this
                 let i = 0
-                for (; i < lyrics.length-1 ; i++) {
-                    if(this.currentTime>=lyrics[i].time && this.currentTime <= lyrics[i+1].time) {
-                        return i
+                if(lyrics.length) {
+                    for (; i < lyrics.length-1 ; i++) {
+                        if(this.currentTime>=lyrics[i].time && this.currentTime <= lyrics[i+1].time) {
+                            return i
+                        }
                     }
+                    return this.currentTime < lyrics[0].time ? 0 :lyrics.length
+                } else {
+                    return 0
                 }
-                //console.log('没有第'+i+'句  ','时间'+this.currentTime)
-                return this.currentTime===0 ? 0 :lyrics.length
             },
+            //位移距离
             trans() {
                 // console.log(this.eachHeight * this.currentLyricNum,this.eachHeight,this.currentLyricNum)
                 return {
-                    transform: `translateY(-${ this.eachHeight * this.currentLyricNum - 80}px)`
+                    transform: `translateY(-${ (this.eachHeight * this.currentLyricNum - (this.$refs.lyricbox||window).clientHeight/2)}px)`
                 }
             }
         },
@@ -61,9 +66,9 @@
     }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus" >
     .lyric
-        height 170px
+
         overflow hidden
         .lyric-inner
             transition transform .2s

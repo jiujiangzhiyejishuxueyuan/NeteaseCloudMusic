@@ -21,7 +21,7 @@ export const reqSongDetail = (ids) => ajax(`api/song/detail?ids=${ids}`) // 获�
 export const reqSongUrl = (id, br = 320000) => ajax(`api/song/url?id=${id}&br=${br}`) //获取歌曲url
 export const reqSonglyric = (id) => ajax(`api/lyric?id=${id}`) // 获取歌曲歌词
 
-export const search = (keywords, type = 1, limit = 20, offset = 0) => ajax(`api/search?keywords=${keywords}&type=${type}&limit=${limit}&offset=${offset}`) //搜索
+export const search = (keywords, type, limit , offset ) => ajax(`api/search?keywords=${keywords}&type=${type}&limit=${limit}&offset=${offset}`) //搜索
 export const searchHot = () => ajax('api/search/hot') //获取热搜(简略)
 export const searchDefault = () => ajax('api/search/default') //获取默认搜索关键词
 export const searchSuggest = (keywords) => ajax(`api/search/suggest?keywords=${keywords}`) //获取搜索建议

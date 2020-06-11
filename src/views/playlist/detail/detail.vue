@@ -59,7 +59,7 @@
         <Page
                 :total="songlist.trackCount"
                 :page-size="20"
-                @on-change="changePage"
+                @on-change="(page)=>$router.replace(`${$route.path}?page=${page}`)"
                 :current="parseInt($route.query.page)||1"
         />
 
@@ -80,9 +80,6 @@
             }
         },
         methods: {
-            changePage(page) {
-                this.$router.push(`${this.$route.path}?page=${page}`)
-            },
             render() {
                 const page = this.$route.query.page || 1
                 reqSonglistDetail(this.$route.params.id).then(res => {
@@ -115,6 +112,7 @@
 <style lang="stylus" rel="stylesheet/stylus">
     $red = #e91e63
     .playlist-detail
+
         .header-info
             position relative
             padding 80px 0

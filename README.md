@@ -1,5 +1,5 @@
 # music
-
+6.11已实现播放歌曲功能
 ## Project setup
 ```
 npm install

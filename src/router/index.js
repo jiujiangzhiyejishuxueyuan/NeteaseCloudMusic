@@ -31,6 +31,26 @@ export default new VueRouter({
             ]
         },
         {
+            name: 'artist',
+            path: '/music/artist',
+            component: () => import('@/views/artist/artist')
+        },
+        {
+            name: 'singer',
+            path: '/music/artist/:id',
+            component: () => import('@/views/singer/singer')
+        },
+        {
+            name: 'user-home',
+            path: '/user/home',
+            component: () => import('@/views/user/user')
+        },
+        {
+            name: 'videoPlayer',
+            path: '/video/:id',
+            component: () => import('@/views/video-player/video-player')
+        },
+        {
             name: 'playlist',
             path: '/music/playlist',
             component: () => import('@/views/playlist/playlist'),

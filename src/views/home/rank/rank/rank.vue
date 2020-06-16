@@ -123,7 +123,7 @@
                 cursor pointer
                 &:hover
                     background rgba(0,0,0,.05)
-                    .control
+                    .song-control
                         opacity 1
                 .content
                     flex 1 0 auto

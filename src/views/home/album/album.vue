@@ -1,7 +1,7 @@
 <template>
     <div class="new-album section">
         <div class="container">
-            <div class="section-header flex justify-between">
+            <div class="section-header flex justify-between" v-if="title">
                 <div class="title">
                     <h1>新碟上架</h1>
                 </div>
@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="new-album-items flex flex-wrap">
-                <div class="item-contain" v-for="(item,index) in list" :key="index">
+                <div class="item-contain" v-for="(item,index) in albums" :key="index">
                     <div class="item-box">
                         <div class="item-inner">
                             <div class="img-box">
@@ -44,21 +44,24 @@
     import {reqNewAlbum} from "@/api";
 
     export default {
-        data() {
-            return {
-                list:[]
-            }
-        },
-        async created() {
-            const result = await reqNewAlbum(0,10)
-            this.list = result.albums
+        props: {
+            albums: Array,
+            title: String
         }
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
     $red = #E60026
+
     .new-album
+        @media screen and (max-width: 1550px)
+            .img-box
+                height 170px !important
+        @media screen and (max-width: 1200px)
+            .img-box
+                height 133px !important
+
         .section-header
             h1
                 font-size 28px
@@ -69,7 +72,7 @@
             cursor pointer
             position relative
             margin 0 21px 25px
-            padding-right 25px
+            padding 0 12.5px
             &:hover .img-box img
                 transform scale(1.1)
             &:hover .play-box
@@ -98,7 +101,7 @@
                 z-index -1
         .img-box
             width 100%
-            height 100%
+            height 190px
             overflow hidden
             position relative
             border-radius 15px

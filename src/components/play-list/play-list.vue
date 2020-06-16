@@ -6,7 +6,7 @@
                     <div class="cover relative">
                         <a @click="$router.push(`/music/playlist/${playlist.id}`)">
                             <div class="img-box img-scale ">
-                                <img :src="playlist.coverImgUrl">
+                                <img alt="背景图" :src="playlist.coverImgUrl">
                             </div>
                         </a>
                         <div class="btn-play absolute-center">

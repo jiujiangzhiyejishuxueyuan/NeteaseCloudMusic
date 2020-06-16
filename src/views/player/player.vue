@@ -26,7 +26,7 @@
                     <song-list
                             :songlists="songlist"
                             :show-footer="false"
-                            @change="onChange"
+                            @checked="(value) => checked=value"
                             player
                             @play="changeMusic"
                             :pid="+song.id"
@@ -223,10 +223,6 @@
                     this.changeMusic(this.nextId)
                 }
                 window.localStorage.setItem('musics',JSON.stringify({ids:this.ids}))
-            },
-            //改变列表复选框
-            onChange(value) {
-                console.log(value,this.checked)
             },
             //播放中触发
             playmonitor(e) {
@@ -510,6 +506,9 @@
         .player-header
             height 70px
             padding 0 40px
+            position absolute
+            top 0
+            z-index 10
 
             .logo
                 cursor pointer
@@ -529,7 +528,7 @@
                 width 200px
 
             .right
-                max-width 280px
+                width 280px
                 margin-right 100px
                 overflow hidden
                 color #999

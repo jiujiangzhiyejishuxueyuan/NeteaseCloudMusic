@@ -36,8 +36,8 @@
                 <div class="header-right-container flex">
 <!--                    搜索-->
                     <div class="search flex align-center"  v-if="$route.path!='/music/search'">
-                        <input type="text" id="search_ipt" placeholder="搜索歌曲、歌手、MV">
-                        <div class="btn-search" @click="$router.push('/music/search')">
+                        <input type="text" @keydown.enter="$router.push(`/music/search?keywords=${keywords}&type=1`)" id="search_ipt" placeholder="搜索歌曲、歌手、MV" v-model="keywords">
+                        <div class="btn-search" @click="$router.push(`/music/search?keywords=${keywords}&type=1`)">
                             <Icon type="ios-search" />
                         </div>
                     </div>
@@ -63,9 +63,8 @@
                             </div>
                             <div class="islogin" v-else>
                                 <div class="info-inner">
-                                    <div class="avatar img">
+                                    <div class="avatar img" @click="$router.push('/user')">
                                         <img :src="userInfo.avatarUrl" alt="我的主页" title="我的主页">
-
                                     </div>
                                     <p class="username">
                                         {{userInfo.nickname}}
@@ -134,7 +133,8 @@
                     }
                 ],
                 loginShow:false,
-                userInfo:''
+                userInfo:'',
+                keywords: ''
             }
         },
         methods:{

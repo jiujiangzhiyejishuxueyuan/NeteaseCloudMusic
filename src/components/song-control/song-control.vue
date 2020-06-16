@@ -11,7 +11,23 @@
     export default {
         props: {
             id: Number,
-            btns: Array
+            btns: {
+                type: Array,
+                default: () => [
+                    {
+                        icon: 'ios-play',
+                        event: 'onplay'
+                    },
+                    {
+                        icon: 'md-heart-outline',
+                        event: 'onlove'
+                    },
+                    {
+                        icon: 'ios-add',
+                        event: 'onadd'
+                    }
+                ]
+            }
         },
         methods: {
             click(type) {

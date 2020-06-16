@@ -29,7 +29,7 @@
                     <div class="song-name">
                         <a href="" class="text-hv">{{song.name}}</a>
                     </div>
-                    <div class="singer">
+                    <div class="singer ellipse">
                         <a :href="`/music/singer/${art.id}`" v-for="(art,index) in (song.ar || song.artists)" :key="index" class="text-hv">
                             {{art.name}}
                             <span v-if="index+1<(song.ar || song.artists).length">/</span>
@@ -93,10 +93,11 @@
                         event: 'onadd'
                     }
                 ]
-            },
-            value: {
-                type: Array,
-                default: () => []
+            }
+        },
+        data() {
+            return {
+                value: []
             }
         },
         components: {
@@ -105,7 +106,7 @@
         methods: {
             check(song) {
                 let index = this.value.indexOf(song.id)
-                index!==-1 ? this.value.splice(index,1) :this.value.push(song.id)
+                index!==-1 ? this.value.splice(index,1) : this.value.push(song.id)
             },
             playmusic(ids) {
                 if(!this.player) {
@@ -184,8 +185,8 @@
             },
         },
         watch: {
-            vaule(value) {
-                this.$emit('change',value)
+            value(value) {
+                this.$emit('checked',value)
             }
         }
     }

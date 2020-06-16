@@ -16,6 +16,7 @@ export const checkRegister = (phone) => ajax(`api/cellphone/existence/check?phon
 export const reqLoginState = () => ajax('api/login/status') //获取登陆状态
 export const reqUserInfo = (id) => ajax(`api/user/detail?uid=${id}`) //获取用户信息
 export const logout = () => ajax('api/logout') //退出登陆
+export const follow = (id,t) => ajax(`api/follow?id=${id}&t=${t}`) //关注/取关用户
 
 export const reqSongDetail = (ids) => ajax(`api/song/detail?ids=${ids}`) // 获取歌曲详情
 export const reqSongUrl = (id, br = 320000) => ajax(`api/song/url?id=${id}&br=${br}`) //获取歌曲url
@@ -25,4 +26,17 @@ export const search = (keywords, type, limit , offset ) => ajax(`api/search?keyw
 export const searchHot = () => ajax('api/search/hot') //获取热搜(简略)
 export const searchDefault = () => ajax('api/search/default') //获取默认搜索关键词
 export const searchSuggest = (keywords) => ajax(`api/search/suggest?keywords=${keywords}`) //获取搜索建议
-// export const
+
+export const reqVideoUrl = (vid) => ajax(`api/video/url?id=${vid}`) //获取视频播放链接
+export const reqVideoDetail = (vid) => ajax(`api/video/detail?id=${vid}`) //获取视频详情
+export const reqRelatedVideo = (vid) => ajax(`api/related/allvideo?id=${vid}`) //获取相关视频
+export const reqVideoInfo = (vid) => ajax(`api/video/detail/info?vid=${vid}`) //获取视频数据详情
+export const reqVideoComments = (vid,limit=20,offset=0) => ajax(`api/comment/video?id=${vid}&limit=${limit}&offset=${offset}`) //获取视频评论
+
+export const reqHotComments = (id,type,limit=20,offset=0) => ajax(`api/comment/hot?id=${id}&type=${type}&limit=${limit}&offset=${offset}`) //获取热门评论
+export const giveCommentLike = (id,cid,type,t) => ajax(`api/comment/like?id=${id}&cid=${cid}&t=${t}&type=${type}`) //给评论点赞
+export const submitComment = (id,type,content,t,commentId) => ajax(`api/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`) //发送评论
+
+export const ResourceLike = (id,type,t) => ajax(`api/resource/like?id=${id}&type=${type}&t=${t}`) //给电台,视频,mv点赞
+
+export const subVideo = (id,t=1) => ajax(`api/video/sub?id=${id}&t=${t}`) //收藏视频

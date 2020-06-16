@@ -3,7 +3,7 @@
         <banner/>
         <recommend-hot :list="hotList" title="热门推荐"/>
         <recommend-today/>
-        <new-album/>
+        <new-album :albums="albums" title="新碟上架"/>
         <rank/>
     </div>
 </template>
@@ -12,9 +12,9 @@
     import banner from "@/views/home/banner/banner";
     import recommendHot from '@/views/home/recommend-hot/recommend-hot'
     import recommendToday from '@/views/home/recommend-today/recommend-today'
-    import newAlbum from '@/views/home/new-album/new-album'
+    import newAlbum from '@/views/home/album/album'
     import rank from "@/views/home/rank/rank/rank";
-    import {reqHotSongList} from "@/api";
+    import {reqHotSongList, reqNewAlbum} from "@/api";
     export default {
         name: 'home',
         components: {
@@ -26,12 +26,15 @@
         },
         data() {
             return {
-                hotList: []
+                hotList: [],
+                albums:[]
             }
         },
         async created() {
             const result = await reqHotSongList(14,'hot')
             this.hotList = result.playlists
+            const albums = await reqNewAlbum(0,10)
+            this.albums = albums.albums
         }
     }
 </script>
@@ -42,4 +45,7 @@
     .section-header
         line-height 42px
         margin-bottom 30px
+    .swiper-slide
+        img
+            margin 0 auto
 </style>

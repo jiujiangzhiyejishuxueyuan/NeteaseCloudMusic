@@ -10,7 +10,7 @@
                 <ul class="list-inner flex flex-wrap justify-between">
                     <li class="item">
                         <div class="item-box">
-                            <div class="main-box">
+                            <div class="img-box">
                                 <div class="title">
                                     {{today.ch}}
                                 </div>
@@ -25,7 +25,7 @@
                     </li>
                     <li class="item" v-for="index in 6" :key="index">
                         <div class="item-box">
-                            <div class="main-box">
+                            <div class="img-box">
                                 <img src="https://p1.music.126.net/NM8LUQLozehwPCOEDzH5Pg==/109951164960715408.jpg" alt="">
                             </div>
                             <div class="play-box">
@@ -91,7 +91,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
     .recommend-today
-        .main-box
+        .img-box
             background #FAFAFA
             .content
                 font-size 100px

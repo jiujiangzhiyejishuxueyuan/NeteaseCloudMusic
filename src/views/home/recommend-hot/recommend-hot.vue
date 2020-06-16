@@ -13,8 +13,8 @@
             <div class="list-box">
                 <ul class="list-inner flex flex-wrap justify-between">
                     <li class="item" v-for="(item,index) in list" :key="index">
-                        <div class="item-box">
-                            <div class="main-box">
+                        <div class="item-box img-scale-hover" @click="$router.push(`/music/playlist/${item.id}`)">
+                            <div class="img-box img-scale">
                                 <img :src="item.coverImgUrl" >
                             </div>
                             <div class="play-box">
@@ -91,9 +91,7 @@
                     top 50%
                     left 50%
                     transform translate(-50%,-50%)
-                .main-box
-                    width 100%
-                    height 180px
+                .img-box
                     overflow hidden
                     border-radius 8px
                     img

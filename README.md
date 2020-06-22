@@ -1,16 +1,19 @@
-# music
+api地址: https://github.com/Binaryify/NeteaseCloudMusicApi
+# NeteaseCloundMusic
 6.11已实现播放歌曲功能
-## Project setup
+6.16实现播放视频功能
+6.22增加用户页,歌手分类页,排行榜页,修复歌词异常,使用路由切换过渡,加载中占位,增加用户体验
+## 依赖安装
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 项目加载
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 项目打包
 ```
 npm run build
 ```
@@ -19,6 +22,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

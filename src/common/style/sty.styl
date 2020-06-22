@@ -1,4 +1,6 @@
 $red = #E91E63
+$blue = #00a1d6
+$blueh = #00b5e5
 .container
   margin 0 auto
   min-width 1000px
@@ -32,13 +34,11 @@ $red = #E91E63
 html,body
   margin 0
   padding 0
-*
-  box-sizing content-box
 h1
-  font-size: .4rem;
+  font-size: 40px;
 h2,h3,h4
   font-weight normal
-  font-size .2rem
+  font-size 20px
 li
   list-style none
 .block
@@ -58,6 +58,8 @@ li
     right 0
     top 0
     background rgba(0,0,0,.05)
+.text-wrap
+  white-space normal
 img
   display block
 div a
@@ -110,3 +112,21 @@ i
   img
     width 100%
     height 100%
+.background-blur
+  position absolute;
+  top 0
+  right 0
+  bottom 0
+  left 0
+  overflow hidden
+  opacity .3
+  z-index -1
+  img
+    width 100%
+    filter blur(30px)
+.bb
+  border-bottom 3px solid $blue
+.ivu-spin
+  margin 0 auto
+.ske
+  padding 200px 0

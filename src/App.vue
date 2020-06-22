@@ -1,8 +1,9 @@
 <template>
-  <div id="app">
-    <my-header v-if="isRouterActive && !$route.meta.hidden"/>
-    <router-view class="center" v-if="isRouterActive"></router-view>
-    <my-footer v-if="!$route.meta.hidden"/>
+  <div id="app" class="flex direction-column">
+    <my-header v-if="!$route.meta.hidden"/>
+    <transition name="view"><router-view class="center expend" v-if="isRouterActive"></router-view></transition>
+    <BackTop :duration="800"/>
+    <my-footer v-if="!$route.meta.hidden && !$route.meta.hiddenFooter"/>
   </div>
 </template>
 
@@ -39,6 +40,10 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/style/sty.styl"
   @import "./common/style/media.styl"
+  .view-enter-active,.view-leave-active
+    transition opacity .5s
+  .view-enter,.view-leave-to
+    opacity 0
   html,body
     padding 0
     margin 0
@@ -48,6 +53,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    min-height 100vh
   .ivu-page
     margin-bottom 20px
     .ivu-page-prev,.ivu-page-next

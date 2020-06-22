@@ -1,7 +1,7 @@
 <template>
     <div class="my-song-list">
         <div class="songlist-header" v-if="showHeader">
-            <div class="row flex align-center disabled">
+            <div class="row flex align-center disable">
                 <div class="song-check" @click="allChecked=!allChecked">
                     <Icon type="ios-checkmark" v-show="allChecked" />
                 </div>
@@ -13,7 +13,11 @@
         </div>
         <div class="songlist-inner" v-if="songlists">
             <div class="scroll">
-                <div class="row flex align-center" :class="{active:song.id===pid}" v-for="(song,index) in songlists" :key="index">
+                <div class="row flex align-center"
+                     :class="{active:song.id===pid}"
+                     v-for="(song,index) in songlists"
+                     :key="index"
+                >
                     <div class="song-check" @click="check(song)">
                         <Icon type="ios-checkmark"  v-show="value.indexOf(song.id)!==-1"/>
                     </div>
@@ -40,16 +44,17 @@
                         <a href="" class="text-hv">《{{(song.al || song.album).name}}》</a>
                     </div>
                     <song-control
-                            @onplay="playmusic(song.id)"
                             @ondelete="$emit('ondelete',index)"
                             :btns="btns"
                             :id="song.id"
+                            :like-ids="likeIds"
                     />
                 </div>
             </div>
         </div>
+        <Spin v-else></Spin>
         <div class="songlist-foot" v-if="showFooter">
-            <div class="row flex align-center disabled">
+            <div class="row flex align-center disable">
                 <div class="song-check" @click="allChecked=!allChecked">
                     <Icon type="ios-checkmark" v-show="allChecked"/>
                 </div>
@@ -63,6 +68,7 @@
 
 <script>
     import songControl from '@/components/song-control/song-control'
+    import {reqLikeSong} from "@/api";
     export default {
         props: {
             songlists: Array,
@@ -97,11 +103,18 @@
         },
         data() {
             return {
-                value: []
+                value: [],
+                likeIds: [],
+                hv: ''
             }
         },
         components: {
             songControl
+        },
+        created() {
+            reqLikeSong(this.$store.state.userInfo.userId).then(res => {
+                this.likeIds = res.ids
+            })
         },
         methods: {
             check(song) {
@@ -156,9 +169,7 @@
                 if(state) {
                     this.$Message.success('添加到播放器成功')
                 } else {
-                    let a = window.location.href
-                    a = a.split('music')[0] + 'music/player/audio'
-                    window.open(a)
+                    window.open('/music/player/audio')
                 }
             }
         },
@@ -200,7 +211,7 @@
         height 100%
         .songlist-inner
             height 100%
-            overflow scroll
+            overflow auto
         /*滚动条整体样式*/
         .songlist-inner::-webkit-scrollbar
             width: 8px;
@@ -239,8 +250,11 @@
             text-align left
             line-height 35px
             padding 16px 20px
-            &.disabled:hover
-                background #fff
+            &.disable
+                .hv
+                    background #fff
+                &:hover
+                    background #fff
             &.active
                 color #E91E63 !important
                 a

@@ -15,7 +15,7 @@
                     <div class="item-box">
                         <div class="item-inner">
                             <div class="img-box">
-                                <img :src="item.picUrl">
+                                <img :src="item.picUrl+'?param=200y200'">
                             </div>
                             <div class="play-box">
                                 <img src="../../../static/imgs/btn-play.png">
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-    import {reqNewAlbum} from "@/api";
 
     export default {
         props: {

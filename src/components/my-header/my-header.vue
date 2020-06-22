@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header :class="{fixd:$route.meta.headerFixd}" >
         <div class="header flex container">
             <div class="logo" @click="$router.replace('/music')">
                 <h1 v-if="$route.path!='/music/search'">网易云音乐</h1>
@@ -44,7 +44,7 @@
 <!--                    用户信息-->
                     <div class="user">
                         <div class="h-avatar img">
-                            <img :src="userInfo.avatarUrl" v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页">
+                            <img :src="userInfo.avatarUrl+'?param=80y80'" v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页">
                             <img src="../../static/imgs/no-login.png" alt="" v-else>
                         </div>
                         <div class="info-box">
@@ -63,8 +63,8 @@
                             </div>
                             <div class="islogin" v-else>
                                 <div class="info-inner">
-                                    <div class="avatar img" @click="$router.push('/user')">
-                                        <img :src="userInfo.avatarUrl" alt="我的主页" title="我的主页">
+                                    <div class="avatar img" @click="$router.push(`/user/home?id=${userInfo.userId}`)">
+                                        <img :src="userInfo.avatarUrl+'?param=80y80'" alt="我的主页" title="我的主页">
                                     </div>
                                     <p class="username">
                                         {{userInfo.nickname}}
@@ -107,12 +107,12 @@
                                 icon:'ios-musical-note-outline'
                             },
                             {
-                                link:'/rank',
+                                link:'/toplist',
                                 text:'排行榜',
                                 icon:'md-list'
                             },
                             {
-                                link:'/singer',
+                                link:'/artist',
                                 text:'歌手',
                                 icon:'md-person'
                             },
@@ -128,8 +128,8 @@
                         link: '/my'
                     },
                     {
-                        text: '音乐人',
-                        link: '/person'
+                        text: '朋友',
+                        link: '/friend'
                     }
                 ],
                 loginShow:false,
@@ -167,7 +167,14 @@
     $red = #E60026
     header
         color #A0A0A0
+        z-index 99
         box-shadow 0 2px 10px rgba(0,0,0,.1)
+        &.fixd
+            background #fff
+            position fixed
+            top 0
+            left 0
+            width 100%
         .header
             margin 0 auto
             max-width 1400px
@@ -191,6 +198,7 @@
                 display none
                 position absolute;
                 top 70px
+                left 0
                 z-index 99
                 padding 0 30px
                 border-radius 5px
@@ -224,6 +232,7 @@
                     &.active
                         color $red
                     &.top-item
+                        position relative
                         padding 0 20px
         .header-right
             flex 1 0 auto
@@ -248,7 +257,7 @@
                     z-index 33
                     position absolute
                     top 40px
-                    right 0
+                    right -10px
                     padding 20px
                     border-radius 10px
                     box-shadow 0 2px 6px rgba(0,0,0,.1)

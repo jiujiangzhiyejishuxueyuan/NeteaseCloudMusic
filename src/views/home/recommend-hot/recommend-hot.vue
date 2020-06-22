@@ -12,10 +12,10 @@
             </div>
             <div class="list-box">
                 <ul class="list-inner flex flex-wrap justify-between">
-                    <li class="item" v-for="(item,index) in list" :key="index">
-                        <div class="item-box img-scale-hover" @click="$router.push(`/music/playlist/${item.id}`)">
+                    <li class="item" v-for="(item,index) in list" :key="index" @click="$router.push(`/music/playlist/${item.id}`)">
+                        <div class="item-box img-scale-hover">
                             <div class="img-box img-scale">
-                                <img :src="item.coverImgUrl" >
+                                <img :src="item.coverImgUrl+'?param=200y200'" >
                             </div>
                             <div class="play-box">
                                 <img src="../../../static/imgs/btn-play.png" alt="">

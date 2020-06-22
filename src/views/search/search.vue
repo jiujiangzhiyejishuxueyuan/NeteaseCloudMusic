@@ -19,14 +19,17 @@
                 </li>
             </ul>
             <song-list :songlists="result.songs" v-if="$route.query.type==='1'&&result.songs"/>
-            <singer-list :singers="result.artists" v-if="$route.query.type==='100'&&result.artists"/>
-            <album :albums="result.albums" v-if="$route.query.type==='10'&&result.albums"/>
-            <PlayList :playlists="result.playlists" v-if="$route.query.type==='1000'&&result.playlists"/>
-            <userList :users="result.userprofiles" v-if="$route.query.type==='1002'&&result.userprofiles"/>
-            <mv-list :mvs="result.mvs" v-if="$route.query.type==='1004'&&result.mvs"/>
-            <lyric-list :songs="result.songs" v-if="$route.query.type==='1006'&&result.songs"/>
-            <dj-list :djs="result.djRadios" v-if="$route.query.type==='1009'&&result.djRadios"/>
-            <video-list :videos="result.videos" v-if="$route.query.type==='1014'&&result.videos"/>
+            <singer-list :singers="result.artists" v-else-if="$route.query.type==='100'&&result.artists"/>
+            <album :albums="result.albums" v-else-if="$route.query.type==='10'&&result.albums"/>
+            <PlayList :playlists="result.playlists" v-else-if="$route.query.type==='1000'&&result.playlists"/>
+            <userList :users="result.userprofiles" v-else-if="$route.query.type==='1002'&&result.userprofiles"/>
+            <mv-list :mvs="result.mvs" v-else-if="$route.query.type==='1004'&&result.mvs"/>
+            <lyric-list :songs="result.songs" v-else-if="$route.query.type==='1006'&&result.songs"/>
+            <dj-list :djs="result.djRadios" v-else-if="$route.query.type==='1009'&&result.djRadios"/>
+            <video-list :videos="result.videos" v-else-if="$route.query.type==='1014'&&result.videos"/>
+            <div class="ske container flex justify-center" v-else>
+                <Spin></Spin>
+            </div>
             <page
                     :total="count"
                     :page-size="limit"
@@ -155,7 +158,6 @@
                     this.result = res.result
                     console.log(this.result)
                     this.count = this.result[c]
-                    console.log(res)
                 })
             }
         },

@@ -8,12 +8,14 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
 import 'view-design/dist/styles/iview.css'
-import {Icon,LoadingBar,Page,Input,Message,Slider,  } from "view-design";
+import {Icon,LoadingBar,Page,Input,Message,Slider,Spin,BackTop  } from "view-design";
 Vue.component('Icon',Icon)
 Vue.component('LoadingBar',LoadingBar)
 Vue.component('Page',Page)
 Vue.component('Input',Input)
 Vue.component('Slider',Slider )
+Vue.component('Spin',Spin )
+Vue.component('BackTop',BackTop )
 // Vue.component('Button',Button)
 // Vue.component('DropdownMenu',DropdownMenu)
 // Vue.component('DropdownItem',DropdownItem)

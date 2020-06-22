@@ -8,7 +8,7 @@
             </div>
             <div class="list-box">
                 <ul class="list-inner flex flex-wrap justify-between">
-                    <li class="item">
+                    <li class="item" @click="$router.push('/music/recommend')">
                         <div class="item-box">
                             <div class="img-box">
                                 <div class="title">
@@ -23,21 +23,24 @@
                             每日歌曲推荐
                         </div>
                     </li>
-                    <li class="item" v-for="index in 6" :key="index">
-                        <div class="item-box">
-                            <div class="img-box">
-                                <img src="https://p1.music.126.net/NM8LUQLozehwPCOEDzH5Pg==/109951164960715408.jpg" alt="">
+                    <li class="item img-scale-hover" v-for="(playlist,index) in playlists.slice(0,13)" :key="index" @click="$router.push(`/music/playlist/${playlist.id}`)">
+                        <div class="item-box" :title="playlist.copywriter">
+                            <div class="img-box img-scale">
+                                <img :src="playlist.picUrl+'?param=200y200'" alt="">
                             </div>
                             <div class="play-box">
                                 <img src="../../../static/imgs/btn-play.png" alt="">
                             </div>
                             <p class="play-count">
                                 <Icon type="ios-headset" />
-                                100w
+                                {{playlist.playcount | playCount}}
                             </p>
+                            <div class="tip">
+                                {{playlist.copywriter}}
+                            </div>
                         </div>
-                        <div class="title">
-                            【六一记忆】经典中国动画，臻乐重现
+                        <div class="title" :title="playlist.name">
+                            {{playlist.name}}
                         </div>
                     </li>
                 </ul>
@@ -47,10 +50,12 @@
 </template>
 
 <script>
+    import {reqRecommendPlaylist} from "@/api";
+
     export default {
         data() {
             return {
-
+                playlists: []
             }
         },
         computed: {
@@ -81,16 +86,43 @@
 
                 }
                 return {
-                    td: date.getDay()!=0 ? date.getDay() : 7,
+                    td: date.getDate(),
                     ch: day
                 }
             }
+        },
+        created() {
+            reqRecommendPlaylist().then(res => {
+                this.playlists = res.recommend
+            })
         }
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
     .recommend-today
+        .item-box
+            border-radius 5px
+            overflow hidden
+            &:hover
+                .tip
+                    transform none
+                .play-count
+                    display none
+
+        .tip
+            position absolute
+            top 0
+            left 0
+            max-height 50px
+            width 100%
+            padding 5px
+            color #fff
+            text-align left
+            background rgba(0,0,0,.3)
+            overflow hidden
+            transition all .3s
+            transform translateY(-100%)
         .img-box
             background #FAFAFA
             .content

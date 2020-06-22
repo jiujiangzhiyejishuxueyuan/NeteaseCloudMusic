@@ -76,6 +76,65 @@
         components: {
             playList
         },
+        beforeRouteEnter(to,from,next) {
+            let hotTags
+            let tags
+            let ctags = []
+            let i = 0
+            let page = to.query.page || 1
+            let cat = to.query.cat || '全部'
+            reqHotTags().then(res => {
+                hotTags = res.tags
+                i++
+                if(i===3) {
+                    next(vm => {
+                        vm.hotTags = hotTags
+                        vm.tags = ctags
+                        vm.songlists = res
+                        vm.cat = cat
+                    })
+                }
+            })
+            reqTags().then(res => {
+                const categories = res.categories
+                tags = res.sub
+                for (const categoriesKey in categories) {
+                    ctags.push({title:categories[categoriesKey],list:[],more:[]})
+                }
+                tags.forEach(tag=> {
+                    for (const categoriesKey in categories) {
+                        if(categoriesKey==tag.category) {
+                            if(ctags[categoriesKey].list.length<8) {
+                                ctags[categoriesKey].list.push(tag)
+                            } else {
+                                ctags[categoriesKey].more.push(tag)
+                            }
+                            return
+                        }
+                    }
+                })
+                i++
+                if(i===3) {
+                    next(vm => {
+                        vm.hotTags = hotTags
+                        vm.tags = ctags
+                        vm.songlists = res
+                        vm.cat = cat
+                    })
+                }
+            })
+            reqplaylist(25,(page-1)*25,cat).then(res => {
+                i++
+                if(i===3) {
+                    next(vm => {
+                        vm.hotTags = hotTags
+                        vm.tags = ctags
+                        vm.songlists = res
+                        vm.cat = cat
+                    })
+                }
+            })
+        },
         data() {
             return {
                 hotTags:[],
@@ -88,35 +147,13 @@
                 cat:''
             }
         },
-        async created() {
-            let hotTags = await reqHotTags()
-            reqTags().then(res => {
-                const categories = res.categories
-                let tags = res.sub
-                for (const categoriesKey in categories) {
-                    this.tags.push({title:categories[categoriesKey],list:[],more:[]})
-                }
-                tags.forEach(tag=> {
-                    for (const categoriesKey in categories) {
-                        if(categoriesKey==tag.category) {
-                            if(this.tags[categoriesKey].list.length<8) {
-                                this.tags[categoriesKey].list.push(tag)
-                            } else {
-                                this.tags[categoriesKey].more.push(tag)
-                            }
-
-                            return
-                        }
-                    }
-                })
-            })
-            this.hotTags = hotTags.tags
-            this.render()
-        },
         watch:{
             $route() {
                 this.render()
             }
+        },
+        mounted() {
+            console.log(this.cat);
         },
         methods: {
             checkMore(index) {
@@ -135,14 +172,15 @@
                 reqplaylist(25,(page-1)*25,this.filterCat(this.cat)).then(res => {
                     this.songlists = res
                 })
-
             },
             filterCat(cat) {
-                cat = cat.replace(/%/g,"%25")
-                cat = cat.replace(/#/g,"%23")
-                cat = cat.replace(/&/g,"%26")
-                cat = cat.replace(/\//g,"%2F")
-                return cat
+                if(cat) {
+                    cat = cat.replace(/%/g,"%25")
+                    cat = cat.replace(/#/g,"%23")
+                    cat = cat.replace(/&/g,"%26")
+                    cat = cat.replace(/\//g,"%2F")
+                }
+                return cat || '全部'
             },
 
         }

@@ -55,8 +55,6 @@
                     width 100%
                     height 100%
 
-            .count
-                color $red
             .control
                 margin 0 15px
                 a

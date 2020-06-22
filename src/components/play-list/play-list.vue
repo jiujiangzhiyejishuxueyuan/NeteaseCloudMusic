@@ -1,12 +1,12 @@
 <template>
-    <div class="songlist-inner">
+    <div class="playlist-inner">
         <ul class="flex flex-wrap">
             <li v-for="(playlist,index) in playlists" :key="index">
                 <div class="content img-scale-hover">
                     <div class="cover relative">
                         <a @click="$router.push(`/music/playlist/${playlist.id}`)">
                             <div class="img-box img-scale ">
-                                <img alt="背景图" :src="playlist.coverImgUrl">
+                                <img alt="背景图" :src="playlist.coverImgUrl+'?param=300y300'">
                             </div>
                         </a>
                         <div class="btn-play absolute-center">
@@ -36,7 +36,9 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    .songlist-inner
+
+
+    .playlist-inner
         margin-bottom 40px
         ul li
             width 20%
@@ -47,6 +49,7 @@
                     opacity 1
                 .img-box
                     width 100%
+
                 .btn-play
                     z-index 20
                     transition all .4s

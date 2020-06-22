@@ -121,8 +121,8 @@
                         <Icon type="ios-arrow-up" v-else/>
                         <ul class="dorp" v-show="dropShow">
                             <li class="flex align-center" v-for="(item,index) in song.quality" :key="index" @click="switchBit(item)">
-                                <span :class="item.sty"></span>
-                                {{item.text}}
+                                <span :class="item&&item.sty"></span>
+                                {{item && item.text}}
                             </li>
 
                         </ul>

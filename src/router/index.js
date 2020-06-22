@@ -31,6 +31,20 @@ export default new VueRouter({
             ]
         },
         {
+            name: 'recommend',
+            path: '/music/recommend',
+            component: () => import('@/views/recommend/recommend')
+        },
+        {
+            name: 'toplist',
+            path: '/music/toplist',
+            component: () => import('@/views/toplist/toplist'),
+            meta: {
+                headerFixd: true,
+                hiddenFooter: true
+            }
+        },
+        {
             name: 'artist',
             path: '/music/artist',
             component: () => import('@/views/artist/artist')
@@ -41,9 +55,29 @@ export default new VueRouter({
             component: () => import('@/views/singer/singer')
         },
         {
-            name: 'user-home',
-            path: '/user/home',
-            component: () => import('@/views/user/user')
+            path: '/user',
+            component: () => import('@/views/user/user'),
+            children: [
+                {
+                    name: 'user-home',
+                    path: 'home',
+                    component: () => import('@/views/user/home/home')
+                },
+                {
+                    name: 'follows',
+                    path: 'follows',
+                    component: () => import('@/views/follows/follows')
+                },
+                {
+                    name: 'followeds',
+                    path: 'followeds',
+                    component: () => import('@/views/user/followeds/followeds')
+                },
+                {
+                    path: '',
+                    redirect: 'home',
+                }
+            ]
         },
         {
             name: 'videoPlayer',
@@ -73,10 +107,16 @@ export default new VueRouter({
             path: '/my/music',
             component: () => import('@/views/my-music/my-music')
         },
+
         {
             path: '/',
             redirect: '/music'
         },
+        {
+            name: '404',
+            path:'*',
+            component: () => import('@/views/not-found/index')
+        }
     ],
     scrollBehavior() {
         return {x: 0, y: 0}

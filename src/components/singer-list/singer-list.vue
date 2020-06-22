@@ -30,6 +30,7 @@
     .singer-item
         width 16.6%
         padding 0 10px
+        margin 5px 0
         .img-box
             height 195px
             cursor pointer

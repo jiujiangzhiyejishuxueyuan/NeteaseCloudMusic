@@ -2,12 +2,11 @@
     <div class="playlist-detail">
         <div class="header-info">
             <div class="background-blur">
-                <img :src="songlist.coverImgUrl">
+                <img :src="songlist.coverImgUrl+'?param=800y800'">
             </div>
             <div class="info-inner flex container">
                 <div class="img-box">
-                    <img :src="songlist.coverImgUrl"
-                         >
+                    <img :src="songlist.coverImgUrl+'?param=500y500'">
                 </div>
                 <div class="content" v-if="songlist.creator">
                     <div class="title">
@@ -15,37 +14,24 @@
                     </div>
                     <div class="user-name flex">
                         <div class="avatar">
-                            <img :src="songlist.creator.avatarUrl"
-                                 alt="">
+                            <img :src="songlist.creator.avatarUrl" >
                         </div>
-                        <a href="">{{songlist.creator.nickname}}</a>
+                        <a @click="$router.push(`/user/home?id=${songlist.creator.userId}`)" title="查看主页">{{songlist.creator.nickname}}</a>
+                        <div class="createTime">{{songlist.createTime | dataFormat}} 创建</div>
                     </div>
                     <div class="playcount">
                         <span>播放量:</span>
                         {{songlist.playCount | playCount}}
                     </div>
-                    <div class="tags">
+                    <div class="tags" v-if="songlist.tags.length">
                         <span>标签:</span>
-                        <i v-for="(tag,index) in songlist.tags" :key="index">{{tag}}</i>
+                        <a v-for="(tag,index) in songlist.tags" :key="index" @click="$router.push(`/music/playlist?cat=${tag}`)">{{tag}}</a>
                     </div>
-                    <div class="brief ellipse">
+                    <div class="brief ellipse" v-if="songlist.description">
                         <span>简介:</span>
                         {{songlist.description}}
                     </div>
-                    <div class="control flex">
-                        <div class="button play-all">
-                            <Icon type="ios-play-outline" />
-                            全部播放
-                        </div>
-                        <div class="button">
-                            <Icon type="md-heart-outline" />
-                            收藏
-                        </div>
-                        <div class="button">
-                            <Icon type="md-add" />
-                            添加到
-                        </div>
-                    </div>
+                    <playlist-control />
                 </div>
             </div>
         </div>
@@ -61,6 +47,7 @@
                 :page-size="20"
                 @on-change="(page)=>$router.replace(`${$route.path}?page=${page}`)"
                 :current="parseInt($route.query.page)||1"
+                v-if="songlist.trackCount>20"
         />
 
     </div>
@@ -68,10 +55,12 @@
 
 <script>
     import songList from '@/components/song-list/song-list'
+    import playlistControl from '@/components/playlist-control/playlist-control'
     import {reqSongDetail, reqSonglistDetail} from "@/api";
     export default {
         components: {
             songList,
+            playlistControl
         },
         data() {
             return {
@@ -92,10 +81,18 @@
                         ids.push(res.playlist.trackIds[i+startCount].id)
                     }
 
-                    reqSongDetail(ids.join(',')).then(res => {
-                        this.songs = res.songs
-                    })
+                    if(ids.length) {
+                        reqSongDetail(ids.join(',')).then(res => {
+                            this.songs = res.songs
+                        }).catch(()=> this.$Message.error('获取歌曲列表失败'))
+                    } else {
+                        this.$Message.error('获取歌曲列表失败')
+                        this.$router.replace({name:'404'})
+                    }
+                }).catch(() => {
+                    this.$router.replace({name:'404'})
                 })
+
             }
         },
         created() {
@@ -121,7 +118,7 @@
                 margin-left 50px
                 color #000
                 width 75%
-                .control
+                .playlist-control
                     margin-top 15px
                     .button
                         margin-right 20px
@@ -137,19 +134,26 @@
                 .user-name
                     font-size 18px
                     color #666
+                    line-height 25px
                     .avatar
-                        width 18px
-                        height 18px
+                        width 25px
+                        height 25px
                         border-radius 50%
                         overflow hidden
                         img
                             display block
                             width 100%
+                    .createTime
+                        margin-left 20px
+                        font-size 13px
 
                     a
+
                         font-size 14px
                         color #666
                         margin-left 5px
+                        &:hover
+                            color $red
                 .playcount
                     margin-top 20px
                     span
@@ -159,8 +163,10 @@
 
                     span
                         margin-right 10px
-                    i
+                    a
                         margin-right 10px
+                        &:hover
+                            color $red
             .img-box
                 width 23%
             .background-blur

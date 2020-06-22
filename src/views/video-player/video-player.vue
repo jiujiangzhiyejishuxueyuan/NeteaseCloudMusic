@@ -6,15 +6,15 @@
                 <p class="time" v-if="video.publishTime">发布时间:{{video.publishTime | dataFormat}}</p>
                 <p class="count">
                     <span class="play-count">播放次数:{{video.playTime | playCount}}</span>
-                    <span class="comment-count">评论数:{{video.commentCount}}</span>
+                    <span class="comment-count">评论数:{{comments.total}}</span>
                 </p>
             </div>
             <div class="user flex" v-if="video.creator">
-                <div class="img-box">
-                    <img :src="video.creator.avatarUrl" :title="video.creator.nickname">
+                <div class="img-box" @click="$router.push(`/user/home?id=${video.creator.userId}`)">
+                    <img :src="video.creator.avatarUrl" title="查看主页">
                 </div>
                 <div class="info">
-                    <a class="name">{{video.creator.nickname}}</a>
+                    <a class="name" @click="$router.push(`/user/home?id=${video.creator.userId}`)">{{video.creator.nickname}}</a>
                     <div @click="follow(video.creator.userId,1)" class="btn-follow" v-if="!video.creator.followed"><Icon type="md-add" />关注</div>
                     <div @click="follow(video.creator.userId,0)" class="btn-follow disabled" v-else>
                         <span class="h">已关注</span><span class="hf">取消关注</span>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="comment">
                     <div class="comment-count">
-                        {{video.commentCount}}  评论
+                        {{comments.total}}  评论
                     </div>
                     <div class="comment-header bb flex" ref="comment">
                         <a class="sort" :class="{active:hotComments}" @click="hotComments = true">最热评论</a>

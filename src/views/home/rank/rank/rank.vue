@@ -11,10 +11,10 @@
                 </div>
             </div>
         </div>
-        <div class="rank-bg">
+        <div class="rank-bg" v-if="list.length===3">
             <div class="container">
-                <div class="rank-items flex">
-                    <div class="rank-item" v-for="(playlist,index) in list" :key="index">
+                <div class="rank-items flex" v-if="list.length">
+                    <div class="rank-item" v-for="(playlist,index) in list" :key="index" >
                         <div class="rank-item-header flex">
                             <div class="img-box">
                                 <img :src="playlist.coverImgUrl">
@@ -40,7 +40,7 @@
                                             </span>
                                         </p>
                                     </div>
-                                    <song-control/>
+                                    <song-control :id="song.id" :like-ids="likeIds"/>
                                 </li>
                             </ul>
                         </div>
@@ -48,33 +48,40 @@
                 </div>
             </div>
         </div>
+        <div class="ske container flex justify-center" v-else>
+            <Spin></Spin>
+        </div>
     </div>
 </template>
 
 <script>
-    import {reqTopList} from "@/api";
+    import {reqLikeSong, reqTopListDetail} from "@/api";
     import songControl from '@/components/song-control/song-control'
     export default {
         components: {songControl},
         data() {
             return {
-                list:[]
+                list:[],
+                likeIds: []
             }
         },
         created() {
             const list = [0,1,3]
             list.forEach(async item => {
-
-                const result = await reqTopList(item)
+                const result = await reqTopListDetail(item,'')
                 this.list.push(result.playlist)
             })
-        }
+            reqLikeSong(this.$store.state.userInfo.userId).then(res => {
+                this.likeIds = res.ids
+            })
+        },
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
     $red = #E60026
     .home-rank
+
         img
             display block
             width 100%

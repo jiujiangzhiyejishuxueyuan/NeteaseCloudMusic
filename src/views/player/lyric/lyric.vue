@@ -5,6 +5,7 @@
                     v-for="(lyric,index) in lyrics"
                     :key="index"
                     :class="{on:index===currentLyricNum}"
+                    class="ellipse"
 
             >
                 {{lyric.text}}
@@ -49,8 +50,14 @@
             //位移距离
             trans() {
                 // console.log(this.eachHeight * this.currentLyricNum,this.eachHeight,this.currentLyricNum)
+                let l
+                if((this.eachHeight * this.currentLyricNum - (this.$refs.lyricbox||window).clientHeight/2)>0) {
+                    l = this.eachHeight * this.currentLyricNum - (this.$refs.lyricbox||window).clientHeight/2
+                } else {
+                    l = 0
+                }
                 return {
-                    transform: `translateY(-${ (this.eachHeight * this.currentLyricNum - (this.$refs.lyricbox||window).clientHeight/2)}px)`
+                    transform: `translateY(-${l}px)`
                 }
             }
         },

@@ -2,7 +2,7 @@
     <div class="home">
         <banner/>
         <recommend-hot :list="hotList" title="热门推荐" v-if="hotList.length"/>
-        <div class="ske hot container flex justify-center" v-else>
+        <div class="ske container" v-else>
             <Spin></Spin>
         </div>
         <recommend-today v-if="userInfo&&userInfo.userId"/>
@@ -38,7 +38,6 @@
             const result = await reqHotSongList(14,'hot')
             this.hotList = result.playlists
             const albums = await reqNewAlbum(0,10)
-            console.log(albums)
             this.albums = albums.albums
         },
         computed: {
@@ -51,7 +50,6 @@
     .home
         .ske
             overflow hidden
-            padding 200px 0
         .section
             margin-bottom 30px
         .section-header

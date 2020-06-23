@@ -7,7 +7,7 @@
                 </div>
             </div>
             <div class="list-box">
-                <ul class="list-inner flex flex-wrap justify-between">
+                <ul class="list-inner flex flex-wrap">
                     <li class="item" @click="$router.push('/music/recommend')">
                         <div class="item-box">
                             <div class="img-box">
@@ -23,7 +23,7 @@
                             每日歌曲推荐
                         </div>
                     </li>
-                    <li class="item img-scale-hover" v-for="(playlist,index) in playlists.slice(0,13)" :key="index" @click="$router.push(`/music/playlist/${playlist.id}`)">
+                    <li class="item img-scale-hover" v-for="(playlist,index) in playlists" :key="index" @click="$router.push(`/music/playlist/${playlist.id}`)">
                         <div class="item-box" :title="playlist.copywriter">
                             <div class="img-box img-scale">
                                 <img :src="playlist.picUrl+'?param=200y200'" alt="">
@@ -93,7 +93,7 @@
         },
         created() {
             reqRecommendPlaylist().then(res => {
-                this.playlists = res.recommend
+                this.playlists = res.recommend.length>13 ? res.recommend.slice(0,13) : res.recommend.slice(0,6)
             })
         }
     }

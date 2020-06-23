@@ -20,7 +20,7 @@
                             <div class="play-box">
                                 <img src="../../../static/imgs/btn-play.png" alt="">
                             </div>
-                            <p class="play-count">
+                            <p class="play-count" :title="'播放量:'+item.playCount">
                                 <Icon type="ios-headset" />
                                 {{item.playCount | playCount}}
                             </p>

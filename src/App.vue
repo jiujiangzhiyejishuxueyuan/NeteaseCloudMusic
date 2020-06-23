@@ -41,7 +41,7 @@ export default {
   @import "./common/style/sty.styl"
   @import "./common/style/media.styl"
   .view-enter-active,.view-leave-active
-    transition opacity .5s
+    transition opacity .3s
   .view-enter,.view-leave-to
     opacity 0
   html,body

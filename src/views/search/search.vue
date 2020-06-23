@@ -27,7 +27,7 @@
             <lyric-list :songs="result.songs" v-else-if="$route.query.type==='1006'&&result.songs"/>
             <dj-list :djs="result.djRadios" v-else-if="$route.query.type==='1009'&&result.djRadios"/>
             <video-list :videos="result.videos" v-else-if="$route.query.type==='1014'&&result.videos"/>
-            <div class="ske container flex justify-center" v-else>
+            <div class="ske container " v-else>
                 <Spin></Spin>
             </div>
             <page

@@ -2,13 +2,13 @@
     <ul class="video-list flex flex-wrap">
         <li class="video-item img-scale-hover" v-for="(video,index) in videos" :key="index">
             <div class="img-box img-scale" @click="skip(video)">
-                <img :src="video.coverUrl" alt="" :title="video.title">
+                <img :src="video.coverUrl+'?param=360y200'" alt="" :title="video.title">
             </div>
             <p class="title ellipse text-hv" @click="skip(video)">{{video.title}}</p>
             <p class="name ellipse flex">
                 <span class="by" v-if="video.type">by</span>
                 <i class="mv" v-else></i>
-                <a class="text-hv" v-for="(art,index) in video.creator" :key="index">
+                <a class="text-hv" v-for="(art,index) in video.creator" :key="index" @click="skipCreate(video.type,art)">
                     {{art.userName}}
                     <span v-if="index+1<video.creator.length">/</span>
                 </a>
@@ -28,6 +28,13 @@
                     this.$router.push(`/video/${video.vid}`)
                 } else {
                     this.$router.push(`/mv/${video.vid}`)
+                }
+            },
+            skipCreate(t,art) {
+                if (t) {
+                    this.$router.push(`/user/home?id=${art.userId}`)
+                } else {
+                    this.$router.push(`/music/artist/${art.userId}`)
                 }
             }
         }

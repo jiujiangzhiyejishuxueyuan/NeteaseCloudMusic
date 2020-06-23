@@ -34,7 +34,7 @@
                                     <div class="content flex justify-between">
                                         <span class="song-name block">{{song.name}}</span>
                                         <p class="singer block">
-                                            <span v-for="(singer,index) in song.ar" :key="index">
+                                            <span v-for="(singer,index) in song.ar" :key="index" @click="$router.push(`/music/artist/${singer.id}`)">
                                                 {{singer.name}}
                                                 <span v-if="index+1<song.ar.length">/</span>
                                             </span>
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class="ske container flex justify-center" v-else>
+        <div class="ske container" v-else>
             <Spin></Spin>
         </div>
     </div>

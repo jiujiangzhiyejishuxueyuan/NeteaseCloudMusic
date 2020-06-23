@@ -2,7 +2,7 @@
     <ul class="mv-list flex flex-wrap">
         <li class="mv-item img-scale-hover" v-for="(mv,index) in mvs" :key="index">
             <div class="img-box img-scale">
-                <img :src="mv.cover" alt="">
+                <img :src="(mv.cover||mv.imgurl16v9||imgurl)+'?param=260y150'" alt="">
                 <div class="shadow">
                     <div class="btn-play absolute-center">
                         <img src="../../static/imgs/btn-play.png" alt="">
@@ -10,9 +10,17 @@
                 </div>
 
             </div>
-            <div class="info">
+            <div class="info" v-if="mv.artistName">
                 <p class="title ellipse text-hv">{{mv.name}}</p>
-                <a class="name text-hv">{{mv.artistName}}</a>
+                <p class="art ellipse">
+                    <a class="name text-hv"
+                       v-for="(art,index) in mv.artists"
+                       @click="$router.push(`/music/artist/${art.id}`)"
+                       :key="index"
+                    >
+                        {{art.name }}
+                    </a>
+                </p>
             </div>
         </li>
     </ul>

@@ -152,9 +152,6 @@
                 this.render()
             }
         },
-        mounted() {
-            console.log(this.cat);
-        },
         methods: {
             checkMore(index) {
                 if(index==this.showMoreTag&&this.showMore) {

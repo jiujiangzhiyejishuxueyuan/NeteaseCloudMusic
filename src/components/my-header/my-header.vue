@@ -98,7 +98,7 @@
             return {
                 navList:[
                     {
-                        text: '音乐',
+                        text: '发现音乐',
                         link: '/music',
                         chilren:[
                             {

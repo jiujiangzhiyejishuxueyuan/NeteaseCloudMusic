@@ -108,9 +108,7 @@
                 this.currentType = parseInt(type)
                 this.currentStyle = parseInt(style)
                 this.str = str
-                console.log(type,style,str,limit,offset)
                 reqSingerList(type,style,str,limit,offset).then(res => {
-                    console.log(res)
                     this.singers = res.artists
                     this.more = res.more
                 })
@@ -162,6 +160,7 @@
                 font-size 14px
                 margin 10px 0
                 li
+                    cursor pointer
                     padding 3px 10px
                     margin-right 20px
                     border-radius 15px

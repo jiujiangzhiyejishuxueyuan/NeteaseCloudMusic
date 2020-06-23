@@ -31,6 +31,53 @@ export default new VueRouter({
             ]
         },
         {
+            name: 'my',
+            path: '/my',
+            component: () => import('@/views/my-music/my-music'),
+            children: [
+                {
+                    name: 'my-singer',
+                    path: 'artist',
+                    component: () => import('@/views/my-music/my-singer/my-singer'),
+                    meta: {
+                        headerFixd: true,
+                        hiddenFooter: true
+                    }
+                },
+                {
+                    name: 'my-mv',
+                    path: 'mv',
+                    component: () => import('@/views/my-music/my-video/my-video'),
+                    meta: {
+                        headerFixd: true,
+                        hiddenFooter: true
+                    }
+                },
+                {
+                    name: 'my-playlist',
+                    path: 'playlist',
+                    component: () => import('@/views/my-music/my-playlist/my-playlist'),
+                    meta: {
+                        headerFixd: true,
+                        hiddenFooter: true
+                    }
+                },
+                {
+                    name: 'my-dj',
+                    path: 'dj',
+                    component: () => import('@/views/my-music/my-dj/my-dj'),
+                    meta: {
+                        headerFixd: true,
+                        hiddenFooter: true
+                    }
+                },
+                {
+                    path: '',
+                    redirect: 'playlist'
+                }
+            ]
+        },
+        {
             name: 'recommend',
             path: '/music/recommend',
             component: () => import('@/views/recommend/recommend')

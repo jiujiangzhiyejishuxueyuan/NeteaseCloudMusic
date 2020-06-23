@@ -12,9 +12,9 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
     footer
-        background #1a1a1a
+        background #F2F2F2
         height 200px
-        color #fff
+        color #000
         .container
             overflow hidden
         h1

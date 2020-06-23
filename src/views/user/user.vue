@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <router-view :user="user.profile"></router-view>
+        <transition name="view"><router-view :user="user.profile"></router-view></transition>
     </div>
 </template>
 
@@ -306,7 +306,4 @@
                     .user-name
                         font-size 25px
                         font-weight 500
-
-    .wocao
-        color #fff
 </style>

@@ -34,7 +34,7 @@
                         <a href="" class="text-hv">{{song.name}}</a>
                     </div>
                     <div class="singer ellipse">
-                        <a :href="`/music/singer/${art.id}`" v-for="(art,index) in (song.ar || song.artists)" :key="index" class="text-hv">
+                        <a @click="skip(art)" v-for="(art,index) in (song.ar || song.artists)" :key="index" class="text-hv">
                             {{art.name}}
                             <span v-if="index+1<(song.ar || song.artists).length">/</span>
                         </a>
@@ -117,6 +117,13 @@
             })
         },
         methods: {
+            skip(art) {
+                if (this.player) {
+                    window.open(`/music/artist/${art.id}`)
+                } else {
+                    this.$router.push(`/music/artist/${art.id}`)
+                }
+            },
             check(song) {
                 let index = this.value.indexOf(song.id)
                 index!==-1 ? this.value.splice(index,1) : this.value.push(song.id)

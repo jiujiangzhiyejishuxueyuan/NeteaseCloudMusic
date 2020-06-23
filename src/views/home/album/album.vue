@@ -15,7 +15,7 @@
                     <div class="item-box">
                         <div class="item-inner">
                             <div class="img-box">
-                                <img :src="item.picUrl+'?param=200y200'">
+                                <img :src="item.picUrl+'?param=250y250'">
                             </div>
                             <div class="play-box">
                                 <img src="../../../static/imgs/btn-play.png">
@@ -27,7 +27,7 @@
                                 <span >{{item.name}}</span>
                             </p>
                             <p class="singer block-name-next">
-                                <span v-for="(singer,index) in item.artists" :key="index">
+                                <span v-for="(singer,index) in item.artists" :key="index" @click="$router.push(`/music/artist/${singer.id}`)">
                                     {{singer.name}}
                                     <span v-if="index+1<item.artists.length">/</span>
                                 </span>

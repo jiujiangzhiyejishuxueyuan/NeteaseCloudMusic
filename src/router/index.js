@@ -31,8 +31,12 @@ export default new VueRouter({
             ]
         },
         {
-            name: 'my',
             path: '/my',
+            component: () => import('@/views/m/m'),
+        },
+        {
+            name: 'my',
+            path: '/my/m',
             component: () => import('@/views/my-music/my-music'),
             children: [
                 {
@@ -56,7 +60,7 @@ export default new VueRouter({
                 {
                     name: 'my-playlist',
                     path: 'playlist',
-                    component: () => import('@/views/my-music/my-playlist/my-playlist'),
+                    component: () => import('@/views/playlist/detail/detail'),
                     meta: {
                         headerFixd: true,
                         hiddenFooter: true
@@ -73,7 +77,7 @@ export default new VueRouter({
                 },
                 {
                     path: '',
-                    redirect: 'playlist'
+                    redirect: 'artist'
                 }
             ]
         },

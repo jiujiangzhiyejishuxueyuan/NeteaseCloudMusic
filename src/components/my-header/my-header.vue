@@ -11,13 +11,12 @@
                             :class="{active: $route.path.split('/')[1]=== item.link.replace('/','')}"
                             v-for="(item,index) in navList"
                             :key="index"
-                            @click="$router.replace(item.link)"
                     >
-                        {{item.text}}
+                        <router-link :to="item.link">{{item.text}}</router-link>
                         <div class="header-channel music" v-if="index==0">
                             <ul class="flex">
                                 <li v-for="(navitem,index) in item.chilren" :key="index">
-                                    <a @click.stop="$router.push(item.link+navitem.link)"
+                                    <router-link :to="item.link+navitem.link"
                                        class="flex direction-column"
                                     >
                                         <Icon
@@ -25,7 +24,7 @@
                                                 :class="{active: $route.path.split('/')[2]=== navitem.link.replace('/','')}"
                                         />
                                         {{navitem.text}}
-                                    </a>
+                                    </router-link>
                                 </li>
                             </ul>
                         </div>

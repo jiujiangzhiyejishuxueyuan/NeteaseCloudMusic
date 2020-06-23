@@ -5,7 +5,7 @@
                 <ul class="hotTags flex justify-center">
                     <li class="hottag_til">热门歌单</li>
                     <li class="hottag" v-for="(tag,index) in hotTags" :key="index">
-                        <a :href="`/music/playlist?cat=${filterCat(tag.name)}`">{{tag.name}}</a>
+                        <router-link :to="`/music/playlist?cat=${filterCat(tag.name)}`">{{tag.name}}</router-link>
                     </li>
                 </ul>
                 <div class="category-tags-box flex" >
@@ -18,12 +18,13 @@
                         </div>
                         <ul class="tag-list flex flex-wrap">
                             <li v-for="(item,index) in tag.list" :key="index">
-                                <a class="text-hv"
-                                   :class="{'active':$route.query.cat==item.name}"
-                                   @click="$router.push(`/music/playlist?cat=${filterCat(item.name)}`)"
+                                <router-link
+                                        class="text-hv"
+                                        :class="{'active':$route.query.cat==item.name}"
+                                        :to="`/music/playlist?cat=${filterCat(item.name)}`"
                                 >
                                     {{item.name}}
-                                </a>
+                                </router-link>
                             </li>
                             <li class="showMoreTag" v-if="tag.more.length">
                                 <a class="text-hv" :class="{active:index==showMoreTag&&showMore}"  @click="checkMore(index)">
@@ -39,12 +40,12 @@
             <div class="container more-container" v-show="showMore">
                 <ul class="more-tags flex">
                     <li v-for="(tag,index) in moreTags" :key="index">
-                        <a class="text-hv"
-                           :class="{'active':$route.query.cat==tag.name}"
-                           :href="`/music/playlist?cat=${filterCat(tag.name)}`"
+                        <router-link class="text-hv"
+                           :class="{active:$route.query.cat==tag.name}"
+                           :to="`/music/playlist?cat=${filterCat(tag.name)}`"
                         >
                             {{tag.name.replace(/\s+/g,"")}}
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
             </div>

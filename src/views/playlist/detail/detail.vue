@@ -4,7 +4,7 @@
             <div class="background-blur">
                 <img :src="songlist.coverImgUrl+'?param=800y800'">
             </div>
-            <div class="info-inner flex container">
+            <div class="info-inner flex container align-center">
                 <div class="img-box">
                     <img :src="songlist.coverImgUrl+'?param=500y500'">
                 </div>
@@ -16,7 +16,7 @@
                         <div class="avatar">
                             <img :src="songlist.creator.avatarUrl" >
                         </div>
-                        <a @click="$router.push(`/user/home?id=${songlist.creator.userId}`)" title="查看主页">{{songlist.creator.nickname}}</a>
+                        <router-link :to="`/user/home?id=${songlist.creator.userId}`" title="查看主页">{{songlist.creator.nickname}}</router-link>
                         <div class="createTime">{{songlist.createTime | dataFormat}} 创建</div>
                     </div>
                     <div class="playcount">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="tags" v-if="songlist.tags.length">
                         <span>标签:</span>
-                        <a v-for="(tag,index) in songlist.tags" :key="index" @click="$router.push(`/music/playlist?cat=${tag}`)">{{tag}}</a>
+                        <router-link :to="`/music/playlist?cat=${tag}`" v-for="(tag,index) in songlist.tags" :key="index">{{tag}}</router-link>
                     </div>
                     <div class="brief ellipse" v-if="songlist.description">
                         <span>简介:</span>
@@ -38,6 +38,13 @@
         <div class="playlist-box">
             <div class="container">
                 <div class="playlist-inner">
+                    <div class="inner-title bb">
+                        <span class="title">歌曲列表</span>
+                        <span class="song-count">{{songlist.trackCount}}首歌</span>
+                        <div class="play-count">
+                            播放: <span class="count">{{songlist.playCount}} </span>次
+                        </div>
+                    </div>
                     <song-list :songlists="songs"/>
                 </div>
             </div>
@@ -45,7 +52,7 @@
         <Page
                 :total="songlist.trackCount"
                 :page-size="20"
-                @on-change="(page)=>$router.replace(`${$route.path}?page=${page}`)"
+                @on-change="(page)=>$router.replace(`${$route.path}?id=${songlist.id}&page=${page}`)"
                 :current="parseInt($route.query.page)||1"
                 v-if="songlist.trackCount>20"
         />
@@ -71,7 +78,8 @@
         methods: {
             render() {
                 const page = this.$route.query.page || 1
-                reqSonglistDetail(this.$route.params.id).then(res => {
+                let id = this.$route.params.id || this.$route.query.id
+                reqSonglistDetail(id).then(res => {
                     this.songlist = res.playlist
                     let ids = []
                     let startCount = (page-1)*20
@@ -87,7 +95,8 @@
                         }).catch(()=> this.$Message.error('获取歌曲列表失败'))
                     } else {
                         this.$Message.error('获取歌曲列表失败')
-                        this.$router.replace({name:'404'})
+                        console.log(ids,res)
+                        //this.$router.replace({name:'404'})
                     }
                 }).catch(() => {
                     this.$router.replace({name:'404'})
@@ -107,6 +116,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+    $blue = #00a1d6
     $red = #e91e63
     .playlist-detail
 
@@ -172,4 +182,22 @@
 
         .playlist-box
             background #fff
+            .inner-title
+                padding 5px 20px
+                text-align left
+                position relative
+                .title
+                    font-size 16px
+                .play-count
+                    position absolute
+                    right 0
+                    bottom 5px
+                    font-size 14px
+
+                    .count
+                        color $blue
+                .song-count
+                    color #999
+                    margin-left 20px
+                    font-size 12px
 </style>

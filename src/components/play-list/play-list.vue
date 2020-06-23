@@ -2,21 +2,21 @@
     <div class="playlist-inner">
         <ul class="flex flex-wrap">
             <li v-for="(playlist,index) in playlists" :key="index">
-                <div class="content img-scale-hover">
+                <div class="content img-scale-hover" :title="playlist.name">
                     <div class="cover relative">
-                        <a @click="$router.push(`/music/playlist/${playlist.id}`)">
+                        <router-link :to="`/music/playlist/${playlist.id}`">
                             <div class="img-box img-scale ">
                                 <img alt="背景图" :src="playlist.coverImgUrl+'?param=300y300'">
                             </div>
-                        </a>
+                        </router-link>
                         <div class="btn-play absolute-center">
                             <img src="../../static/imgs/btn-play.png" alt="">
                         </div>
                     </div>
-                    <div class="info ellipse ">
+                    <div class="info ellipse">
                         <a class="text-hv">{{playlist.name}}</a>
                     </div>
-                    <div class="play-count">
+                    <div class="play-count" :title="playlist.playCount">
                         <Icon type="ios-headset" />
                         {{playlist.playCount | playCount}}
                     </div>

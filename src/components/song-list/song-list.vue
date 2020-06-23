@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="song-name">
-                        <a href="" class="text-hv">{{song.name}}</a>
+                        <a class="text-hv">{{song.name}}</a>
                     </div>
                     <div class="singer ellipse">
                         <a @click="skip(art)" v-for="(art,index) in (song.ar || song.artists)" :key="index" class="text-hv">
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="album text-hv ellipse">
-                        <a href="" class="text-hv">《{{(song.al || song.album).name}}》</a>
+                        <a class="text-hv">《{{(song.al || song.album).name}}》</a>
                     </div>
                     <song-control
                             @ondelete="$emit('ondelete',index)"

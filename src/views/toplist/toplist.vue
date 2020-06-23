@@ -124,6 +124,7 @@
             margin 40% auto 0
 
         .toplist-inner
+
             padding-top 50px
             margin-left 300px
             @media screen and (max-width: 1200px)
@@ -212,7 +213,10 @@
                 -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);
                 border-radius: 10px;
                 background: transparent;
+            .list-box
+                padding-bottom 80px
             .toplist-list
+
                 .item
                     padding 10px 0 10px 20px
                     cursor pointer

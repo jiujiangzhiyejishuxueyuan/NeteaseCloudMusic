@@ -11,19 +11,24 @@
                 <li class="djs" @click="$router.replace(`/my/dj`)" :class="{active: $route.name==='my-dj'}">
                     我的电台(<span class="count">{{subCount.djRadioCount}}</span>)
                 </li>
-                <li class="playlists create">
-                    <svg t="1592901845916" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1742" width="12" height="12"><path d="M515.218 872.541l478.947-718.424-957.906 0.01 478.959 718.414z" fill="#040000" fill-opacity=".7" p-id="1743"></path></svg>
+                <li class="playlists create" @click="createdPlaylistShow = !createdPlaylistShow">
+                    <svg  v-if="createdPlaylistShow" t="1592901845916" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1742" width="12" height="12"><path d="M515.218 872.541l478.947-718.424-957.906 0.01 478.959 718.414z" fill="#040000" fill-opacity=".7" p-id="1743"></path></svg>
+                    <svg v-else t="1592901962436" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2711" width="12" height="12"><path d="M874.424 513.323L156 34.376l0.01 957.906 718.414-478.959z" fill="#040000" fill-opacity=".7" p-id="2712"></path></svg>
                     创建的歌单(<span class="count">{{subCount.createdPlaylistCount}}</span>)
                 </li>
-               <playlist-list :playlists="createdPlaylist" is-creator/>
-                <li class="playlists sub">
-                    <svg t="1592901962436" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2711" width="12" height="12"><path d="M874.424 513.323L156 34.376l0.01 957.906 718.414-478.959z" fill="#040000" fill-opacity=".7" p-id="2712"></path></svg>
+               <playlist-list :playlists="createdPlaylist" is-creator v-if="createdPlaylistShow"/>
+                <li class="playlists sub" @click="subPlaylistShow = !subPlaylistShow">
+                    <svg  v-if="subPlaylistShow" t="1592901845916" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1742" width="12" height="12"><path d="M515.218 872.541l478.947-718.424-957.906 0.01 478.959 718.414z" fill="#040000" fill-opacity=".7" p-id="1743"></path></svg>
+                    <svg v-else t="1592901962436" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2711" width="12" height="12"><path d="M874.424 513.323L156 34.376l0.01 957.906 718.414-478.959z" fill="#040000" fill-opacity=".7" p-id="2712"></path></svg>
                     收藏的歌单(<span class="count">{{subCount.subPlaylistCount}}</span>)
                 </li>
+                <playlist-list :playlists="subPlaylist" v-if="subPlaylistShow"/>
             </ul>
         </div>
         <div class="my-music-content">
-            <router-view :userId="id"></router-view>
+            <transition name="view">
+                <router-view :userId="id"></router-view>
+            </transition>
         </div>
     </div>
 </template>
@@ -41,7 +46,9 @@
                 vLength: 0,
                 id: 0,
                 createdPlaylist: [],
-                subPlaylist: []
+                subPlaylist: [],
+                createdPlaylistShow: true,
+                subPlaylistShow: false
             }
         },
         created() {
@@ -59,14 +66,25 @@
             reqSubMv(999).then(res => {
                 this.vLength = res.count
             })
+        },
 
-        }
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
     #my-music
         margin-top 70px
+        .header-info
+            padding 0 0 10px
+            .info-inner
+                padding-left 20px
+                .content
+                    width 700px
+                .img-box
+                    width 210px
+                    height 210px
+            .background-blur
+                display none
         .section-header
             text-align left
             padding 3px 0
@@ -75,18 +93,20 @@
                 font-size 24px
         .my-music-content
             padding-top 30px
-            margin-left 310px
+            margin-left 320px
             width 1000px
         .nav-list
             position fixed
             top 70px
             height 100vh
-            width 300px
+            width 310px
             overflow auto
             text-align left
+            padding-top 30px
+            padding-bottom 80px
 
             .nav-list-inner
-                margin-top 30px
+                padding-right 2px
                 .playlists:hover
                     background #fff
                 &>li

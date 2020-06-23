@@ -3,7 +3,7 @@
         <div class="section-header bb">
             <span class="title">我的歌手(<span class="count">{{singers.count}}</span>)</span>
         </div>
-        <ul class="my-singer-list">
+        <ul class="my-singer-list flex flex-wrap">
             <li class="singer flex" v-for="(singer,index) in singers.data" :key="index">
                 <div class="avatar img-box">
                     <img :src="singer.picUrl+'?param=100y100'" alt="">
@@ -55,6 +55,7 @@
                         color $blue
             .singer
                 padding 10px 0 10px 10px
+                width 50%
                 &:hover
                     background rgba(0,0,0,.02)
         .avatar

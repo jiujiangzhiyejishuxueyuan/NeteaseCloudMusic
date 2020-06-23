@@ -167,7 +167,6 @@
                     width 100%
                     filter blur(30px)
             .avatar-box
-                cursor pointer
                 width 20%
                 img
                     width 100%

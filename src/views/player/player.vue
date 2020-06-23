@@ -88,9 +88,9 @@
                 <div class="play-info expend">
                     <div class="song-info flex justify-between " v-if="song.name">
                         <div class="song-mate" >
-                            <a href="" class="text-hv">{{song.name}}</a>-
+                            <a class="text-hv">{{song.name}}</a>-
                             <span>
-                                <a href="" v-for="(singer,index) in song.ar" :key="index" class="text-hv">
+                                <a v-for="(singer,index) in song.ar" :key="index" class="text-hv" @click="skip(singer)">
                                     {{singer.name}}
                                     <span v-if="index==song.ar.length">/</span>
                                 </a>
@@ -199,6 +199,9 @@
             }
         },
         methods: {
+            skip(singer) {
+                window.open(`/music/artist/${singer.id}`)
+            },
             switchBit(v) {
                 this.bit = v.text
                 reqSongUrl(this.song.id,v.v.br).then(res => {

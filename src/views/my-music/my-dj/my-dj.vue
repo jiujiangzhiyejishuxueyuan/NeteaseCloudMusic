@@ -1,7 +1,7 @@
 <template>
     <div id="my-dj">
         <div class="section-header bb">
-            <span class="title">我订阅的电台(<span class="count">{{}}</span>)</span>
+            <span class="title">我订阅的电台(<span class="count">{{djs.count}}</span>)</span>
         </div>
         <ul class="dj-list">
             <li class="dj flex" v-for="(dj,index) in djs.djRadios" :key="index">
@@ -15,7 +15,7 @@
                         <a class="text-hv">{{dj.category}}</a>
                     </div>
                     <div class="creator">
-                        by <a class="text-hv">{{dj.dj.nickname}}</a>
+                        by <a class="text-hv" @click="$router.push(`/user/home?id=${dj.dj.userId}`)">{{dj.dj.nickname}}</a>
                     </div>
                     <div class="count">{{dj.programCount}}期</div>
                 </div>
@@ -57,9 +57,9 @@
                     margin-left 20px
                     .count
                         position absolute
-                        right 0
+                        right 10px
                         top 50%
-                        height 20
+                        height 20px
                         font-size 16px
                         margin-top -10px
                         color rgba(0,0,0,.5)

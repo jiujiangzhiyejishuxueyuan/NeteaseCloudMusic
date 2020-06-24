@@ -233,6 +233,10 @@
                     &.top-item
                         position relative
                         padding 0 20px
+                        >a
+                            display block
+                            width 100%
+                            height 100%
         .header-right
             flex 1 0 auto
             .user

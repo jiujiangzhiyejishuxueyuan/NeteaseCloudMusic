@@ -1,6 +1,9 @@
 <template>
     <div class="home">
-        <banner/>
+        <banner v-if="banners.length" :banners="banners"/>
+        <div class="ske container" v-else>
+            <Spin></Spin>
+        </div>
         <recommend-hot :list="hotList" title="热门推荐" v-if="hotList.length"/>
         <div class="ske container" v-else>
             <Spin></Spin>
@@ -17,7 +20,7 @@
     import recommendToday from '@/views/home/recommend-today/recommend-today'
     import newAlbum from '@/views/home/album/album'
     import rank from "@/views/home/rank/rank/rank";
-    import {reqHotSongList, reqNewAlbum} from "@/api";
+    import {reqBanner, reqHotSongList, reqNewAlbum} from "@/api";
     import {mapState} from 'vuex'
     export default {
         name: 'home',
@@ -31,14 +34,18 @@
         data() {
             return {
                 hotList: [],
-                albums:[]
+                albums:[],
+                banners: []
             }
         },
         async created() {
+            let banners = await reqBanner()
+            this.banners = banners.banners
             const result = await reqHotSongList(14,'hot')
             this.hotList = result.playlists
             const albums = await reqNewAlbum(0,10)
             this.albums = albums.albums
+
         },
         computed: {
             ...mapState(['userInfo'])

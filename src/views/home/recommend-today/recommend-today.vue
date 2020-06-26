@@ -1,6 +1,6 @@
 <template>
     <div class="recommend-today recommend-item section">
-        <div class="container">
+        <div class="container" v-if="playlists.length">
             <div class="section-header flex justify-between">
                 <div class="title">
                     <h1>个性化推荐</h1>
@@ -50,13 +50,16 @@
                 </ul>
             </div>
         </div>
+        <ske :row="1" v-else/>
     </div>
 </template>
 
 <script>
     import {reqRecommendPlaylist} from "@/api";
+    import Ske from "@/components/ske/ske";
 
     export default {
+        components: {Ske},
         data() {
             return {
                 playlists: []

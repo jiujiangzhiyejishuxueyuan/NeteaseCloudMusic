@@ -5,9 +5,7 @@
             <Spin></Spin>
         </div>
         <recommend-hot :list="hotList" title="热门推荐" v-if="hotList.length"/>
-        <div class="ske container" v-else>
-            <Spin></Spin>
-        </div>
+        <ske :row="2" v-else/>
         <recommend-today v-if="userInfo&&userInfo.userId"/>
         <new-album :albums="albums" title="新碟上架" v-if="albums.length"/>
         <rank/>
@@ -15,6 +13,7 @@
 </template>
 
 <script>
+    import ske from '@/components/ske/ske'
     import banner from "@/views/home/banner/banner";
     import recommendHot from '@/views/home/recommend-hot/recommend-hot'
     import recommendToday from '@/views/home/recommend-today/recommend-today'
@@ -29,7 +28,8 @@
             recommendHot,
             recommendToday,
             newAlbum,
-            rank
+            rank,
+            ske
         },
         data() {
             return {

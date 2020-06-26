@@ -103,7 +103,7 @@
                     item.ToplistType ? this.featureToplists.push(item) : this.toplists.push(item)
                 })
             })
-            reqTopListDetail(1,toplistId).then(res => {
+            reqTopListDetail(toplistId).then(res => {
                 this.currentToplist = res.playlist
             })
         },

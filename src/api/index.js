@@ -4,7 +4,7 @@ import ajax from "@/api/ajax";
 export const reqBanner = () => ajax('api/banner') //获取首页轮播图
 export const reqHotSongList = (num, type) => ajax(`api/top/playlist?limit=${num}&order=${type}`) //获取热门歌单
 export const reqNewAlbum = (offset, num) => ajax(`api/top/album?offset=${offset}&limit=${num}`) //获取新碟上架
-export const reqTopListDetail = (idx,id) => ajax(`api/top/list?idx=${idx}&id=${id}`) //获取排行榜详情
+export const reqTopListDetail = (id) => ajax(`api/top/list?id=${id}`) //获取排行榜详情
 export const reqTopList = () => ajax('api/toplist') //获取所有排行榜
 
 //歌单相关

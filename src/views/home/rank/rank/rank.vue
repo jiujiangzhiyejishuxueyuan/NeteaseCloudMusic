@@ -55,7 +55,7 @@
 </template>
 
 <script>
-    import {reqLikeSong, reqTopListDetail} from "@/api";
+    import {reqLikeSong, reqLoginState, reqTopListDetail} from "@/api";
     import songControl from '@/components/song-control/song-control'
     export default {
         components: {songControl},
@@ -66,14 +66,17 @@
             }
         },
         created() {
-            const list = [0,1,3]
+            const list = [19723756,3779629,3778678]
             list.forEach(async item => {
-                const result = await reqTopListDetail(item,'')
+                const result = await reqTopListDetail(item)
                 this.list.push(result.playlist)
             })
-            reqLikeSong(this.$store.state.userInfo.userId).then(res => {
-                this.likeIds = res.ids
+            reqLoginState().then(res => {
+                reqLikeSong(res.profile.userId).then(res => {
+                    this.likeIds = res.ids
+                })
             })
+
         },
     }
 </script>

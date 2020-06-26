@@ -1,5 +1,5 @@
-api地址: https://github.com/Binaryify/NeteaseCloudMusicApi
-项目预览地址:http://39.97.72.153/
+api地址: https://github.com/Binaryify/NeteaseCloudMusicApi```
+项目预览地址:http://39.97.72.153/```
 运行此项目前先运行api
 # NeteaseCloundMusic
 6.11已实现播放歌曲功能

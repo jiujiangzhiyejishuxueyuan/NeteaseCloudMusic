@@ -40,9 +40,10 @@
             <div class="container more-container" v-show="showMore">
                 <ul class="more-tags flex">
                     <li v-for="(tag,index) in moreTags" :key="index">
-                        <router-link class="text-hv"
-                           :class="{active:$route.query.cat==tag.name}"
-                           :to="`/music/playlist?cat=${filterCat(tag.name)}`"
+                        <router-link
+                                class="text-hv"
+                                :class="{active:$route.query.cat==tag.name}"
+                                :to="`/music/playlist?cat=${filterCat(tag.name)}`"
                         >
                             {{tag.name.replace(/\s+/g,"")}}
                         </router-link>
@@ -55,10 +56,13 @@
                 <div class="songlist-title flex justify-between">
                     <div class="type">
                         <h1>{{this.cat}}</h1>
-                        <a v-if="$route.query.cat" @click="$router.replace('/music/playlist')" class="text-hv"><Icon type="ios-close" /></a>
+                        <a v-if="$route.query.cat" @click="$router.replace('/music/playlist')" class="text-hv">
+                            <Icon type="ios-close"/>
+                        </a>
                     </div>
                 </div>
-                <play-list :playlists="songlists.playlists"/>
+                <play-list :playlists="songlists.playlists" v-if="songlists.playlists&&songlists.playlists.length"/>
+                <playlist-ske :row="5" v-else/>
                 <Page
                         :total="songlists.total"
                         :page-size="25"
@@ -73,9 +77,11 @@
 <script>
     import {reqHotTags, reqplaylist, reqTags} from "@/api";
     import playList from '@/components/play-list/play-list'
+    import playlistSke from '@/components/play-list/playlist-ske'
     export default {
         components: {
-            playList
+            playList,
+            playlistSke
         },
         beforeRouteEnter(to,from,next) {
             let hotTags
@@ -163,7 +169,9 @@
                     this.moreTags = this.tags[index].more
                 }
             },
+
             render(page) {
+                this.songlists.playlists = []
                 this.cat = this.$route.query.cat || '全部'
                 page = page || this.$route.query.page || 1
                 this.recursionCount = 0
@@ -189,6 +197,7 @@
     $red = #E60026
     .playlist
         margin-bottom 20px
+
         .recommend-hot .list-inner
             .item
                 width 20%

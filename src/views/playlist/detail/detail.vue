@@ -45,7 +45,10 @@
                             播放: <span class="count">{{songlist.playCount}} </span>次
                         </div>
                     </div>
-                    <song-list :songlists="songs"/>
+                    <song-list :songlists="songs" v-if="songs"/>
+                    <ul class="songlist-ske" v-else>
+                        <li class="song" v-for="index in 10" :key="index"></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -56,6 +59,28 @@
                 :current="parseInt($route.query.page)||1"
                 v-if="songlist.trackCount>20"
         />
+        <div class="playlist-comments container">
+            <div class="comment-count">
+                {{comment&&comment.total}} 评论
+            </div>
+            <div class="comment-header flex" ref="comment">
+                <a class="sort" :class="{active:hotComments}" @click="hotComments = true"
+                   v-if="comment&&comment.hotcomment">最热评论</a>
+                <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
+            </div>
+            <comment-edit/>
+            <comment-list :comments="hotComments ? comment.hotComments : comment.comments" v-if="comment.total>0"/>
+            <div class="no-comments">
+                暂无评论
+            </div>
+            <Page
+                    class="comment"
+                    :total="comment.total"
+                    :page-size="commentLimit"
+                    @on-change="nextComment"
+                    v-if="comment&&(hotComments&&comment.hotComments.length || !hotComments&&comment.total)>20"
+            />
+        </div>
 
     </div>
 </template>
@@ -63,30 +88,53 @@
 <script>
     import songList from '@/components/song-list/song-list'
     import playlistControl from '@/components/playlist-control/playlist-control'
-    import {reqSongDetail, reqSonglistDetail} from "@/api";
+    import {reqPlaylistComments, reqSongDetail, reqSonglistDetail} from "@/api";
+    import CommentList from "@/components/comment-list/comment-list";
+    import CommentEdit from "@/components/comment-edit/comment-edit";
+
     export default {
         components: {
+            CommentEdit,
+            CommentList,
             songList,
             playlistControl
         },
         data() {
             return {
                 songlist: {},
-                songs:[]
+                songs: [],
+                hotComments: true,
+                comment: '',
+                commentLimit: 20
             }
         },
         methods: {
+            nextComment(page) {
+                let id = this.$route.params.id || this.$route.query.id
+                let offset = this.commentLimit * (page - 1)
+                reqPlaylistComments(id, this.commentLimit, offset).then(res => {
+                    this.comment = res
+                    window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
+                })
+            },
             render() {
                 const page = this.$route.query.page || 1
                 let id = this.$route.params.id || this.$route.query.id
+                reqPlaylistComments(id, this.commentLimit, 0).then(res => {
+                    this.comment = res
+                    if (!res.hotComments.length) {
+                        this.hotComments = false
+                    }
+
+                })
                 reqSonglistDetail(id).then(res => {
                     this.songlist = res.playlist
                     let ids = []
-                    let startCount = (page-1)*20
-                    let residue = res.playlist.trackCount-startCount
-                    residue = residue >=20 ? 20 : residue
-                    for (let i=0; i<residue; i++) {
-                        ids.push(res.playlist.trackIds[i+startCount].id)
+                    let startCount = (page - 1) * 20
+                    let residue = res.playlist.trackCount - startCount
+                    residue = residue >= 20 ? 20 : residue
+                    for (let i = 0; i < residue; i++) {
+                        ids.push(res.playlist.trackIds[i + startCount].id)
                     }
 
                     if(ids.length) {
@@ -95,8 +143,7 @@
                         }).catch(()=> this.$Message.error('获取歌曲列表失败'))
                     } else {
                         this.$Message.error('获取歌曲列表失败')
-                        console.log(ids,res)
-                        //this.$router.replace({name:'404'})
+                        this.$router.replace({name: '404'})
                     }
                 }).catch(() => {
                     this.$router.replace({name:'404'})
@@ -119,15 +166,56 @@
     $blue = #00a1d6
     $red = #e91e63
     .playlist-detail
+        .playlist-comments
+            text-align left
+            margin-top 50px
+
+            .no-comments
+                padding 20px 0 40px
+                text-align center
+                font-size 16px
+
+            .comment-edit
+                margin-bottom 50px
+
+            .comment-header
+                border-bottom 1px solid #e5e9f0
+                margin-bottom 20px
+
+                .sort
+                    display block
+                    padding 10px 0
+                    margin-right 20px
+
+                    &:hover
+                        color $blue
+
+                    &.active
+                        color $blue
+                        border-bottom 1px solid $blue
+
+            .comment-count
+                font-size 18px
+                margin-bottom 20px
+
+        .songlist-ske
+            .song
+                animation ske .8s linear infinite alternate
+                background rgba(0, 0, 0, .05)
+                border-radius 15px
+                height 50px
+                margin 15px 0
 
         .header-info
             position relative
             padding 80px 0
+
             .content
                 text-align left
                 margin-left 50px
                 color #000
                 width 75%
+
                 .playlist-control
                     margin-top 15px
                     .button

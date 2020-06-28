@@ -11,7 +11,7 @@
                 <div class="album">专辑</div>
             </div>
         </div>
-        <div class="songlist-inner" v-if="songlists">
+        <div class="songlist-inner">
             <div class="scroll">
                 <div class="row flex align-center"
                      :class="{active:song.id===pid}"
@@ -19,9 +19,9 @@
                      :key="index"
                 >
                     <div class="song-check" @click="check(song)">
-                        <Icon type="ios-checkmark"  v-show="value.indexOf(song.id)!==-1"/>
+                        <Icon type="ios-checkmark" v-show="value.indexOf(song.id)!==-1"/>
                     </div>
-                    <div class="song-on" v-if="isplay&&song.id===pid" >
+                    <div class="song-on" v-if="isplay&&song.id===pid">
                     </div>
                     <div class="song-index" v-else>
                         {{index+1}}
@@ -34,7 +34,8 @@
                         <a class="text-hv">{{song.name}}</a>
                     </div>
                     <div class="singer ellipse">
-                        <a @click="skip(art)" v-for="(art,index) in (song.ar || song.artists)" :key="index" class="text-hv">
+                        <a :href="`/music/artist/${art.id}`" target="_blank"
+                           v-for="(art,index) in (song.ar || song.artists)" :key="index" class="text-hv">
                             {{art.name}}
                             <span v-if="index+1<(song.ar || song.artists).length">/</span>
                         </a>
@@ -52,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <Spin v-else></Spin>
+
         <div class="songlist-foot" v-if="showFooter">
             <div class="row flex align-center disable">
                 <div class="song-check" @click="allChecked=!allChecked">
@@ -117,13 +118,6 @@
             })
         },
         methods: {
-            skip(art) {
-                if (this.player) {
-                    window.open(`/music/artist/${art.id}`)
-                } else {
-                    this.$router.push(`/music/artist/${art.id}`)
-                }
-            },
             check(song) {
                 let index = this.value.indexOf(song.id)
                 index!==-1 ? this.value.splice(index,1) : this.value.push(song.id)
@@ -137,14 +131,12 @@
                     } else {
                         musics = this.playone(ids,musics)
                     }
-                    console.log(ids,musics)
                     window.localStorage.setItem('musics',JSON.stringify(musics))
                     setTimeout(()=> {
                         this.isplayer()
                     },100)
                 } else {
                     this.$emit('play',ids)
-                    console.log('播放器点击')
                 }
             },
             playmul(ids,musics) {
@@ -160,7 +152,6 @@
             },
             playone(ids,musics) {
                 let index = musics.indexOf(ids)
-                console.log(index)
                 if(index!==-1) {
                     musics.splice(index,1)
                 }
@@ -216,6 +207,7 @@
         padding-top 65px
         position relative
         height 100%
+
         .songlist-inner
             height 100%
             overflow auto

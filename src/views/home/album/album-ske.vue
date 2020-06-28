@@ -52,6 +52,8 @@
                 border-radius 15px
                 height 190px
                 width 100%
+                @media screen and (max-width: 1200px)
+                    height 150px
         .album-ske-header
             height 60px
             .title

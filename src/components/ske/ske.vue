@@ -28,11 +28,21 @@
     $h = rgba(0,0,0,.05)
 
     #ske.container
+        margin-top 20px
+        @media screen and (max-width: 1550px)
+            .inner
+                height 140px !important
+            .title
+                height 30px !important
+                width 100px !important
+        @media screen and (max-width: 1200px)
+            .inner
+                height 120px !important
         .title,.info,.inner
             animation ske .8s  linear infinite alternate
         .ske-header
-            height 60px
             .title
+                margin 10px 0
                 border-radius 10px
                 margin-left 10px
                 width 120px

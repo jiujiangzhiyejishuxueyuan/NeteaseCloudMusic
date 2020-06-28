@@ -5,10 +5,10 @@
                 <div class="title">
                     <h1>{{title}}</h1>
                 </div>
-                <div class="more gray">
+                <router-link class="more gray" to="/music/playlist">
                     更多
                     <Icon type="ios-arrow-dropright-circle" />
-                </div>
+                </router-link>
             </div>
             <div class="list-box">
                 <ul class="list-inner flex flex-wrap justify-between">
@@ -50,6 +50,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
     .gray
+        display block
         color #999999
 
     .recommend-item

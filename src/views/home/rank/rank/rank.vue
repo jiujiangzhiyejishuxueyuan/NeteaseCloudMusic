@@ -5,10 +5,10 @@
                 <div class="title">
                     <h1>排行榜</h1>
                 </div>
-                <div class="more gray">
+                <router-link class="more gray" to="/music/toplist">
                     更多
                     <Icon type="ios-arrow-dropright-circle" />
-                </div>
+                </router-link>
             </div>
         </div>
         <div class="rank-bg" >
@@ -49,7 +49,7 @@
             </div>
             <ul class="home-rank-ske flex container" v-else>
                 <li class="ske-item" v-for="index in  3" :key="index">
-                    <div class="ske-item-header flex">
+                    <div class="ske-item-header flex align-center">
                         <div class="ske-img"></div>
                         <div class="info expend">
                             <div class="title"></div>
@@ -57,17 +57,12 @@
                         </div>
                     </div>
                     <ul class="inner">
-                        <li class="item" v-for="index in 10" :key="index">
-
-                        </li>
+                        <li class="item" v-for="index in 10" :key="index"></li>
                     </ul>
                 </li>
             </ul>
         </div>
 
-<!--        <div class="ske container" v-else>-->
-<!--            <Spin></Spin>-->
-<!--        </div>-->
     </div>
 </template>
 
@@ -105,7 +100,7 @@
             .ske-item
                 width 33%
                 .inner
-                    padding-right 50px
+                    padding-right 10%
                     .item
                         animation ske .8s  linear infinite alternate
                         margin 10px 0
@@ -114,9 +109,24 @@
                         width 100%
 
                 .ske-item-header
+                    padding 15px 10px 15px 0
+                    @media screen and (max-width: 1500px)
+                        .ske-img
+                            width 150px !important
+                            height 150px !important
+                    @media screen and (max-width: 1200px)
+                        .ske-img
+                            height 120px !important
+                            width 120px !important
+                        .title
+                            width 130px !important
+                            height 30px !important
+                        .btn
+                            height 30px !important
+                            width 120px !important
                     .ske-img,.title,.btn
                         animation ske .8s  linear infinite alternate
-                    padding 15px 0
+
                     .ske-img
                         height 180px
                         width 180px

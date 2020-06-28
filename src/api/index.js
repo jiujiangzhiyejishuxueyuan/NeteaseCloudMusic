@@ -1,4 +1,5 @@
 import ajax from "@/api/ajax";
+import {off} from "view-design/src/utils/dom";
 
 // 首页相关
 export const reqBanner = () => ajax('api/banner') //获取首页轮播图
@@ -15,6 +16,7 @@ export const reqplaylist = (num, offset, cat) => ajax(`api/top/playlist?limit=${
 export const reqSonglistDetail = (id) => ajax(`api/playlist/detail?id=${id}`) //获取歌单详情
 export const changeplaylistSong = (pid,type,sids) => ajax(`api/playlist/tracks?op=${type}&pid=${pid}&tracks=${sids}`) //添加或删除歌单歌曲
 export const reqRecommendPlaylist = () => ajax('api/recommend/resource') //获取每日推荐歌单
+export const reqPlaylistComments = (id,limit,offset,before='') => ajax(`api/comment/playlist?id=${id}&limit=${limit}&offset=${offset}&before=${before}`) // 获取歌单评论
 
 // 用户相关
 export const phoneLogin = (phone, pwd) => ajax(`api/login/cellphone?phone=${phone}&password=${pwd}`) //手机号登陆

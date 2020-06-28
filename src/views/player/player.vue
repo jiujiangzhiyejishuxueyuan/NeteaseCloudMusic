@@ -10,7 +10,7 @@
         </div>
         <div class="player-content flex justify-center">
             <div class="left"></div>
-            <div class="center">
+            <div class="center"  v-show="!immerse">
                 <div class="menu-toolbar flex">
                     <div class="button text-hv" :class="{active:checked.length}">
                         <Icon type="ios-add-circle-outline"/>
@@ -38,10 +38,10 @@
                 </div>
             </div>
             <div class="right flex direction-column">
-                <div class="song-cover">
+                <div class="song-cover" v-show="!immerse">
                     <img :src="song.al.picUrl" alt="" v-if="song.al">
                 </div>
-                <div class="song-info" v-if="song.name">
+                <div class="song-info" v-if="song.name&&!immerse">
                     <p class="song_name ">歌曲名: <span class="ellipse">{{song.name}}</span></p>
                     <p class="song_name">
                         歌手名:
@@ -56,9 +56,10 @@
                     </p>
                 </div>
                 <lyric
-                        v-if="song.lyrics"
+                        v-if="song.lyrics&&lyricShow"
                         :lyrics="song.lyrics"
                         :current-time="+song.currentTime"
+                        :class="{immerse: immerse}"
                 />
                 <div class="nolyric" v-else>
                     纯音乐,请欣赏
@@ -111,7 +112,13 @@
                 </div>
 <!--                右侧-->
                 <div class="action-right flex align-center">
-                    <div class="link">
+                    <div class="immerse-btn flex align-center" @click="immerse = !immerse" :class="{on: immerse}">
+                        <div class="circle" >
+                            off
+                        </div>
+                        <p>沉浸模式</p>
+                    </div>
+                    <div class="download">
                         <a :href="url" target="_blank"><Icon type="md-download" /></a>
                         <Icon type="ios-heart-outline"/>
                     </div>
@@ -166,6 +173,8 @@
         },
         data() {
             return {
+                lyricShow: true,
+                immerse: true,
                 songlist: [],
                 ids:[],
                 progress: 0,
@@ -349,6 +358,10 @@
             }
         },
         watch: {
+            immerse(value) {
+                this.lyricShow = false
+                setTimeout(() => this.lyricShow = true)
+            },
             isplay(value) {
                 if (value) {
                     if (this.url) {
@@ -395,12 +408,12 @@
                 height 3px
 
         .player-footer
-            position: absolute;
-            width: 100%;
-            height: 110px;
-            bottom: 0;
-            z-index: 10;
-            padding: 0 60px 0 120px;
+            position absolute
+            width 100%
+            height 110px
+            bottom 0
+            z-index 10
+            padding 0 100px
 
             .song-info
                 margin-bottom 10px
@@ -431,10 +444,39 @@
                         font-size 40px
 
                 .action-right
-                    margin-left 10px
-                    width 450px
+                    margin-left 40px
+                    .immerse-btn
+                        color rgba(255,255,255,.8)
+                        width 120px
+                        height 40px
+                        border-radius 20px
+                        border 3px solid rgba(255,255,255,.8)
+                        cursor pointer
+                        &.on
+                            p
+                                transform translateX(-25px)
+                            .circle
+                                transform translateX(80px)
+                        p
+                            width 80px
+                        &.on,&:hover
+                            color #fff
+                            border-color #fff
+                            .circle
+                                background #fff
+                        .circle
+                            color #000
+                            margin-left 2px
+                            width 30px
+                            height 30px
+                            border-radius 50%
+                            background rgba(255,255,255,.8)
+                            font-size 12px
+                            line-height 30px
+                            transition all .1s
 
-                    .link
+
+                    .download
                         color #fff
                         font-size 30px
 
@@ -502,7 +544,7 @@
             background-color: #000;
 
             img
-                filter blur(55px)
+                filter blur(155px)
                 width 100%
                 height 100%
 

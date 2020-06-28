@@ -61,6 +61,14 @@
                 }
             }
         },
+        mounted() {
+            if(this.lyrics.length) {
+                this.$nextTick(()=> {
+                    this.totalHeight = this.$refs.lyric.clientHeight
+                    this.eachHeight = this.totalHeight / this.lyrics.length
+                })
+            }
+        },
         watch: {
             lyrics(value) {
                 this.$nextTick(()=> {
@@ -69,14 +77,21 @@
                 })
 
             }
-        }
+        },
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" >
     .lyric
-
         overflow hidden
+        &.immerse
+            p
+                font-size 20px
+                color #fff
+                height 45px !important
+                line-height 45px !important
+                &.on
+                    color #e91e63 !important
         .lyric-inner
             transition transform .2s
             p

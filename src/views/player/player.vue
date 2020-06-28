@@ -114,7 +114,7 @@
                 <div class="action-right flex align-center">
                     <div class="immerse-btn flex align-center" @click="immerse = !immerse" :class="{on: immerse}">
                         <div class="circle" >
-                            off
+                            {{immerse?'on':'off'}}
                         </div>
                         <p>沉浸模式</p>
                     </div>

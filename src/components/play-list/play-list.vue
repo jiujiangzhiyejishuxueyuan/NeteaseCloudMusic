@@ -48,6 +48,7 @@
                 &:hover .btn-play
                     opacity 1
                 .img-box
+                    border-radius 10px
                     width 100%
 
                 .btn-play

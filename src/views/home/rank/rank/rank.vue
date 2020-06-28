@@ -11,13 +11,13 @@
                 </div>
             </div>
         </div>
-        <div class="rank-bg" v-if="list.length===3">
-            <div class="container">
+        <div class="rank-bg" >
+            <div class="container" v-if="list.length===3">
                 <div class="rank-items flex" v-if="list.length">
                     <div class="rank-item" v-for="(playlist,index) in list" :key="index" >
                         <div class="rank-item-header flex">
                             <div class="img-box">
-                                <img :src="playlist.coverImgUrl">
+                                <img :src="playlist.coverImgUrl + '?param=200y200'">
                             </div>
                             <div class="rank-item-info">
                                 <h2 class="title">{{playlist.name}}</h2>
@@ -47,10 +47,27 @@
                     </div>
                 </div>
             </div>
+            <ul class="home-rank-ske flex container" v-else>
+                <li class="ske-item" v-for="index in  3" :key="index">
+                    <div class="ske-item-header flex">
+                        <div class="ske-img"></div>
+                        <div class="info expend">
+                            <div class="title"></div>
+                            <div class="btn"></div>
+                        </div>
+                    </div>
+                    <ul class="inner">
+                        <li class="item" v-for="index in 10" :key="index">
+
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <div class="ske container" v-else>
-            <Spin></Spin>
-        </div>
+
+<!--        <div class="ske container" v-else>-->
+<!--            <Spin></Spin>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -84,13 +101,45 @@
 <style lang="stylus" rel="stylesheet/stylus">
     $red = #E60026
     .home-rank
+        .home-rank-ske
+            .ske-item
+                width 33%
+                .inner
+                    padding-right 50px
+                    .item
+                        animation ske .8s  linear infinite alternate
+                        margin 10px 0
+                        border-radius 15px
+                        height 40px
+                        width 100%
+
+                .ske-item-header
+                    .ske-img,.title,.btn
+                        animation ske .8s  linear infinite alternate
+                    padding 15px 0
+                    .ske-img
+                        height 180px
+                        width 180px
+                    .info
+                        margin-left 50px
+                        .title
+                            margin-top 20px
+                            width 150px
+                            height 35px
+                        .btn
+                            margin-left 10px
+                            margin-top 15px
+                            width 130px
+                            height 45px
+                            border-radius 25px
+
 
         img
             display block
             width 100%
             height 100%
         .rank-bg
-            background #f2f2f2
+            background #fff
         .btn-play-songlist
             width 140px
             height 40px
@@ -115,10 +164,10 @@
                 .title
                     margin-top 20px
                     font-size 26px
-
+                    @media screen and (max-width: 1200px)
+                        font-size 20px
             .img-box
-                width 200px
-                height 200px
+                width 40%
                 border-radius 10px
                 overflow hidden
         .rank-inner

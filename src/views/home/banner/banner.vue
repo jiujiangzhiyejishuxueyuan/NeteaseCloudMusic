@@ -49,4 +49,11 @@
 <style lang="stylus" rel="stylesheet/stylus">
 .swiper-container
     margin 20px 0
+    .swiper-slide
+        @media screen and (max-width: 1550px)
+            img
+                width 900px
+        @media screen and (max-width: 1200px)
+            img
+                width 800px
 </style>

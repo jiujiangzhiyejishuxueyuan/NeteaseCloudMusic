@@ -26,13 +26,10 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
     $h = rgba(0,0,0,.05)
-    @keyframes myfirst
-        0%   {background: rgba(0,0,0,.06);}
-        25%  {background: rgba(0,0,0,.08);}
-        100% {background: rgba(0,0,0,.12);}
+
     #ske.container
         .title,.info,.inner
-            animation myfirst .8s  linear infinite alternate
+            animation ske .8s  linear infinite alternate
         .ske-header
             height 60px
             .title

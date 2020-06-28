@@ -50,7 +50,7 @@
                 </ul>
             </div>
         </div>
-        <ske :row="1" v-else/>
+        <ske :row="playlists.length > 6 ? 2 : 1" v-else/>
     </div>
 </template>
 

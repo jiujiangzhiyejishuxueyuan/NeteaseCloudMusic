@@ -88,7 +88,7 @@ export default {
         background #E91E63
 
         a
-      color #fff
+          color #fff
 
   .ivu-page-item-active
     background #E91E63

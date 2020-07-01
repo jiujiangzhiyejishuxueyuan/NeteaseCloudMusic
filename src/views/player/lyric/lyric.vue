@@ -87,16 +87,14 @@
         &.immerse
             p
                 font-size 20px
-                color #fff
                 height 45px !important
                 line-height 45px !important
-                &.on
-                    color #e91e63 !important
         .lyric-inner
             transition transform .2s
             p
+                color #fff
                 height 30px
                 line-height 30px
                 &.on
-                    color #fff
+                    color #00a1d6
 </style>

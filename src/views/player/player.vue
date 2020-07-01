@@ -425,6 +425,7 @@
             padding 0 100px
 
             .song-info
+
                 margin-bottom 10px
 
                 .song-mate, a
@@ -598,6 +599,7 @@
                         height 200px
 
                 .song-info
+                    color #fff
                     margin 20px 0
 
                     p

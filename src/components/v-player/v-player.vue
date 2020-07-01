@@ -1,41 +1,48 @@
 <template>
     <div class="v-player" @click="isplay=!isplay">
-        <video
-                :src="url"
-                ref="video"
-                @timeupdate="playing"
-                @ended="isplay=false"
-                autoplay
-                @play="isplay=true"
-        />
-        <div class="play" v-show="!isplay"><Icon type="md-play" /></div>
-        <div class="footer" @click.stop>
-            <Slider
-                    v-model="currentTime"
-                    show-tip="never"
-                    :max="parseInt(video.duration)"
-                    :step="1"
-                    @on-change="change"
-            ></Slider>
-            <div class="control flex justify-between align-center">
-                <div class="time">
-                    {{parseInt(this.currentTime||0) | sminute}} / {{parseInt(this.video.duration||0) | sminute}}
-                </div>
-                <div class="right">
-                    <div class="control flex">
-                        <Icon type="md-volume-up" @click="video.muted=true" v-if="!video.muted"/>
-                        <Icon type="md-volume-mute" @click="video.muted=false" v-else/>
+        <div class="inner flex align-center" :class="{lucency: !ready}" ref="videobox">
+            <video
+                    :src="url"
+                    ref="video"
+                    @timeupdate="playing"
+                    @ended="isplay=false"
+                    autoplay
+                    @play="readyPlay"
+                    :class="{full: fullScreen}"
+            />
+            <div class="play" v-show="!isplay">
+                <Icon type="md-play"/>
+            </div>
+            <div class="footer" @click.stop>
+                <Slider
+                        v-model="currentTime"
+                        show-tip="never"
+                        :max="parseInt(video.duration)"
+                        :step="1"
+                        @on-change="change"
+                ></Slider>
+                <div class="control flex justify-between align-center">
+                    <div class="time">
+                        {{parseInt(this.currentTime||0) | sminute}} / {{parseInt(this.video.duration||0) | sminute}}
+                    </div>
+                    <div class="right">
+                        <div class="control flex">
+                            <Icon type="md-volume-up" @click="video.muted=true" v-if="!video.muted" title="静音"/>
+                            <Icon type="md-volume-mute" @click="video.muted=false" v-else title="取消静音"/>
+                            <Icon type="md-qr-scanner" @click="fullScreen = !fullScreen"
+                                  :title="fullScreen?'退出全屏':'全屏'"/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="bottom">
-            <Slider
-                    v-model="currentTime"
-                    show-tip="never"
-                    :max="parseInt(video.duration)"
-                    :step="1"
-            ></Slider>
+            <div class="bottom">
+                <Slider
+                        v-model="currentTime"
+                        show-tip="never"
+                        :max="parseInt(video.duration)"
+                        :step="1"
+                ></Slider>
+            </div>
         </div>
     </div>
 </template>
@@ -49,10 +56,17 @@
             return {
                 video: '',
                 isplay: false,
-                currentTime: 0
+                currentTime: 0,
+                ready: false,
+                fullScreen: false
             }
         },
         methods: {
+            readyPlay() {
+                this.isplay = true
+                this.ready = true
+                this.$emit('ready')
+            },
             playing() {
                 this.currentTime = this.video.currentTime
             },
@@ -63,16 +77,29 @@
         },
         watch: {
             isplay(value) {
-                if(value) {
+                if (value) {
                     this.video.play()
                 } else {
                     this.video.pause()
                 }
+            },
+            fullScreen(value) {
+
+                if (value) {
+                    this.$refs.videobox.webkitRequestFullScreen()
+                } else {
+                    document.webkitCancelFullScreen()
+                }
             }
         },
         mounted() {
-           this.video = this.$refs.video
-
+            this.video = this.$refs.video
+            window.addEventListener("keydown", ev => {
+                if (ev.keyCode === 32) {
+                    this.isplay = !this.isplay
+                    ev.preventDefault()
+                }
+            })
         }
     }
 </script>
@@ -82,13 +109,27 @@
         position relative
         height 100%
         width 100%
-        background #000
         cursor pointer
+
+        .inner
+            max-height 590px
+
+            &.lucency
+                opacity 0
+
+        .v-player-ske
+            animation ske .8s linear infinite alternate
+            height 590px
+            background rgba(0, 0, 0, .5)
+            width 100%
+
         &:hover
             .bottom
                 display none
+
             .footer
                 opacity 1
+
         .play
             cursor pointer
             position absolute
@@ -132,6 +173,10 @@
                     cursor pointer
                     color #fff
                     font-size 30px
+                    margin-right 10px
+
+                    &:hover
+                        color #00a1d6
             .time
                 font-size 12px
                 margin-left 20px
@@ -155,6 +200,18 @@
             display block
             margin 0 auto
             cursor pointer
-            max-height 100%
-            max-width 100%
+            min-height 580px
+            max-height 590px
+            width 1050px
+            @media screen and (max-width: 1550px)
+                max-width 850px
+                height 480px
+            @media screen and (max-width: 1200px)
+                max-width 710px
+                height 400px
+
+            &.full
+                max-height inherit
+                width 100vw
+                height 100vh
 </style>

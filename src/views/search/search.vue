@@ -27,14 +27,18 @@
             <lyric-list :songs="result.songs" v-else-if="$route.query.type==='1006'&&result.songs"/>
             <dj-list :djs="result.djRadios" v-else-if="$route.query.type==='1009'&&result.djRadios"/>
             <video-list :videos="result.videos" v-else-if="$route.query.type==='1014'&&result.videos"/>
-            <div class="ske container " v-else>
+            <div class="ske container " v-else-if="result!==0">
                 <Spin></Spin>
+            </div>
+            <div class="not-found" v-else>
+                未找到与"{{keywords}}"相关的资源
             </div>
             <page
                     :total="count"
                     :page-size="limit"
                     :current="parseInt($route.query.page)||1"
                     @on-change="(page)=>$router.replace(`${$route.path}?keywords=${$route.query.keywords}&type=${$route.query.type||1}&page=${page}`)"
+                    v-if="count"
             />
         </div>
     </div>
@@ -153,21 +157,20 @@
                         c = 'videoCount'
 
                 }
-                console.log(keywords, type, page)
                 search(keywords, type, this.limit, (page - 1) * this.limit).then(res => {
-                    this.result = res.result
-                    console.log(this.result)
+                    this.result = JSON.stringify(res.result) !== '{}' ? res.result : 0
                     this.count = this.result[c]
                 })
             }
         },
         created() {
             console.log(this.$route.query.keywords)
-            if(!this.$route.query.keywords) {
-
+            if (!this.$route.query.keywords) {
                 this.$router.replace('/music')
+            } else {
+                this.search()
             }
-            this.search()
+
         },
         watch: {
             $route() {
@@ -180,6 +183,9 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     $red = #e91e63
     #search
+        .not-found
+            padding 150px 0
+
         .bg
             position absolute
             top 0
@@ -218,7 +224,7 @@
 
         .search-result-content
             background #fff
-            padding 40px 50px
+            padding 40px 15px
             box-shadow 0 0 80px 0 rgba(50, 50, 50, .15)
             @media screen and (max-width: 1200px)
                 padding 40px 20px

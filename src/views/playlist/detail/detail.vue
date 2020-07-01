@@ -27,11 +27,11 @@
                         <span>标签:</span>
                         <router-link :to="`/music/playlist?cat=${tag}`" v-for="(tag,index) in songlist.tags" :key="index">{{tag}}</router-link>
                     </div>
-                    <div class="brief ellipse" v-if="songlist.description">
+                    <div class="brief ellipse" v-if="songlist.description" :title="songlist.description">
                         <span>简介:</span>
                         {{songlist.description}}
                     </div>
-                    <playlist-control />
+                    <playlist-control :commentObj="$refs.comment" :id="songlist.id"/>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                 :current="parseInt($route.query.page)||1"
                 v-if="songlist.trackCount>20"
         />
-        <div class="playlist-comments container">
+        <div class="playlist-comments container" v-if="songlist">
             <div class="comment-count">
                 {{comment&&comment.total}} 评论
             </div>
@@ -68,9 +68,10 @@
                    v-if="comment&&comment.hotcomment">最热评论</a>
                 <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
             </div>
-            <comment-edit/>
-            <comment-list :comments="hotComments ? comment.hotComments : comment.comments" v-if="comment.total>0"/>
-            <div class="no-comments">
+            <comment-edit :id="songlist.id.toString()" type="2" class="input"/>
+            <comment-list :id="songlist.id.toString()" type="2"
+                          :comments="hotComments ? comment.hotComments : comment.comments" v-if="comment.total>0"/>
+            <div class="no-comments" v-else>
                 暂无评论
             </div>
             <Page
@@ -101,7 +102,7 @@
         },
         data() {
             return {
-                songlist: {},
+                songlist: '',
                 songs: [],
                 hotComments: true,
                 comment: '',
@@ -109,12 +110,15 @@
             }
         },
         methods: {
+            scrollToComment() {
+                window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
+            },
             nextComment(page) {
                 let id = this.$route.params.id || this.$route.query.id
                 let offset = this.commentLimit * (page - 1)
                 reqPlaylistComments(id, this.commentLimit, offset).then(res => {
                     this.comment = res
-                    window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
+                    this.scrollToComment()
                 })
             },
             render() {
@@ -169,7 +173,6 @@
         .playlist-comments
             text-align left
             margin-top 50px
-
             .no-comments
                 padding 20px 0 40px
                 text-align center
@@ -177,22 +180,6 @@
 
             .comment-edit
                 margin-bottom 50px
-
-            .comment-header
-                border-bottom 1px solid #e5e9f0
-                margin-bottom 20px
-
-                .sort
-                    display block
-                    padding 10px 0
-                    margin-right 20px
-
-                    &:hover
-                        color $blue
-
-                    &.active
-                        color $blue
-                        border-bottom 1px solid $blue
 
             .comment-count
                 font-size 18px
@@ -210,6 +197,9 @@
             position relative
             padding 80px 0
 
+            .img-box > img
+                cursor auto
+
             .content
                 text-align left
                 margin-left 50px
@@ -218,6 +208,7 @@
 
                 .playlist-control
                     margin-top 15px
+
                     .button
                         margin-right 20px
                     .play-all

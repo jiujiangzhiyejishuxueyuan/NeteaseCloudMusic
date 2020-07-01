@@ -131,6 +131,11 @@ export default new VueRouter({
             ]
         },
         {
+            name: 'mv-player',
+            path: '/mv/:id',
+            component: () => import('@/views/mv/mv-player/mv-player')
+        },
+        {
             name: 'videoPlayer',
             path: '/video/:id',
             component: () => import('@/views/video-player/video-player')

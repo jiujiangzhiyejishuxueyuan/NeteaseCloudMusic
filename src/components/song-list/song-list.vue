@@ -89,15 +89,18 @@
                 default: () => [
                     {
                         icon: 'ios-play',
-                        event: 'onplay'
+                        event: 'onplay',
+                        title: '播放'
                     },
                     {
                         icon: 'md-heart-outline',
-                        event: 'onlove'
+                        event: 'onlove',
+                        title: '喜欢'
                     },
                     {
                         icon: 'ios-add',
-                        event: 'onadd'
+                        event: 'onadd',
+                        title: '添加到'
                     }
                 ]
             }

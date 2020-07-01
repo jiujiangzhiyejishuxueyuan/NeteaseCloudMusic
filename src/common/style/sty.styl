@@ -35,7 +35,7 @@ html,body
   margin 0
   padding 0
 h1
-  font-size: 40px;
+  font-size 30px
 h2,h3,h4
   font-weight normal
   font-size 20px
@@ -100,14 +100,16 @@ i
   border-radius 18px
   border 1px #666 solid
   text-align center
+
   &.active
     background $red
     color #fff
     border-color $red !important
-    &:hover
-      background #EB3370
-      border-color #EB3370
-      color #fff !important
+
+  &:hover
+    background #EB3370
+    border-color #EB3370
+    color #fff !important
 .img
   img
     width 100%
@@ -123,6 +125,7 @@ i
   z-index -1
   img
     width 100%
+    height 100%
     filter blur(30px)
 .bb
   border-bottom 3px solid $blue

@@ -9,31 +9,23 @@
                     <span class="comment-count">评论数:{{comments.total}}</span>
                 </p>
             </div>
-            <div class="user flex" v-if="video.creator">
-                <div class="img-box" @click="$router.push(`/user/home?id=${video.creator.userId}`)">
-                    <img :src="video.creator.avatarUrl" title="查看主页">
-                </div>
-                <div class="info">
-                    <a class="name" @click="$router.push(`/user/home?id=${video.creator.userId}`)">{{video.creator.nickname}}</a>
-                    <div @click="follow(video.creator.userId,1)" class="btn-follow" v-if="!video.creator.followed"><Icon type="md-add" />关注</div>
-                    <div @click="follow(video.creator.userId,0)" class="btn-follow disabled" v-else>
-                        <span class="h">已关注</span><span class="hf">取消关注</span>
-                    </div>
-                </div>
-            </div>
+            <user-card :id="video.creator.userId" v-if="video.creator"/>
         </div>
         <div class="video-player-inner container flex">
             <div class="left">
-                <div class="player">
-                    <v-player :url="url" v-if="url"/>
+                <div class="player" :class="{'player-ske':!vReady}">
+                    <div class="background-blur">
+                        <img :src="video.coverUrl" alt="">
+                    </div>
+                    <v-player :url="url" v-if="url" @ready="vReady = true"/>
                 </div>
                 <div class="control flex">
                     <div class="praised" :class="{active:liked}" @click="giveLike">
-                        <Icon type="md-thumbs-up" />
+                        <Icon type="md-thumbs-up"/>
                         {{video.praisedCount | playCount}}
                     </div>
                     <div class="subscribe" @click="subVideo">
-                        <Icon type="md-star" />
+                        <Icon type="md-star"/>
                         {{video.subscribeCount | playCount}}
                     </div>
                     <div class="share">
@@ -44,7 +36,7 @@
                 <div class="description">
                     {{video.description || '暂无简介'}}
                 </div>
-                <div class="tags flex bb">
+                <div class="tags flex bb flex-wrap">
                     <a class="tag" v-for="(tag,index) in video.videoGroup" :title="tag.name" :key="index">
                         {{tag.name}}
                     </a>
@@ -57,83 +49,65 @@
                         <a class="sort" :class="{active:hotComments}" @click="hotComments = true">最热评论</a>
                         <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
                     </div>
-                    <div class="input">
-                        <comment-edit @submit="editSubmit"/>
-                    </div>
+                    <comment-edit :id="video.vid" type="5" class="input"/>
                     <comment-list
                             :comments="commentsList"
                             :id="video.vid"
                             type="5"
                             v-if="commentsList.length"
                     />
+                    <div class="no-comment" v-else>
+                        暂无更多评论
+                    </div>
                     <Page
                             :total="comments.total"
-                            :page-size="commentsList.length"
+                            :page-size="20"
                             v-if="comments.total>20"
                             @on-change="pageTurning"
                     />
                 </div>
             </div>
-            <div class="related-box">
-                <p class="tip">相关推荐</p>
-                <ul class="related-list">
-                    <li class="related-item flex img-scale-hover" v-for="(item,index) in relatedVideos" :key="index">
-                        <div class="img-box img-scale " :title="item.title" @click="$router.push(`/video/${item.vid}`)">
-                            <img :src="item.coverUrl" alt="">
-                        </div>
-                        <div class="info">
-                            <p class="title ellipse" :title="item.title"  @click="$router.push(`/video/${item.vid}`)">{{item.title}}</p>
-                            <div class="name">
-                                <a class="text-hv" v-for="(art,index) in item.creator" :key="index"> {{art.userName}}</a>
-                                <span v-if="index+1<item.creator.length">/</span>
-                            </div>
-                            <p class="play-count">播放次数:{{item.playTime |playCount}}</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <video-related :videos="relatedVideos"/>
         </div>
     </div>
 </template>
 
 <script>
     import {
-        follow,
         reqHotComments,
         reqRelatedVideo,
         reqVideoComments,
         reqVideoDetail,
         reqVideoInfo,
         reqVideoUrl,
-        ResourceLike, submitComment,
+        resourceLike,
         subVideo
     } from "@/api";
     import VPlayer from "@/components/v-player/v-player";
     import {mapState} from 'vuex'
     import CommentList from "@/components/comment-list/comment-list";
     import CommentEdit from "@/components/comment-edit/comment-edit";
+    import UserCard from "@/components/user-card/user-card";
+    import VideoRelated from "@/components/video-related/video-related";
+
     export default {
-        components: {CommentEdit, CommentList, VPlayer},
+        components: {VideoRelated, UserCard, CommentEdit, CommentList, VPlayer},
         data() {
             return {
                 video: {},
                 url: '',
-                relatedVideos:[],
+                relatedVideos: [],
                 liked: false,
                 comments: {},
                 commentsList: [],
                 id: '',
                 hotComments: true,
+                vReady: false
             }
         },
         inject: ['reload'],
         methods: {
-            editSubmit(value) {
-                submitComment(this.id,5,value,1).then(res => {
-                    this.commentsList.unshift(res.comment)
-                    this.$Message.success('发送评论成功')
-                })
-            },
+            //评论翻页
             pageTurning(page) {
                 let limit = 20
                 let offset = (page-1) * limit
@@ -141,32 +115,44 @@
                     reqVideoComments(this.id,limit,offset).then(res => {
                         this.comments = res
                         this.commentsList = res.comments
+                        window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
                     })
                 } else {
                     reqHotComments(this.id,5,limit,offset).then(res => {
                         this.comments = res
                         this.commentsList = res.hotComments
+                        window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
                     })
                 }
-                window.scrollTo(0,(this.$refs.comment.getBoundingClientRect().top + window.scrollY))
+
             },
+            //点赞视频
             giveLike() {
-                if(!this.liked) {
-                    ResourceLike(this.id,5,1).then(res => {
-                        if(res.code==200) {
+                if (!this.liked) {
+                    resourceLike(this.id, 5, 1).then(res => {
+                        if (res.code === 200) {
                             this.liked = true
                             this.video.praisedCount++
+                        } else {
+                            this.$Message.info('操作失败')
                         }
+                    }).catch(() => {
+                        this.$Message.info('操作失败')
                     })
                 } else {
-                    ResourceLike(this.id,5,0).then(res=> {
-                        if(res.code==200) {
+                    resourceLike(this.id, 5, 0).then(res => {
+                        if (res.code === 200) {
                             this.liked = false
                             this.video.praisedCount--
+                        } else {
+                            this.$Message.info('操作失败')
                         }
+                    }).catch(() => {
+                        this.$Message.info('操作失败')
                     })
                 }
             },
+            //收藏视频
             subVideo() {
                 subVideo(this.id,1).then(res => {
                     if(res.code==200) {
@@ -180,16 +166,7 @@
                     })
                 })
             },
-            follow(id,t) {
-                if(t) {
-                    this.$Message.success('关注成功')
-                    this.video.creator.followed = true
-                } else {
-                    this.$Message.success('取消关注成功')
-                    this.video.creator.followed = false
-                }
-                follow(id,t)
-            }
+
         },
         created() {
             this.id = this.$route.params.id
@@ -204,6 +181,9 @@
                 this.relatedVideos = res.data
                 reqRelatedVideo(res.data[0].vid).then(res => {
                     this.relatedVideos = this.relatedVideos.concat(res.data)
+                    reqRelatedVideo(res.data[0].vid).then(res => {
+                        this.relatedVideos = [...this.relatedVideos, ...res.data]
+                    })
                 })
             })
             reqVideoInfo(id).then(res => {
@@ -245,20 +225,41 @@
     .video-player
         margin-top 20px
         text-align left
+
+        #video-related
+            margin-left 10px
+
+        .background-blur
+            opacity 1
+
+            img
+                filter blur(0)
+
         .bb
             border-bottom 1px solid #e5e9f0
+
         .left
             color #222
+            width 1050px
+
             a:hover
                 color $blue
+            @media screen and (max-width: 1500px)
+                max-width 850px
+            @media screen and (max-width: 1200px)
+                max-width 740px
+
             .control
                 padding 10px 0
                 border-bottom 1px solid #e5e9f0
+
                 div
                     cursor pointer
                     padding-right 30px
-                    &:hover,&.active
+
+                    &:hover, &.active
                         color $blue
+
                         i
                             color $blue
                 i
@@ -293,88 +294,48 @@
                         display block
                         padding 10px 0
                         margin-right 20px
+
                         &.active
                             color $blue
                             border-bottom 1px solid $blue
+
                 .input
 
                     padding-bottom 30px
                     margin-bottom 20px
                     border-bottom 1px solid #e5e9f0
+
+                .no-comment
+                    text-align center
+                    padding 50px 0
+
         .video-player-header
-            .time,.count
+            .user-card
+                margin-right 14%
+
+            .time, .count
                 margin-top 10px
                 color #999
+
             .count
                 margin-bottom 15px
+
             .play-count
                 margin-right 20px
+
             .title
                 font-size 18px
-            .user
-                margin-right 190px
-                .img-box
-                    width 50px
-                    height 50px
-                    border-radius 50%
-                    overflow hidden
-                    margin-right 10px
-                .btn-follow
-                    cursor pointer
-                    color #fff
-                    text-align center
-                    padding 3px 10px
-                    width 80px
-                    background #00a1d6
-                    .hf
-                        display none
-                    &:hover
-                        background $blueh
-                    &.disabled
-                        background #999999
-                        &:hover
-                            .h
-                                display none
-                            .hf
-                                display inline
-        .video-player-inner
-            min-width 1200px
+
 
         .player
-            width 1050px
+            width 100%
             max-height 590px
+            position relative
 
-        .related-box
-            margin-left 20px
-            width 350px
-            .tip
-                margin 15px 0
-                font-size 18px
-            .related-list
-                .related-item
-                    font-size 14px
-                    margin-bottom 10px
-                .img-box
-                    width 150px
-                    height 80px
-                .info
-                    margin-left 5px
-                    width 180px
-                    .name,.play-count
-                        font-size 12px
-                        color #999999
-                    .title
-                        cursor pointer
-                        margin-bottom 5px
-                        height 36px
-                        line-height 18px
-                        font-weight 500
-                        white-space normal
-                        word-break break-all
-                        -webkit-line-clamp: 2;
-                        -webkit-box-orient: vertical;
-                        display -webkit-box
+            &.player-ske
+                animation ske .8s linear infinite alternate
+                background rgba(0, 0, 0, .05)
+                height 580px
 
-        .wo
-            color #ffffff
+
 </style>

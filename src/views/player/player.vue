@@ -192,15 +192,18 @@
                 btns:[
                     {
                         icon: "ios-trash-outline",
-                        event: 'ondelete'
+                        event: 'ondelete',
+                        title: '从播放列表中删除'
                     },
                     {
                         icon: 'md-heart-outline',
-                        event: 'onlove'
+                        event: 'onlove',
+                        title: '喜欢'
                     },
                     {
                         icon: 'ios-add',
-                        event: 'onadd'
+                        event: 'onadd',
+                        title: '添加到'
                     }
                 ],
                 checked:[],
@@ -220,6 +223,7 @@
             batchDelete() {
                 console.log('11')
             },
+            //上一曲
             previous() {
                 let index = this.ids.indexOf(this.song.id)
                 index = index ? index-1 : this.ids.length-1
@@ -356,6 +360,11 @@
                 //console.log('初始化切歌')
                 this.changeMusic(this.ids[0])
             }
+            window.addEventListener("keydown", ev => {
+                if (ev.keyCode === 32) {
+                    this.isplay = !this.isplay
+                }
+            })
         },
         watch: {
             immerse(value) {

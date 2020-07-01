@@ -1,5 +1,5 @@
 <template>
-    <div class="playlist-inner">
+    <div id="playlist-list">
         <ul class="flex flex-wrap">
             <li v-for="(playlist,index) in playlists" :key="index">
                 <div class="content img-scale-hover" :title="playlist.name">
@@ -36,9 +36,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
-
-    .playlist-inner
+    #playlist-list
         margin-bottom 40px
         ul li
             width 20%
@@ -47,10 +45,18 @@
                 padding 0 14px
                 &:hover .btn-play
                     opacity 1
+
+
                 .img-box
                     border-radius 10px
                     width 100%
-
+                    height 252px
+                    @media screen and (max-width: 1200px)
+                        width 172px !important
+                        height 172px !important
+                    @media screen and (max-width: 1500px)
+                        width 212px
+                        height 212px
                 .btn-play
                     z-index 20
                     transition all .4s

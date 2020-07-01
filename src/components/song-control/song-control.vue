@@ -1,8 +1,8 @@
 <template>
     <div class="song-control flex align-center justify-end" :class="{active: showAdd}" >
         <span class="item" @click="click(item.event,id)" v-for="(item,index) in btns" :key="index">
-            <Icon type="md-heart" v-if="item.event==='onlove'&&like"/>
-            <Icon :type="item.icon"  v-else/>
+            <Icon type="md-heart" v-if="item.event==='onlove'&&like" title="取消喜欢"/>
+            <Icon :type="item.icon" v-else :title="item.title"/>
         </span>
         <add-song-plsylist v-if="showAdd" @close="addClose" :id="id" />
     </div>
@@ -21,15 +21,18 @@
                 default: () => [
                     {
                         icon: 'ios-play',
-                        event: 'onplay'
+                        event: 'onplay',
+                        title: '播放'
                     },
                     {
                         icon: 'md-heart-outline',
-                        event: 'onlove'
+                        event: 'onlove',
+                        title: '喜欢'
                     },
                     {
                         icon: 'ios-add',
-                        event: 'onadd'
+                        event: 'onadd',
+                        title: '添加到'
                     }
                 ]
             }

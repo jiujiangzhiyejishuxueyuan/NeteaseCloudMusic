@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <banner v-if="banners.length" :banners="banners"/>
+        <banner :banners="banners" v-if="banners.length"/>
         <banner-ske v-else/>
         <recommend-hot :list="hotList" title="热门推荐" v-if="hotList.length"/>
         <ske :row="2" v-else/>

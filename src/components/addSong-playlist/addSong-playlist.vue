@@ -62,9 +62,9 @@
             cursor pointer
             text-align center
             padding 5px 0
+            color #999999
             &:hover
                 color #fff
                 background #E91E63
-    .wocao
-        color #999999
+
 </style>

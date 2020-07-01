@@ -33,17 +33,27 @@
             </div>
             <div class="header-right flex justify-end align-center">
                 <div class="header-right-container flex">
-<!--                    搜索-->
-                    <div class="search flex align-center"  v-if="$route.path!='/music/search'">
-                        <input type="text" @keydown.enter="$router.push(`/music/search?keywords=${keywords}&type=1`)" id="search_ipt" placeholder="搜索歌曲、歌手、MV" v-model="keywords">
-                        <div class="btn-search" @click="$router.push(`/music/search?keywords=${keywords}&type=1`)">
-                            <Icon type="ios-search" />
+                    <!--                    搜索-->
+                    <div class="search flex align-center" v-if="$route.path!='/music/search'">
+                        <input
+                                type="text"
+                                @keydown.enter="search"
+                                id="search_ipt"
+                                placeholder="搜索歌曲、歌手、MV"
+                                v-model="keywords"
+                                @focus="searchTipShow = true"
+                                @focusout="searchTipShow = false"
+                        >
+                        <div @click="search" class="btn-search">
+                            <Icon type="ios-search"/>
                         </div>
+                        <search-tip :keywords="keywords" v-if="searchTipShow"/>
                     </div>
-<!--                    用户信息-->
+                    <!--                    用户信息-->
                     <div class="user">
                         <div class="h-avatar img">
-                            <img :src="userInfo.avatarUrl+'?param=80y80'" v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页">
+                            <img :src="userInfo.avatarUrl+'?param=80y80'"
+                                 v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页">
                             <img src="../../static/imgs/no-login.png" alt="" v-else>
                         </div>
                         <div class="info-box">
@@ -87,28 +97,31 @@
 
 <script>
     import login from "@/components/login/login";
-    import {logout, reqLoginState, reqUserInfo} from "@/api";
+    import searchTip from '@/components/search-tip/search-tip'
+    import {logout, reqLoginState, reqUserInfo, searchDefault} from "@/api";
+
     export default {
         components: {
-            login
+            login,
+            searchTip
         },
-        inject:['reload'],
+        inject: ['reload'],
         data() {
             return {
-                navList:[
+                navList: [
                     {
                         text: '发现音乐',
                         link: '/music',
-                        chilren:[
+                        chilren: [
                             {
-                                link:'/playlist',
-                                text:'歌单',
-                                icon:'ios-musical-note-outline'
+                                link: '/playlist',
+                                text: '歌单',
+                                icon: 'ios-musical-note-outline'
                             },
                             {
-                                link:'/toplist',
-                                text:'排行榜',
-                                icon:'md-list'
+                                link: '/toplist',
+                                text: '排行榜',
+                                icon: 'md-list'
                             },
                             {
                                 link:'/artist',
@@ -131,32 +144,39 @@
                         link: '/friend'
                     }
                 ],
-                loginShow:false,
-                userInfo:'',
-                keywords: ''
+                loginShow: false,
+                userInfo: '',
+                keywords: '',
+                searchTipShow: false
             }
         },
-        methods:{
+        methods: {
             logout() {
                 logout().then(() => {
                     this.userInfo = ''
                     this.reload()
                 })
+            },
+            search() {
+                window.open(`/music/search?keywords=${this.keywords}&type=1`)
             }
         },
-        mounted() {
+        created() {
             reqLoginState().then(res => {
-                if(res.code==200) {
+                if (res.code == 200) {
                     reqUserInfo(res.profile.userId).then(res => {
                         this.userInfo = res.profile
                         this.userInfo.level = res.level
-                        this.$store.commit('receive_userinfo',this.userInfo)
+                        this.$store.commit('receive_userinfo', this.userInfo)
                     })
                 } else {
-                    this.$store.commit('receive_userinfo','')
+                    this.$store.commit('receive_userinfo', '')
                 }
             }).catch(error => {
                 error.toString()
+            })
+            searchDefault().then(res => {
+                this.keywords = res.data.showKeyword
             })
         }
     }

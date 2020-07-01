@@ -23,7 +23,13 @@
 
 <script>
     import {mapState} from 'vuex'
+    import {submitComment} from "@/api";
     export default {
+        props: {
+            id: String,
+            type: String,
+            reply: Boolean
+        },
         computed: {
             ...mapState(['userInfo'])
         },
@@ -34,7 +40,12 @@
         },
         methods: {
             submitComment() {
-                this.$emit('submit',this.value)
+                this.$emit('submit', this.value)
+                if (!this.reply) {
+                    submitComment(this.id, this.type, this.value, 1).then(res => {
+                        this.$Message.success('评论成功')
+                    })
+                }
                 this.value = ''
             }
         }
@@ -45,14 +56,22 @@
     $blue = #00a1d6
     $blueh = #00b5e5
     .comment-edit
+        &.input
+            padding-bottom 30px
+            margin-bottom 20px
+            border-bottom 1px solid #e5e9f0
+
         .user-face
             width 50px
             height 50px
             border-radius 50%
             overflow hidden
+
         .edit-inner
             margin-left 40px
-            width 100%
+            width 90%
+            padding-right 10px
+
         .comment-submit
             margin-left 10px
             width 70px

@@ -31,7 +31,9 @@
         width 16.6%
         padding 0 10px
         margin 5px 0
+
         .img-box
+            border-radius 10px
             cursor pointer
         .info
             padding 15px 5px

@@ -2,13 +2,20 @@
     <ul class="comment-list">
         <li class="comment-item  flex" v-for="(comment,index) in comments" :key="index">
             <div class="user-face img-box">
-                <img :src="comment.user.avatarUrl+'?param=50y50'" alt="" :title="comment.user.nickname">
+                <a :href="`/user/home?id=${comment.user.userId}`" target="_blank">
+                    <img :src="comment.user.avatarUrl+'?param=50y50'" alt="comment.user.nickname"
+                         :title="comment.user.nickname">
+                </a>
             </div>
             <div class="comment-inner bb">
-                <a class="user-name">{{comment.user.nickname}}</a>
+                <a :href="`/user/home?id=${comment.user.userId}`" target="_blank" class="user-name"
+                   :title="comment.user.nickname">{{comment.user.nickname}}</a>
                 <p class="text">{{comment.content}}</p>
                 <div class="reply" v-if="comment.beReplied && comment.beReplied.length">
-                    <a class="user-name">@{{comment.beReplied[0].user.nickname}}</a>:
+                    <router-link :to="`/user/home?id=${comment.beReplied[0].user.userId}`" class="user-name">
+                        @{{comment.beReplied[0].user.nickname}}
+                    </router-link>
+                    :
                     <span class="text">{{comment.beReplied[0].content}}</span>
                 </div>
                 <span class="time">{{comment.time | dataFormat}}</span>
@@ -19,7 +26,7 @@
                 </span>
                 <span class="send-btn" @click="sendCommentId = sendCommentId===comment.commentId ? '' :comment.commentId">回复</span>
                 <span class="comment-delete" v-if="comment.user.userId===userInfo.userId" @click="commentDelete(comment.commentId,index)">删除</span>
-                <comment-edit v-if="sendCommentId===comment.commentId" @submit="sendComment"/>
+                <comment-edit reply v-if="sendCommentId===comment.commentId" @submit="sendComment"/>
             </div>
         </li>
     </ul>
@@ -47,14 +54,14 @@
             giveLike(comment) {
                 if(!comment.liked) {
                     giveCommentLike(this.id,comment.commentId,this.type,1).then(res => {
-                        if(res.code==200) {
+                        if (res.code === 200) {
                             comment.liked = true
                             comment.likedCount++
                         }
                     })
                 } else {
                     giveCommentLike(this.id,comment.commentId,this.type,0).then(res => {
-                        if(res.code==200) {
+                        if (res.code === 200) {
                             comment.liked = false
                             comment.likedCount--
                         }
@@ -62,10 +69,12 @@
                 }
             },
             sendComment(value) {
-                submitComment(this.id,this.type,value,2,this.sendCommentId).then(res => {
-                    this.sendCommentId = ''
-                    this.comments.unshift(res.comment)
-                    this.$Message.success('发送评论成功')
+                submitComment(this.id, this.type, value, 2, this.sendCommentId).then(res => {
+                    if (res.code === 200) {
+                        this.$Message.success('发送评论成功')
+                    }
+                }).catch(() => {
+                    this.$Message.error('发送评论失败')
                 })
             },
             commentDelete(id,index) {
@@ -85,6 +94,7 @@
     $blue = #00a1d6
     $blueh = #00b5e5
     .comment-list
+        text-align left
         .comment-edit
             margin-top 20px
         .bb
@@ -97,8 +107,9 @@
                 height 50px
                 border-radius 50%
                 overflow hidden
+
             .comment-inner
-                width 975px
+                width 90%
                 margin 5px 0 20px 25px
                 padding-bottom 20px
                 .reply
@@ -108,15 +119,24 @@
                     background #F1F1F4
                     .user-name
                         color $blue
+
+                        &:hover
+                            color $blueh
                 p
                     margin-bottom 0
+
                 .user-name
                     font-size 12px
                     color #6d757a
                     font-weight 600
+
+                    &:hover
+                        color $blue
+
                 .text
-                    color rgba(0,0,0,.65)
-                    margin 5px 0
+                    color rgba(0, 0, 0, .65)
+                    margin 10px 0
+
                 .time
                     font-size 12px
                     color #99a2aa

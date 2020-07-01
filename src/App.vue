@@ -40,13 +40,16 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/style/sty.styl"
   @import "./common/style/media.styl"
-  .view-enter-active,.view-leave-active
+  .view-enter-active, .view-leave-active
     transition opacity .3s
-  .view-enter,.view-leave-to
+
+  .view-enter, .view-leave-to
     opacity 0
-  html,body
+
+  html, body
     padding 0
     margin 0
+
   #app
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -54,20 +57,43 @@ export default {
     text-align: center;
     color: #2c3e50;
     min-height 100vh
+
+  .comment-header
+    border-bottom 1px solid #e5e9f0
+    margin-bottom 20px
+
+    .sort
+      display block
+      padding 10px 0
+      margin-right 20px
+
+      &:hover
+        color $blue
+
+      &.active
+        color $blue
+        border-bottom 1px solid $blue
+
   .ivu-page
     margin-bottom 20px
-    .ivu-page-prev,.ivu-page-next
+
+    .ivu-page-prev, .ivu-page-next
       border none
+
     .ivu-page-item
       border none
       border-radius 50%
+
       &:hover
         background #E91E63
+
         a
-          color #fff
-    .ivu-page-item-active
-      background #E91E63
-      a
-        color #fff
+      color #fff
+
+  .ivu-page-item-active
+    background #E91E63
+
+    a
+      color #fff
 
 </style>

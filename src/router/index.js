@@ -35,7 +35,6 @@ export default new VueRouter({
             component: () => import('@/views/m/m'),
         },
         {
-            name: 'my',
             path: '/my/m',
             component: () => import('@/views/my-music/my-music'),
             children: [

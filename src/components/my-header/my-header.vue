@@ -2,10 +2,10 @@
     <header :class="{fixd:$route.meta.headerFixd}" >
         <div class="header flex container">
             <div class="logo" @click="$router.replace('/music')">
-                <h1 v-if="$route.path!='/music/search'">网易云音乐</h1>
+                <h1 v-if="$route.path!=='/music/search'">网易云音乐</h1>
             </div>
             <div class="header-left">
-                <div class="nav-container flex" v-if="$route.path!='/music/search'" >
+                <ul class="nav-container flex" v-if="$route.path!=='/music/search'">
                     <li
                             class="top-item"
                             :class="{active: $route.path.split('/')[1]=== item.link.replace('/','')}"
@@ -13,15 +13,15 @@
                             :key="index"
                     >
                         <router-link :to="item.link">{{item.text}}</router-link>
-                        <div class="header-channel music" v-if="index==0">
+                        <div class="header-channel music" v-if="item.chilren">
                             <ul class="flex">
                                 <li v-for="(navitem,index) in item.chilren" :key="index">
-                                    <router-link :to="item.link+navitem.link"
-                                       class="flex direction-column"
+                                    <router-link :to="navitem.link"
+                                                 class="flex direction-column"
                                     >
                                         <Icon
                                                 :type="navitem.icon"
-                                                :class="{active: $route.path.split('/')[2]=== navitem.link.replace('/','')}"
+                                                :class="{active: $route.path=== navitem.link}"
                                         />
                                         {{navitem.text}}
                                     </router-link>
@@ -29,12 +29,12 @@
                             </ul>
                         </div>
                     </li>
-                </div>
+                </ul>
             </div>
             <div class="header-right flex justify-end align-center">
                 <div class="header-right-container flex">
                     <!--                    搜索-->
-                    <div class="search flex align-center" v-if="$route.path!='/music/search'">
+                    <div class="search flex align-center" v-if="$route.path!=='/music/search'">
                         <input
                                 type="text"
                                 @keydown.enter="search"
@@ -53,7 +53,7 @@
                     <div class="user">
                         <div class="h-avatar img">
                             <img :src="userInfo.avatarUrl+'?param=80y80'"
-                                 v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页">
+                                 v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页" alt="我的主页">
                             <img src="../../static/imgs/no-login.png" alt="" v-else>
                         </div>
                         <div class="info-box">
@@ -114,30 +114,48 @@
                         link: '/music',
                         chilren: [
                             {
-                                link: '/playlist',
+                                link: '/music/playlist',
                                 text: '歌单',
                                 icon: 'ios-musical-note-outline'
                             },
                             {
-                                link: '/toplist',
+                                link: '/music/toplist',
                                 text: '排行榜',
                                 icon: 'md-list'
                             },
                             {
-                                link:'/artist',
-                                text:'歌手',
-                                icon:'md-person'
+                                link: '/music/artist',
+                                text: '歌手',
+                                icon: 'md-person'
                             },
                             {
-                                link:'/dj',
-                                text:'个人电台',
-                                icon:'ios-headset-outline'
+                                link: '/music/dj',
+                                text: '个人电台',
+                                icon: 'ios-headset-outline'
                             },
                         ]
                     },
                     {
                         text: '我的音乐',
                         link: '/my'
+                    },
+                    {
+                        text: '视频',
+                        link: '/video',
+                        chilren: [
+                            {
+                                link: '/video',
+                                text: '视频',
+                                icon: "logo-youtube"
+
+
+                            },
+                            {
+                                link: '/mv',
+                                text: 'Mv',
+                                icon: "ios-videocam"
+                            }
+                        ]
                     },
                     {
                         text: '朋友',
@@ -163,7 +181,7 @@
         },
         created() {
             reqLoginState().then(res => {
-                if (res.code == 200) {
+                if (res.code === 200) {
                     reqUserInfo(res.profile.userId).then(res => {
                         this.userInfo = res.profile
                         this.userInfo.level = res.level
@@ -290,7 +308,7 @@
                             line-height 70px
                             color #000
                         .btns
-                            padding 0px 50px
+                            padding 0 50px
                     .info-inner
                         .avatar
                             cursor pointer

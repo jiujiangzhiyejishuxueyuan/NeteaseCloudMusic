@@ -170,7 +170,7 @@ export default new VueRouter({
         },
         {
             name: '404',
-            path:'*',
+            path: '*',
             component: () => import('@/views/not-found/index')
         }
     ],

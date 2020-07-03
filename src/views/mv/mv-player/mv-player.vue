@@ -29,7 +29,7 @@
                         <Icon type="md-star"/>
                         {{mv.subCount | playCount}}
                     </div>
-                    <div class="share" @click="()=> {mv.shareCount++ ,$Message.success('分享成功!')}">
+                    <div class="share" @click="share">
                         <Icon type="ios-share-alt"/>
                         {{mv.shareCount | playCount}}
                     </div>
@@ -71,7 +71,7 @@
                         </span>
                     </div>
                     <div class="desc text-wrap">
-                        简介: {{mv.desc}}
+                        简介: {{mv.desc || '无'}}
                     </div>
                 </div>
                 <div class="title">相关推荐</div>
@@ -112,6 +112,10 @@
             }
         },
         methods: {
+            share() {
+                this.mv.shareCount++
+                this.$Message.success('分享成功!')
+            },
             nextComment(page) {
                 let offset = this.commentLimit * (page - 1)
                 reqMvComments(this.id, this.commentLimit, offset).then(res => {
@@ -300,5 +304,6 @@
                     color $blue
 
             .name
+                margin-left 10px
                 font-size 24px
 </style>

@@ -29,21 +29,22 @@
                         {{video.subscribeCount | playCount}}
                     </div>
                     <div class="share">
-                        <Icon type="ios-share-alt" />
+                        <Icon type="ios-share-alt"/>
                         {{video.shareCount | playCount}}
                     </div>
                 </div>
                 <div class="description">
                     {{video.description || '暂无简介'}}
                 </div>
-                <div class="tags flex bb flex-wrap">
-                    <a class="tag" v-for="(tag,index) in video.videoGroup" :title="tag.name" :key="index">
+                <div class="tags flex bb">
+                    <a :href="`/video?id=${tag.id}`" target="_blank" class="tag" v-for="(tag,index) in video.videoGroup"
+                       :title="tag.name" :key="index">
                         {{tag.name}}
                     </a>
                 </div>
                 <div class="comment">
                     <div class="comment-count">
-                        {{comments.total}}  评论
+                        {{comments.total}} 评论
                     </div>
                     <div class="comment-header bb flex" ref="comment">
                         <a class="sort" :class="{active:hotComments}" @click="hotComments = true">最热评论</a>
@@ -89,7 +90,6 @@
     import CommentEdit from "@/components/comment-edit/comment-edit";
     import UserCard from "@/components/user-card/user-card";
     import VideoRelated from "@/components/video-related/video-related";
-
     export default {
         components: {VideoRelated, UserCard, CommentEdit, CommentList, VPlayer},
         data() {
@@ -110,21 +110,19 @@
             //评论翻页
             pageTurning(page) {
                 let limit = 20
-                let offset = (page-1) * limit
-                if(!this.hotComments) {
-                    reqVideoComments(this.id,limit,offset).then(res => {
+                let offset = (page - 1) * limit
+                if (!this.hotComments) {
+                    reqVideoComments(this.id, limit, offset).then(res => {
                         this.comments = res
                         this.commentsList = res.comments
-                        window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
                     })
                 } else {
-                    reqHotComments(this.id,5,limit,offset).then(res => {
+                    reqHotComments(this.id, 5, limit, offset).then(res => {
                         this.comments = res
                         this.commentsList = res.hotComments
-                        window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
                     })
                 }
-
+                window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
             },
             //点赞视频
             giveLike() {
@@ -155,12 +153,12 @@
             //收藏视频
             subVideo() {
                 subVideo(this.id,1).then(res => {
-                    if(res.code==200) {
+                    if (res.code === 200) {
                         this.$Message.success('收藏成功')
                     }
                 }).catch(()=> {
                     subVideo(this.id,0).then(res => {
-                        if(res.code==200) {
+                        if (res.code === 200) {
                             this.$Message.success('取消收藏成功')
                         }
                     })
@@ -225,41 +223,33 @@
     .video-player
         margin-top 20px
         text-align left
-
         #video-related
             margin-left 10px
 
         .background-blur
             opacity 1
-
             img
-                filter blur(0)
-
+                filter blur(10px)
         .bb
             border-bottom 1px solid #e5e9f0
-
         .left
             color #222
             width 1050px
-
             a:hover
                 color $blue
             @media screen and (max-width: 1500px)
                 max-width 850px
             @media screen and (max-width: 1200px)
                 max-width 740px
-
             .control
                 padding 10px 0
                 border-bottom 1px solid #e5e9f0
-
                 div
                     cursor pointer
                     padding-right 30px
 
                     &:hover, &.active
                         color $blue
-
                         i
                             color $blue
                 i
@@ -286,47 +276,35 @@
                         border-color $blue
             .comment
                 .comment-count
-                    margin-bottom 20px
-                    font-size 18px
+                    margin-bottom 20
                 .comment-header
                     margin-bottom 20px
                     .sort
                         display block
                         padding 10px 0
                         margin-right 20px
-
                         &.active
                             color $blue
                             border-bottom 1px solid $blue
-
                 .input
-
                     padding-bottom 30px
                     margin-bottom 20px
                     border-bottom 1px solid #e5e9f0
-
                 .no-comment
                     text-align center
                     padding 50px 0
-
         .video-player-header
             .user-card
                 margin-right 14%
-
             .time, .count
                 margin-top 10px
                 color #999
-
             .count
                 margin-bottom 15px
-
             .play-count
                 margin-right 20px
-
             .title
                 font-size 18px
-
-
         .player
             width 100%
             max-height 590px
@@ -336,6 +314,5 @@
                 animation ske .8s linear infinite alternate
                 background rgba(0, 0, 0, .05)
                 height 580px
-
 
 </style>

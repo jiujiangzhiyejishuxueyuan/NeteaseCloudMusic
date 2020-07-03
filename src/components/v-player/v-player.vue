@@ -13,7 +13,7 @@
             <div class="play" v-show="!isplay">
                 <Icon type="md-play"/>
             </div>
-            <div class="footer" @click.stop>
+            <div class="footer" @click.stop v-show="footShow">
                 <Slider
                         v-model="currentTime"
                         show-tip="never"
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bottom">
+            <div class="bottom" :class="{full: !footShow}">
                 <Slider
                         v-model="currentTime"
                         show-tip="never"
@@ -58,7 +58,9 @@
                 isplay: false,
                 currentTime: 0,
                 ready: false,
-                fullScreen: false
+                fullScreen: false,
+                footShow: true,
+                set: ''
             }
         },
         methods: {
@@ -84,10 +86,19 @@
                 }
             },
             fullScreen(value) {
-
                 if (value) {
+                    this.$refs.video.onmousemove = () => {
+                        clearTimeout(this.set)
+                        this.set = setTimeout(() => {
+                            this.footShow = false
+                        }, 3000)
+                        this.footShow = true
+                    }
                     this.$refs.videobox.webkitRequestFullScreen()
                 } else {
+                    this.$refs.video.onmousemove = null
+                    this.footShow = true
+                    clearTimeout(this.set)
                     document.webkitCancelFullScreen()
                 }
             }
@@ -123,6 +134,7 @@
             background rgba(0, 0, 0, .5)
             width 100%
 
+
         &:hover
             .bottom
                 display none
@@ -150,10 +162,18 @@
             bottom 0
             left 0
             width 100%
+
+            &.full
+                display block
+
+                .ivu-slider-wrap, .ivu-slider-bar
+                    height 4px
+
             .ivu-slider-wrap
                 background none
                 margin 0
                 height 2px
+
                 .ivu-slider-bar
                     height 2px
 
@@ -166,9 +186,14 @@
             opacity 0
             cursor default
             transition opacity .4s
-            background rgba(0,0,0,.2)
+            background rgba(0, 0, 0, .2)
+
+            &.show
+                opacity 1
+
             .control
                 margin-right 20px
+
                 i
                     cursor pointer
                     color #fff
@@ -186,21 +211,34 @@
                 position absolute
                 width 100%
                 top 0
+
+                &:hover
+                    top -10px
+
+                    .ivu-slider-wrap
+                        height 20px
+
+                    .ivu-slider-button
+                        width 25px
+                        height 25px
+                        opacity 1
+
+                        &:hover
+                            transform scale(1.1)
+
                 .ivu-slider-wrap
                     height 3px
                     margin 0
-                    background hsla(0,0%,100%,.2)
+                    background hsla(0, 0%, 100%, .2)
+
                     .ivu-slider-bar
                         height 100%
-                    &:hover
-                        height 5px
-                        .ivu-slider-button
-                            opacity 1
+
+
         video
             display block
             margin 0 auto
             cursor pointer
-            min-height 580px
             max-height 590px
             width 1050px
             @media screen and (max-width: 1550px)

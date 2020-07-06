@@ -12,7 +12,7 @@
                 </div>
             </a>
             <div class="info" v-if="mv.artistName">
-                <p class="title ellipse text-hv">{{mv.name}}</p>
+                <a :href="`/mv/${mv.id}`" target="_blank" class="title ellipse text-hv">{{mv.name}}</a>
                 <p class="art ellipse" v-if="!hiddenArt">
                     <a class="name text-hv"
                        v-for="(art,index) in mv.artists"

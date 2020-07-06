@@ -79,9 +79,14 @@
             &.ivu-page-item-active
                 background #00a1d6 !important
 
+                a
+                    color #fff !important
+
             &:hover
                 background #00a1d6 !important
 
+                a
+                    color #fff !important
         .mv-all-inner
             margin-top 30px
 

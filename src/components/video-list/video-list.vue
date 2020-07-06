@@ -7,7 +7,7 @@
                 </div>
                 <p class="title ellipse text-hv">{{video.title}}</p>
             </a>
-            <p class="name flex">
+            <p class="name flex" v-if="video.creator">
                 <i class="mv" v-if="video.type===0"></i>
                 <span class="by" v-else>by</span>
 
@@ -46,7 +46,7 @@
 
             .img-box
                 height 130px
-                @media screen and (max-width: 1500px)
+                @media screen and (max-width: 1550px)
                     height 107px
                 @media screen and (max-width: 1200px)
                     height 84px

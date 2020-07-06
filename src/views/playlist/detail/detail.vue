@@ -2,11 +2,11 @@
     <div class="playlist-detail">
         <div class="header-info">
             <div class="background-blur">
-                <img :src="songlist.coverImgUrl+'?param=800y800'">
+                <img :src="songlist.coverImgUrl+'?param=200y200'">
             </div>
             <div class="info-inner flex container align-center">
                 <div class="img-box">
-                    <img :src="songlist.coverImgUrl+'?param=500y500'">
+                    <img :src="songlist.coverImgUrl+'?param=500y500'" v-if="songlist.coverImgUrl">
                 </div>
                 <div class="content" v-if="songlist.creator">
                     <div class="title">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="user-name flex">
                         <div class="avatar">
-                            <img :src="songlist.creator.avatarUrl" >
+                            <img :src="songlist.creator.avatarUrl+'?param=50y50'">
                         </div>
                         <router-link :to="`/user/home?id=${songlist.creator.userId}`" title="查看主页">{{songlist.creator.nickname}}</router-link>
                         <div class="createTime">{{songlist.createTime | dataFormat}} 创建</div>
@@ -65,7 +65,7 @@
             </div>
             <div class="comment-header flex" ref="comment">
                 <a class="sort" :class="{active:hotComments}" @click="hotComments = true"
-                   v-if="comment&&comment.hotcomment">最热评论</a>
+                   v-if="comment.hotComment||comment.hotComments">最热评论</a>
                 <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
             </div>
             <comment-edit :id="songlist.id.toString()" type="2" class="input"/>
@@ -219,7 +219,7 @@
                             font-size 16px
                             font-weight 800
                 .title
-                    padding 20px 0
+                    padding 0 0 20px
                 .user-name
                     font-size 18px
                     color #666
@@ -247,17 +247,28 @@
                     margin-top 20px
                     span
                         margin-right 5px
-                .tags,.brief
+
+                .tags, .brief
                     margin-top 10px
 
                     span
                         margin-right 10px
+
                     a
                         margin-right 10px
+
                         &:hover
                             color $red
+
             .img-box
-                width 23%
+                width 316px
+                height 316px
+                @media screen and (max-width: 1550px)
+                    width 270px
+                    height 270px
+                @media screen and (max-width: 1200px)
+                    width 222px
+                    height 222px
 
         .playlist-box
             background #fff

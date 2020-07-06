@@ -146,9 +146,10 @@
             padding-top 20px
             background #f2f2f2
             height 170px
+            @media screen and (max-width: 1200px)
+                height 210px !important
 
             .tags
-                width 1400px
                 margin-top 20px
                 position absolute
                 left 50%
@@ -156,6 +157,8 @@
                 max-height 80px
                 overflow hidden
                 background #f2f2f2
+                @media screen and (min-width: 1550px)
+                    width 1400px
 
                 &.all
                     box-shadow 0 2px 3px rgba(0, 0, 0, 0.1)

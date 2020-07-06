@@ -3,12 +3,12 @@
         <div class="mv-player-header container flex align-center">
             <i class="mv"></i>
             <span class="name">{{mv.name}}</span>
-            <ul class="artists ellipse">
+            <ul class="artists ellipse flex">
                 <li class="art" v-for="(art,index) in mv.artists" :key="index">
                     <a :href="`/music/artist/${art.id}`" target="_blank">
-                        {{art.name }}
+                        {{ art.name }}
                     </a>
-                    <i v-if="index<mv.artists.length-1">/</i>
+                    <i v-if="index<mv.artists.length-1">/ </i>
                 </li>
             </ul>
         </div>
@@ -286,7 +286,7 @@
                         height 580px
 
         .mv-player-header
-            margin-top 40px
+            margin-top 20px
             text-align left
 
             .mv
@@ -300,7 +300,7 @@
                 margin-top 10px
                 margin-left 20px
 
-                &:hover
+                .art:hover
                     color $blue
 
             .name

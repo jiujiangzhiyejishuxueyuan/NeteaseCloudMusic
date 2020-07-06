@@ -2,13 +2,14 @@
     <div id="my-music" class="flex container">
         <div class="nav-list">
             <ul class="nav-list-inner">
-                <li class="singers" @click="$router.replace(`/my/artist`)" :class="{active: $route.name==='my-singer'}">
+                <li class="singers" @click="$router.replace(`/my/m/artist`)"
+                    :class="{active: $route.name==='my-singer'}">
                     我的歌手(<span class="count">{{subCount.artistCount}}</span>)
                 </li>
-                <li class="mvs" @click="$router.replace(`/my/mv`)" :class="{active: $route.name==='my-mv'}">
+                <li class="mvs" @click="$router.replace(`/my/m/mv`)" :class="{active: $route.name==='my-mv'}">
                     我的视频(<span class="count">{{vLength}}</span>)
                 </li>
-                <li class="djs" @click="$router.replace(`/my/dj`)" :class="{active: $route.name==='my-dj'}">
+                <li class="djs" @click="$router.replace(`/my/m/dj`)" :class="{active: $route.name==='my-dj'}">
                     我的电台(<span class="count">{{subCount.djRadioCount}}</span>)
                 </li>
                 <li class="playlists create" @click="createdPlaylistShow = !createdPlaylistShow">

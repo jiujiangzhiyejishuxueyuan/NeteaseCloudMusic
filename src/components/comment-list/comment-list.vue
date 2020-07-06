@@ -12,9 +12,9 @@
                    :title="comment.user.nickname">{{comment.user.nickname}}</a>
                 <p class="text">{{comment.content}}</p>
                 <div class="reply" v-if="comment.beReplied && comment.beReplied.length">
-                    <router-link :to="`/user/home?id=${comment.beReplied[0].user.userId}`" class="user-name">
+                    <a target="_blank" :href="`/user/home?id=${comment.beReplied[0].user.userId}`" class="user-name">
                         @{{comment.beReplied[0].user.nickname}}
-                    </router-link>
+                    </a>
                     :
                     <span class="text">{{comment.beReplied[0].content}}</span>
                 </div>

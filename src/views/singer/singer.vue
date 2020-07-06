@@ -1,17 +1,15 @@
 <template>
-    <div id="singer">
-        <singer-header />
-        <div class="singer-inner container">
-            <div class="songs" v-if="songlist">
-                <div class="section-header bb">
+    <div class="singer-inner container">
+        <div class="songs" v-if="songlist">
+            <div class="section-header bb">
                     <span class="title">
                         热门歌曲
                     </span>
-                        <a class="more" v-if="songlist&&songlist.songs.length>20">
-                            查看全部
-                        </a>
-                    </div>
-                <song-list :songlists="songlist&&songlist.songs.slice(0,20) || []"/>
+                <router-link :to="$route.path+'/song'" class="more" v-if="songlist&&songlist.songs.length>20">
+                    查看全部
+                </router-link>
+            </div>
+            <song-list :songlists="songlist&&songlist.songs.slice(0,20) || []"/>
             </div>
             <div class="ske container " v-else>
                 <Spin></Spin>
@@ -43,7 +41,6 @@
                 <singer-list :singers="simiSingers"/>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -52,9 +49,8 @@
     import Album from "@/views/home/album/album";
     import MvList from "@/components/mv-list/mv-list";
     import SingerList from "@/components/singer-list/singer-list";
-    import SingerHeader from '@/components/singer-header/singer-header'
     export default {
-        components: {SingerList, MvList, Album, SongList,SingerHeader},
+        components: {SingerList, MvList, Album, SongList},
         data() {
             return {
                 desc: '',

@@ -1,33 +1,37 @@
 <template>
     <div id="video-related">
         <ul class="related-list" v-if="videos.length>=10">
-            <li class="related-item flex img-scale-hover" v-for="(item,index) in videos" :key="index">
-                <div class="img-box img-scale " :title="item.title">
-                    <router-link :to="`/video/${item.vid}`">
-                        <img :src="item.coverUrl || item.cover" alt="">
+            <li class="related-item flex img-scale-hover" v-for="(video,index) in videos" :key="index">
+                <div class="img-box img-scale " :title="video.title">
+                    <router-link :to="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`">
+                        <img :src="video.coverUrl || video.cover" alt="">
                     </router-link>
 
                 </div>
                 <div class="info">
-                    <router-link :to="`/video/${item.vid}`" class="title ellipse" :title="item.title">{{item.title}}
+                    <router-link :to="`/video/${video.vid}`" class="title ellipse" :title="video.title">{{video.title}}
                     </router-link>
-                    <div class="name" v-if="item.artists&&item.artists.length">
-                        <router-link :to="`/music/singer/${art.id}`" class="text-hv" v-for="(art,index) in item.artists"
-                                     :key="index">
+                    <div class="name" v-if="video.artists&&video.artists.length">
+                        <a :href="`/music/singer/${art.id}`" class="text-hv" v-for="(art,index) in video.artists"
+                           :key="index">
                             {{art.name}}
-                            <span v-if="index+1<item.artists.length">/</span>
-                        </router-link>
+                            <span v-if="index+1<video.artists.length">/</span>
+                        </a>
                     </div>
                     <div class="name" v-else>
-                        <router-link :to="`/user/home?id=${user.userId}`" class="text-hv"
-                                     v-for="(user,index) in item.creator" :key="index">
+                        <a
+                                target="_blank"
+                                :href="video.type!==0?`/user/home?id=${user.userId}`:`/music/artist/${user.userId}`"
+                                class="text-hv"
+                                v-for="(user,index) in video.creator" :key="index"
+                        >
                             {{user.userName}}
-                            <span v-if="index+1<item.creator.length">/</span>
-                        </router-link>
+                            <span v-if="index+1<video.creator.length">/</span>
+                        </a>
 
                     </div>
 
-                    <p class="play-count">播放次数:{{(item.playTime || item.playCount) |playCount}}</p>
+                    <p class="play-count">播放次数:{{(video.playTime || video.playCount) |playCount}}</p>
                 </div>
             </li>
         </ul>
@@ -49,6 +53,12 @@
         name: 'video-related',
         props: {
             videos: Array
+        },
+        inject: ['reload'],
+        watch: {
+            $route() {
+                this.reload()
+            }
         }
     }
 </script>
@@ -85,7 +95,7 @@
 
         .img-box
             width 150px
-            height 80px
+            height 85px
 
         .info
             margin-left 5px

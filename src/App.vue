@@ -82,18 +82,19 @@ export default {
 
     .ivu-page-item
       border none
-      border-radius 50%
+        border-radius 50%
 
-      &:hover
-        background #E91E63
+        &.ivu-page-item-active
+            background #E91E63
 
-        a
-          color #fff
+            a
+                color #fff
 
-  .ivu-page-item-active
-    background #E91E63
+        &:hover
+            background #E91E63
 
-    a
-      color #fff
+            a
+                color #fff
+
 
 </style>

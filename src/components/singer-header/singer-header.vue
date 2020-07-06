@@ -1,7 +1,7 @@
 <template>
     <div class="singer-header">
         <div class="background-blur">
-            <img :src="singer.picUrl+'?param=800y800'">
+            <img :src="singer.picUrl+'?param=200y200'">
         </div>
         <div class="container">
             <div class="avatar">

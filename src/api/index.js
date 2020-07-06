@@ -119,6 +119,16 @@ export const reqMvInfo = (id) => ajax(`api/mv/detail/info?mvid=${id}`)
 export const reqMvUrl = (id) => ajax(`api/mv/url?id=${id}`)
 // 收藏/取消收藏mv
 export const subMv = (id, t) => ajax(`api/mv/sub?mvid=${id}&t=${t}`)
+// 获取全部mv
+export const reqMv = (area, type, order, limit, offset) => ajax(`api/mv/all?area=${area}&type=${type}&order=${order}&limit=${limit}&offset=${offset}`)
+// 获取最新mv
+export const reqNewMv = (limit, area = '') => ajax(`api/mv/first?limit=${limit}&area=${area}`)
+// 获取网易出品mv
+export const reqexclusiveMv = (limit, offset) => ajax(`api/mv/exclusive/rcmd?limit=${limit}&offset=${offset}`)
+// 获取推荐mv
+export const reqRecommendMv = () => ajax(`api/personalized/mv`)
+// 获取mv排行
+export const reqMvRank = (area, limit, offset) => ajax(`api/top/mv?limit=${limit}&area=${area}&offset=${offset}`)
 
 // 评论相关
 //获取热门评论

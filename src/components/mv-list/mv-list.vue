@@ -1,22 +1,24 @@
 <template>
-    <ul class="mv-list flex flex-wrap">
+    <ul class="mv-list flex flex-wrap" v-if="mvs.length">
         <li class="mv-item img-scale-hover" v-for="(mv,index) in mvs" :key="index">
-            <div class="img-box img-scale">
-                <img :src="(mv.cover||mv.imgurl16v9||imgurl)+'?param=260y150'" alt="">
-                <div class="shadow">
-                    <div class="btn-play absolute-center">
-                        <img src="../../static/imgs/btn-play.png" alt="">
+            <a :href="`/mv/${mv.id}`" target="_blank">
+                <div class="img-box img-scale">
+                    <img :src="(mv.cover||mv.imgurl16v9||imgurl)+'?param=260y150'" alt="">
+                    <div class="shadow">
+                        <div class="btn-play absolute-center">
+                            <img src="../../static/imgs/btn-play.png" alt="">
+                        </div>
                     </div>
                 </div>
-
-            </div>
+            </a>
             <div class="info" v-if="mv.artistName">
                 <p class="title ellipse text-hv">{{mv.name}}</p>
-                <p class="art ellipse">
+                <p class="art ellipse" v-if="!hiddenArt">
                     <a class="name text-hv"
                        v-for="(art,index) in mv.artists"
-                       @click="$router.push(`/music/artist/${art.id}`)"
+                       :href="`/music/artist/${art.id}`"
                        :key="index"
+                       target="_blank"
                     >
                         {{art.name }}
                     </a>
@@ -24,12 +26,20 @@
             </div>
         </li>
     </ul>
+    <video-list-ske :count="skeCount" v-else/>
 </template>
 
 <script>
+    import VideoListSke from "@/components/video-list-ske/video-list-ske";
     export default {
+        components: {VideoListSke},
         props: {
-            mvs: Array
+            mvs: Array,
+            skeCount: {
+                type: Number,
+                default: () => 10
+            },
+            hiddenArt: Boolean
         }
     }
 </script>
@@ -46,6 +56,11 @@
                     opacity 1 !important
             .img-box
                 position relative
+                @media screen and (max-width: 1550px)
+                    height 107px
+                @media screen and (max-width: 1200px)
+                    height 84px
+
                 .shadow
                     opacity 0
                     position absolute
@@ -54,7 +69,8 @@
                     width 100%
                     height 100%
                     z-index 2
-                    background rgba(0,0,0,.4)
+                    background rgba(0, 0, 0, .4)
+
                     .btn-play
                         width 50px
                         height 50px

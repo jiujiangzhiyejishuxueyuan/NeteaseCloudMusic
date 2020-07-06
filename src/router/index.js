@@ -15,20 +15,7 @@ export default new VueRouter({
     routes: [
         {
             path: '/music'
-            , component: () => import ("@/views/music/index"),
-            children: [
-                {
-                    path: '',
-                    name: 'music',
-                    component: () => import('@/views/home/home')
-                },
-
-                {
-                    name: 'playlistDedail',
-                    path: 'playlist/:id',
-                    component: () => import('@/views/playlist/detail/detail')
-                }
-            ]
+            , component: () => import('@/views/home/home')
         },
         {
             path: '/my',
@@ -102,7 +89,17 @@ export default new VueRouter({
         {
             name: 'singer',
             path: '/music/artist/:id',
-            component: () => import('@/views/singer/singer')
+            component: () => import('@/views/singer/index'),
+            children: [
+                {
+                    path: '',
+                    component: () => import('@/views/singer/singer')
+                },
+                {
+                    path: 'song',
+                    component: () => import('@/views/singer/singer-song')
+                }
+            ]
         },
         {
             path: '/user',
@@ -130,12 +127,31 @@ export default new VueRouter({
             ]
         },
         {
+            name: 'mv',
+            path: '/mv',
+            component: () => import('@/views/mv/index')
+        },
+        {
+            path: '/mv/all',
+            component: () => import('@/views/mv/mv-all/mv-all')
+        },
+        {
+            name: 'mv-rank-view',
+            path: '/mv/rank',
+            component: () => import('@/views/mv/mv-rank/mv-rank')
+        },
+        {
             name: 'mv-player',
             path: '/mv/:id',
             component: () => import('@/views/mv/mv-player/mv-player')
         },
         {
-            name: 'videoPlayer',
+            name: 'video',
+            path: '/video',
+            component: () => import('@/views/video/video')
+        },
+        {
+            name: 'video-player',
             path: '/video/:id',
             component: () => import('@/views/video-player/video-player')
         },
@@ -143,6 +159,11 @@ export default new VueRouter({
             name: 'playlist',
             path: '/music/playlist',
             component: () => import('@/views/playlist/playlist'),
+        },
+        {
+            name: 'playlistDedail',
+            path: '/music/playlist/:id',
+            component: () => import('@/views/playlist/detail/detail')
         },
         {
             name: 'player',

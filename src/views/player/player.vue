@@ -206,8 +206,9 @@
                         title: '添加到'
                     }
                 ],
-                checked:[],
-                bit:'无损'
+                checked: [],
+                bit: '无损',
+                setTime: 0
             }
         },
         methods: {
@@ -259,8 +260,10 @@
             },
             //切歌
             changeMusic(id) {
+                clearInterval(this.setTime)
                 if(id) {
                     reqSongDetail(id).then(res => {
+
                         let song = res.songs[0]
                         this.progress = 0
                         this.song.id = song.id
@@ -268,10 +271,17 @@
                         this.song.ar = song.ar
                         this.song.name = song.name
                         this.song.quality = {
-                            h:song.h && {v:song.h,text:'无损',sty:'h'} ,
-                            m:song.m && {v:song.m,text:'高清',sty:'m'},
-                            l:song.l && {v:song.l,text:'标准',sty:'l'}
+                            h: song.h && {v: song.h, text: '无损', sty: 'h'},
+                            m: song.m && {v: song.m, text: '高清', sty: 'm'},
+                            l: song.l && {v: song.l, text: '标准', sty: 'l'}
                         }
+                        let artist = ''
+                        let title = `正在播放 ${song.name} - ${song.ar[0].name}..`
+
+                        this.setTime = setInterval(() => {
+                            document.title = title.substring(1, title.length) + title.substring(0, 1);//截取字符重新赋值给title
+                            title = document.title.substring(0, title.length);
+                        }, 1000)
                     }).catch(()=> console.log('未找到歌曲',id))
                     reqSongUrl(id).then(res => {
                         this.url = res.data[0].url
@@ -294,7 +304,6 @@
                                     })
                                 }
                             })
-                            //console.log('拿到歌词了呀')
                         } else {
                             this.song.lyrics = false
                         }
@@ -357,7 +366,6 @@
         mounted() {
             this.player = this.$refs.play
             if (this.ids.length) {
-                //console.log('初始化切歌')
                 this.changeMusic(this.ids[0])
             }
             window.addEventListener("keydown", ev => {
@@ -367,7 +375,7 @@
             })
         },
         watch: {
-            immerse(value) {
+            immerse() {
                 this.lyricShow = false
                 setTimeout(() => this.lyricShow = true)
             },
@@ -375,7 +383,6 @@
                 if (value) {
                     if (this.url) {
                         this.player.play().then(()=> {
-                            //console.log('播放')
                         }).catch(() => {
                             this.$Message.error('浏览器暂不支持自动播放')
                             this.isplay = false
@@ -385,7 +392,6 @@
                         this.isplay = false
                     }
                 } else {
-                    //console.log('暂停')
                     this.player.pause()
                 }
             },
@@ -554,6 +560,7 @@
             background-color: #000;
 
             img
+                opacity .6
                 filter blur(155px)
                 width 100%
                 height 100%

@@ -1,7 +1,7 @@
 <template>
     <div id="singer">
         <singer-header/>
-        <router-view></router-view>
+        <router-view class="container"></router-view>
     </div>
 </template>
 
@@ -16,5 +16,10 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
+    #singer
+        .singer-title
+            text-align left
+            margin-bottom 20px
+            color #000
+            font-size 24px
 </style>

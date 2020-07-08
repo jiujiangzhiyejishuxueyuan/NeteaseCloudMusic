@@ -4,12 +4,13 @@
             <li class="related-item flex img-scale-hover" v-for="(video,index) in videos" :key="index">
                 <div class="img-box img-scale " :title="video.title">
                     <router-link :to="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`">
-                        <img :src="video.coverUrl || video.cover" alt="">
+                        <img :src="(video.coverUrl || video.cover)+'?param=300y170'" alt="">
                     </router-link>
 
                 </div>
                 <div class="info">
-                    <router-link :to="`/video/${video.vid}`" class="title ellipse" :title="video.title">{{video.title}}
+                    <router-link :to="`/video/${video.vid}`" class="title ellipse" :title="video.title">
+                        {{video.title}}
                     </router-link>
                     <div class="name" v-if="video.artists&&video.artists.length">
                         <a :href="`/music/singer/${art.id}`" class="text-hv" v-for="(art,index) in video.artists"

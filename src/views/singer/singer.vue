@@ -1,5 +1,5 @@
 <template>
-    <div class="singer-inner container">
+    <div class="singer-inner">
         <div class="songs" v-if="songlist">
             <div class="section-header bb">
                     <span class="title">
@@ -19,7 +19,7 @@
                     <span class="title">
                         热门专辑
                     </span>
-                    <a class="more" v-if="album.more">查看全部</a>
+                    <router-link :to="`${$route.path}/album`" class="more" v-if="album.more">查看全部</router-link>
                 </div>
                 <album :albums="album.hotAlbums"/>
             </div>
@@ -28,7 +28,7 @@
                     <span class="title">
                         热门MV
                     </span>
-                    <a class="more" v-if="mv.hasMore">查看全部</a>
+                    <router-link :to="`${$route.path}/mv`" class="more" v-if="mv.hasMore">查看全部</router-link>
                 </div>
                 <mv-list :mvs="mv.mvs"/>
             </div>

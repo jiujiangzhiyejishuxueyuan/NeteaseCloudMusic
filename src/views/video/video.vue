@@ -60,7 +60,6 @@
         methods: {
             reqdata(count) {
                 for (let i = 0; i < count; i++) {
-                    console.log(this.offset)
                     reqVideoList(this.currentTag, this.offset).then(res => {
                         this.more = res.hasmore
                         res.datas.forEach(item => {

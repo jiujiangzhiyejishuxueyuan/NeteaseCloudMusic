@@ -27,7 +27,7 @@
                         </div>
                         <div class="artist" v-if="user.profile.artistId">查看歌手页</div>
                     </div>
-                    <div class="info-user-type flex">
+                    <div class="info-user-type flex flex-wrap">
                         <div class="authen flex" v-for="(anthen,index) in user.profile.allAuthTypes" :key="index">
                             <i class="sign" :class="anthen.type===4?'person':'v'" v-if="anthen.desc"></i>
                             {{anthen.desc}}
@@ -74,7 +74,6 @@
             return {
                 user: '',
                 areaList,
-
             }
         },
         created() {
@@ -86,6 +85,7 @@
                 this.id = this.$route.query.id
                 let id = this.id
                 reqUserInfo(id).then(res => {
+                    document.title = res.profile.nickname + ' - 用户 - 网易云音乐'
                     this.user = res
                     this.user.bindings.forEach(item => {
                         if (item.url) {

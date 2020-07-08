@@ -75,15 +75,29 @@
 <style lang="stylus" rel="stylesheet/stylus">
     #my-music
         margin-top 70px
+
+        .playlist-detail
+            .container
+                width 1000px
+                @media screen and (max-width: 1550px)
+                    width 820px
+                @media screen and (max-width: 1200px)
+                    width 740px
+                    .content
+                        width 60%
+
         .header-info
             padding 0 0 10px
+
             .info-inner
                 padding-left 20px
-                .content
-                    width 700px
+
                 .img-box
                     width 210px
                     height 210px
+                    @media screen and (max-width: 1200px)
+                        width 160px
+                        height 160px
             .background-blur
                 display none
         .section-header

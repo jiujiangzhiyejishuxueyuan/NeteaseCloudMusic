@@ -13,7 +13,7 @@
 
 <script>
     import MvListHeader from "@/views/mv/mv-list-header";
-    import MvRank from '@/components/mv-rank/mv-rank'
+    import MvRank from '@/components/mv-rank-list/mv-rank'
     import {reqMvRank} from "@/api";
 
     export default {

@@ -15,7 +15,7 @@
                 </a>
             </div>
             <div class="info" v-if="mv.artists">
-                <a :href="`/mv/${mv.id}`" target="_blank" class="name text-hv" :title="mv.name">{{mv.name}}</a>
+                <a :href="`/mv/${mv.id}`" target="_blank" class="name text-hv ellipse" :title="mv.name">{{mv.name}}</a>
                 <p class="arts ellipse text-wrap">
                     <a target="_blank" :href="`/music/artist/${art.id}`" class="art text-hv"
                        v-for="(art,index) in mv.artists" :key="index">
@@ -40,7 +40,7 @@
 
 <script>
     export default {
-        name: "mv-rank",
+        name: "mv-rank-list",
         props: {
             mvs: Array
         }

@@ -39,7 +39,7 @@
                                 type="text"
                                 @keydown.enter="search"
                                 id="search_ipt"
-                                placeholder="搜索歌曲、歌手、MV"
+                                placeholder=""
                                 v-model="keywords"
                                 @focus="searchTipShow = true"
                                 @focusout="searchTipShow = false"
@@ -165,7 +165,8 @@
                 loginShow: false,
                 userInfo: '',
                 keywords: '',
-                searchTipShow: false
+                searchTipShow: false,
+                placeholder: ''
             }
         },
         methods: {
@@ -194,7 +195,8 @@
                 error.toString()
             })
             searchDefault().then(res => {
-                this.keywords = res.data.showKeyword
+                this.placeholder = res.data.showKeyword
+                this.keywords = res.data.realkeyword
             })
         }
     }
@@ -348,9 +350,12 @@
                 margin-right 40px
                 padding 0 40px 0 22px
                 background-color #f2f2f2
-                overflow hidden
                 border-radius 40px
                 position relative
+
+                .search-tip
+                    margin-top 40px
+
                 .btn-search
                     position absolute
                     top 0

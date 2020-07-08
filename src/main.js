@@ -26,8 +26,13 @@ Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  LoadingBar.start();
-  next()
+    LoadingBar.start()
+    if (to.meta.title) {
+        document.title = to.meta.title + ' - 网易云音乐'
+    } else {
+        document.title = '网易云音乐'
+    }
+    next()
 })
 router.afterEach(() => {
   LoadingBar.finish();

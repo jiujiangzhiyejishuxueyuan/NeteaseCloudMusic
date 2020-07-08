@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="song-name">
-                        <a class="text-hv">{{song.name}}</a>
+                        <router-link :to="`/music/song/${song.id}`" class="text-hv">{{song.name}}</router-link>
                     </div>
                     <div class="singer ellipse">
                         <a :href="`/music/artist/${art.id}`" target="_blank"

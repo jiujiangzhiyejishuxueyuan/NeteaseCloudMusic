@@ -14,14 +14,20 @@
             <div class="info" v-if="mv.artistName">
                 <a :href="`/mv/${mv.id}`" target="_blank" class="title ellipse text-hv">{{mv.name}}</a>
                 <p class="art ellipse" v-if="!hiddenArt">
-                    <a class="name text-hv"
-                       v-for="(art,index) in mv.artists"
-                       :href="`/music/artist/${art.id}`"
-                       :key="index"
-                       target="_blank"
-                    >
+                    <span class="arts" v-if="mv.artists">
+                        <a class="name text-hv"
+                           v-for="(art,index) in mv.artists"
+                           :href="`/music/artist/${art.id}`"
+                           :key="index"
+                           target="_blank"
+                        >
                         {{art.name }}
+                        <i v-if="index<mv.artists.length-1">/</i>
                     </a>
+                    </span>
+                    <span v-else>
+                        <a target="_blank" :href="`/music/artist/${mv.artist.id}`" class="name text-hv">{{mv.artist.name}}</a>
+                    </span>
                 </p>
             </div>
         </li>
@@ -77,5 +83,6 @@
             .info
                 text-align left
                 .title
+                    display block
                     margin 10px 0
 </style>

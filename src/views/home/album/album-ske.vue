@@ -1,6 +1,6 @@
 <template>
     <div class="album-ske container">
-        <div class="album-ske-header">
+        <div class="album-ske-header" v-if="!hiddenHeader">
             <div class="title"></div>
         </div>
         <ul class="album-ske-list flex flex-wrap">
@@ -21,8 +21,9 @@
         props: {
             row: {
                 type: Number,
-                default: 2
-            }
+                default: () => 2
+            },
+            hiddenHeader: Boolean
         }
     }
 </script>

@@ -40,14 +40,14 @@
                     </div>
                     <div class="comment-header flex" ref="comment">
                         <a class="sort" :class="{active:hotComments}" @click="hotComments = true"
-                           v-if="comment&&comment.hotComments">最热评论</a>
+                           v-if="c">最热评论</a>
                         <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
                     </div>
                     <comment-edit :id="id.toString()" type="1" class="input"/>
                     <comment-list
                             :id="id.toString()"
                             type="1"
-                            :comments="hotComments ? comment.hotComments : comment.comments"
+                            :comments="hotComments ? c : comment.comments"
                             v-if="comment.total>0"
                     />
                     <Page
@@ -108,7 +108,8 @@
                 relateMvs: [],
                 comment: '',
                 hotComments: true,
-                commentLimit: 20
+                commentLimit: 20,
+                c: ''
             }
         },
         methods: {
@@ -195,6 +196,10 @@
                 })
             })
             reqMvComments(id, this.commentLimit, 0).then(res => {
+                this.c = res.hotComments
+                if (!res.hotComments) {
+                    this.hotComments = false
+                }
                 this.comment = res
             })
         }

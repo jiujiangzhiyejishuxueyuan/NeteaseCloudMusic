@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import format from 'date-fns/format'
 
-Vue.filter('dataFormat',(value)=> {
-    return format(value,'yyyy/MM/dd HH:mm')
+Vue.filter('dataFormat', (value, t = 1) => {
+    return t === 1 ? format(value, 'yyyy/MM/dd HH:mm') : format(value, 'yyyy/MM/dd')
 })
 Vue.filter('playCount', count => {
-    if (count>100000000) {
-        count = parseInt(count/100000000) + '亿'
-    } else if(count>=10000) {
-        count = (count/10000).toFixed(1) + '万'
+    if (count > 100000000) {
+        count = parseInt(count / 100000000) + '亿'
+    } else if (count >= 10000) {
+        count = (count / 10000).toFixed(1) + '万'
     }
     return count
 })

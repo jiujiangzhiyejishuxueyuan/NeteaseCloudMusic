@@ -24,10 +24,14 @@
                         </div>
                         <div class="item-info">
                             <p class="album-name name-block">
-                                <span >{{item.name}}</span>
+                                <span>{{item.name}}</span>
                             </p>
-                            <p class="singer block-name-next">
-                                <span v-for="(singer,index) in item.artists" :key="index" @click="$router.push(`/music/artist/${singer.id}`)">
+                            <p class="time block-name-next" v-if="isSinger">
+                                {{item.publishTime | dataFormat(0)}}
+                            </p>
+                            <p class="singer block-name-next" v-else>
+                                <span v-for="(singer,index) in item.artists" :key="index"
+                                      @click="$router.push(`/music/artist/${singer.id}`)">
                                     {{singer.name}}
                                     <span v-if="index+1<item.artists.length">/</span>
                                 </span>
@@ -36,6 +40,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>
@@ -45,7 +50,8 @@
     export default {
         props: {
             albums: Array,
-            title: String
+            title: String,
+            isSinger: Boolean
         }
     }
 </script>

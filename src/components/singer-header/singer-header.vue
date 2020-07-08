@@ -5,7 +5,9 @@
         </div>
         <div class="container">
             <div class="avatar">
-                <img :src="singer.picUrl+'?param=300y300'" alt="">
+                <router-link :to="`/music/artist/${singer.id}`">
+                    <img :src="singer.picUrl+'?param=300y300'" alt="">
+                </router-link>
             </div>
             <h2 class="name">{{singer.name}}</h2>
             <p class="desc ellipse" :title="desc.briefDesc">
@@ -28,12 +30,18 @@
         },
         created() {
             let id = this.$route.params.id
-            reqSingerAlbum(id,1,0).then(res => {
+            reqSingerAlbum(id, 1, 0).then(res => {
                 this.singer = res.artist
+                document.title = `${this.singer.name} - 歌手 - 网易云音乐`
             })
             reqSingerDesc(id).then(res => {
                 this.desc = res
             })
+        },
+        watch: {
+            $route() {
+                document.title = `${this.singer.name} - 歌手 - 网易云音乐`
+            }
         }
     }
 </script>

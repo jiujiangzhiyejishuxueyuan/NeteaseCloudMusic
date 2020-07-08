@@ -61,10 +61,11 @@
                         暂无更多评论
                     </div>
                     <Page
-                            :total="comments.total"
+                            :total="hotComments?commentsList.length:comments.total"
                             :page-size="20"
-                            v-if="comments.total>20"
+                            v-if="hotComments?commentsList.length>20:comments.total>20"
                             @on-change="pageTurning"
+                            :current="commentsPage"
                     />
                 </div>
             </div>
@@ -102,13 +103,15 @@
                 commentsList: [],
                 id: '',
                 hotComments: true,
-                vReady: false
+                vReady: false,
+                commentsPage: 1
             }
         },
         inject: ['reload'],
         methods: {
             //评论翻页
             pageTurning(page) {
+                this.commentsPage = page
                 let limit = 20
                 let offset = (page - 1) * limit
                 if (!this.hotComments) {
@@ -171,6 +174,7 @@
             let id = this.id
             reqVideoDetail(id).then(res => {
                 this.video = res.data
+                document.title = this.video.title + '- 视频 - 网易云音乐'
             })
             reqVideoUrl(id).then(res => {
                 this.url = res.urls[0].url
@@ -187,7 +191,7 @@
             reqVideoInfo(id).then(res => {
                 this.liked = res.liked
             })
-            reqHotComments(id,5).then(res => {
+            reqVideoComments(id, 5).then(res => {
                 this.comments = res
                 this.commentsList = res.hotComments
             })
@@ -197,12 +201,12 @@
                 this.reload()
             },
             hotComments(value) {
+                this.commentsPage = 1
                 if(value) {
-                    reqHotComments(this.id,5).then(res => {
+                    reqHotComments(this.id, 5, 20, 0).then(res => {
                         this.comments = res
                         this.commentsList = res.hotComments
                     })
-
                 } else {
                     reqVideoComments(this.id).then(res => {
                         this.comments = res

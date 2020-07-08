@@ -9,14 +9,16 @@
                     <img :src="songlist.coverImgUrl+'?param=500y500'" v-if="songlist.coverImgUrl">
                 </div>
                 <div class="content" v-if="songlist.creator">
-                    <div class="title">
-                        <h1>{{songlist.name}}</h1>
+                    <div class="title ">
+                        <h1 class="ellipse" :title="songlist.name">{{songlist.name}}</h1>
                     </div>
                     <div class="user-name flex">
                         <div class="avatar">
                             <img :src="songlist.creator.avatarUrl+'?param=50y50'">
                         </div>
-                        <router-link :to="`/user/home?id=${songlist.creator.userId}`" title="查看主页">{{songlist.creator.nickname}}</router-link>
+                        <router-link :to="`/user/home?id=${songlist.creator.userId}`" title="查看主页">
+                            {{songlist.creator.nickname}}
+                        </router-link>
                         <div class="createTime">{{songlist.createTime | dataFormat}} 创建</div>
                     </div>
                     <div class="playcount">
@@ -65,12 +67,12 @@
             </div>
             <div class="comment-header flex" ref="comment">
                 <a class="sort" :class="{active:hotComments}" @click="hotComments = true"
-                   v-if="comment.hotComment||comment.hotComments">最热评论</a>
+                   v-if="c">最热评论</a>
                 <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
             </div>
             <comment-edit :id="songlist.id.toString()" type="2" class="input"/>
             <comment-list :id="songlist.id.toString()" type="2"
-                          :comments="hotComments ? comment.hotComments : comment.comments" v-if="comment.total>0"/>
+                          :comments="hotComments ? c : comment.comments" v-if="comment.total>0"/>
             <div class="no-comments" v-else>
                 暂无评论
             </div>
@@ -79,7 +81,7 @@
                     :total="comment.total"
                     :page-size="commentLimit"
                     @on-change="nextComment"
-                    v-if="comment&&(hotComments&&comment.hotComments.length || !hotComments&&comment.total)>20"
+                    v-if="comment&&!hotComments&&comment.total>20"
             />
         </div>
 
@@ -106,7 +108,8 @@
                 songs: [],
                 hotComments: true,
                 comment: '',
-                commentLimit: 20
+                commentLimit: 20,
+                c: ''
             }
         },
         methods: {
@@ -118,6 +121,9 @@
                 let offset = this.commentLimit * (page - 1)
                 reqPlaylistComments(id, this.commentLimit, offset).then(res => {
                     this.comment = res
+                    if (!res.hotComments) {
+                        this.hotComments = false
+                    }
                     this.scrollToComment()
                 })
             },
@@ -126,13 +132,17 @@
                 let id = this.$route.params.id || this.$route.query.id
                 reqPlaylistComments(id, this.commentLimit, 0).then(res => {
                     this.comment = res
-                    if (!res.hotComments.length) {
+
+                    if (res.hotComments && res.hotComments.length) {
+                        this.c = res.hotComments
+                    } else {
                         this.hotComments = false
                     }
 
                 })
                 reqSonglistDetail(id).then(res => {
                     this.songlist = res.playlist
+                    document.title = res.playlist.name + '-歌单-网易云音乐'
                     let ids = []
                     let startCount = (page - 1) * 20
                     let residue = res.playlist.trackCount - startCount

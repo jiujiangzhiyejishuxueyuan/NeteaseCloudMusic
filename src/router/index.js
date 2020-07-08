@@ -31,7 +31,8 @@ export default new VueRouter({
                     component: () => import('@/views/my-music/my-singer/my-singer'),
                     meta: {
                         headerFixd: true,
-                        hiddenFooter: true
+                        hiddenFooter: true,
+                        title: '我的歌手'
                     }
                 },
                 {
@@ -40,7 +41,8 @@ export default new VueRouter({
                     component: () => import('@/views/my-music/my-video/my-video'),
                     meta: {
                         headerFixd: true,
-                        hiddenFooter: true
+                        hiddenFooter: true,
+                        title: '我的视频'
                     }
                 },
                 {
@@ -58,7 +60,8 @@ export default new VueRouter({
                     component: () => import('@/views/my-music/my-dj/my-dj'),
                     meta: {
                         headerFixd: true,
-                        hiddenFooter: true
+                        hiddenFooter: true,
+                        title: '我的电台'
                     }
                 },
                 {
@@ -78,13 +81,22 @@ export default new VueRouter({
             component: () => import('@/views/toplist/toplist'),
             meta: {
                 headerFixd: true,
-                hiddenFooter: true
+                hiddenFooter: true,
+                title: '排行榜'
             }
+        },
+        {
+            name: 'song',
+            path: '/music/song/:id',
+            component: () => import('@/views/song/song')
         },
         {
             name: 'artist',
             path: '/music/artist',
-            component: () => import('@/views/artist/artist')
+            component: () => import('@/views/artist/artist'),
+            meta: {
+                title: '歌手'
+            }
         },
         {
             name: 'singer',
@@ -98,6 +110,14 @@ export default new VueRouter({
                 {
                     path: 'song',
                     component: () => import('@/views/singer/singer-song')
+                },
+                {
+                    path: 'album',
+                    component: () => import('@/views/singer/singer-album')
+                },
+                {
+                    path: 'mv',
+                    component: () => import('@/views/singer/singer-mv')
                 }
             ]
         },
@@ -129,16 +149,25 @@ export default new VueRouter({
         {
             name: 'mv',
             path: '/mv',
-            component: () => import('@/views/mv/index')
+            component: () => import('@/views/mv/index'),
+            meta: {
+                title: 'mv'
+            }
         },
         {
             path: '/mv/all',
-            component: () => import('@/views/mv/mv-all/mv-all')
+            component: () => import('@/views/mv/mv-all/mv-all'),
+            meta: {
+                title: '全部mv'
+            }
         },
         {
-            name: 'mv-rank-view',
+            name: 'mv-rank-list-view',
             path: '/mv/rank',
-            component: () => import('@/views/mv/mv-rank/mv-rank')
+            component: () => import('@/views/mv/mv-rank/mv-rank'),
+            meta: {
+                title: 'mv排行榜'
+            }
         },
         {
             name: 'mv-player',
@@ -148,7 +177,10 @@ export default new VueRouter({
         {
             name: 'video',
             path: '/video',
-            component: () => import('@/views/video/video')
+            component: () => import('@/views/video/video'),
+            meta: {
+                title: '视频'
+            }
         },
         {
             name: 'video-player',
@@ -159,6 +191,9 @@ export default new VueRouter({
             name: 'playlist',
             path: '/music/playlist',
             component: () => import('@/views/playlist/playlist'),
+            meta: {
+                title: '歌单'
+            }
         },
         {
             name: 'playlistDedail',
@@ -176,7 +211,10 @@ export default new VueRouter({
         {
             name: 'search',
             path: '/music/search',
-            component: () => import('@/views/search/search')
+            component: () => import('@/views/search/search'),
+            meta: {
+                title: '搜索'
+            }
         },
         {
             name: 'my-music',

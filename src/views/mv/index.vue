@@ -24,7 +24,7 @@
     import videoListHeader from '@/views/mv/mv-list-header'
     import MvList from "@/components/mv-list/mv-list";
     import {reqexclusiveMv, reqMv, reqMvRank, reqNewMv} from "@/api";
-    import MvRank from "@/components/mv-rank/mv-rank";
+    import MvRank from "@/components/mv-rank-list/mv-rank";
 
     export default {
         components: {

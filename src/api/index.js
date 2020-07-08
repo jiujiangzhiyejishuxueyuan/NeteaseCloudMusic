@@ -69,6 +69,8 @@ export const likeSong = (id, type) => ajax(`api/like?id=${id}&like=${type}`)
 export const reqLikeSong = (id) => ajax(`api/likelist?uid=${id}`)
 //获取每日推荐歌曲
 export const reqRecommendSongs = () => ajax('api/recommend/songs')
+// 获取歌曲评论
+export const reqSongComments = (id, limit, offset, before = 0) => ajax(`api/comment/music?id=${id}&limit=${limit}&offset=${offset}&before=${before}`)
 
 // 搜索相关
 //搜索
@@ -148,11 +150,14 @@ export const reqSingerAlbum = (id, limit, offset) => ajax(`api/artist/album?id=$
 // 获取歌手描述
 export const reqSingerDesc = (id) => ajax(`api/artist/desc?id=${id}`)
 // 获取歌手mv
-export const reqSingerMv = (id, limit) => ajax(`api/artist/mv?id=${id}&limit=${limit}`)
+export const reqSingerMv = (id, limit, offset) => ajax(`api/artist/mv?id=${id}&limit=${limit}&offset=${offset}`)
 // 获取相似歌手
 export const reqSingerSimi = (id) => ajax(`api/simi/artist?id=${id}`)
 // 获取收藏歌手
 export const reqSubSinger = () => ajax('api/artist/sublist')
+// 获取歌手歌曲和部分信息
+export const reqSingerSong = (id) => ajax(`api/artists?id=${id}`)
+
 
 // 电台相关
 // 获取收藏电台

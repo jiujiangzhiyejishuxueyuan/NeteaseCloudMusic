@@ -6,10 +6,13 @@
         <ul class="my-singer-list flex flex-wrap">
             <li class="singer flex" v-for="(singer,index) in singers.data" :key="index">
                 <div class="avatar img-box">
-                    <img :src="singer.picUrl+'?param=100y100'" alt="">
+                    <router-link :to="`/music/artist/${singer.id}`"><img :src="singer.picUrl+'?param=100y100'" alt="">
+                    </router-link>
                 </div>
                 <div class="info">
-                    <p class="name"><a @click="$router.push(`/music/artist/${singer.id}`)">{{singer.name}}</a></p>
+                    <p class="name">
+                        <router-link :to="`/music/artist/${singer.id}`">{{singer.name}}</router-link>
+                    </p>
                     <p class="count">
                         <span class="album">{{singer.albumSize}}个专辑</span>
                         <span class="mv">{{singer.mvSize}}个mv</span>

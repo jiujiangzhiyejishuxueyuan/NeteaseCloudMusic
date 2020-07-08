@@ -70,6 +70,7 @@
                 reqUserRecord(this.id).then(res => {
                     this.record = res.weekData
                 })
+
                 reqUserPlaylist(this.id).then(res => {
                     res.playlist.forEach(item => {
                         item.creator.userId === this.id ? this.createdPlaylist.push(item) : this.subPlaylist.push(item)

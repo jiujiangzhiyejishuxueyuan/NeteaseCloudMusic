@@ -44,10 +44,8 @@
                 let page = this.$route.query.page || 1
                 let limit = page*20
                 let lasttime = -1
-                console.log(page)
                 reqUserFolloweds(this.id,limit,lasttime).then(res => {
                     this.followeds = res.followeds.slice(0,20)
-                    console.log(res)
                 })
             }
         },

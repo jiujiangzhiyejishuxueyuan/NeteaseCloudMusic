@@ -3,6 +3,10 @@
     <my-header v-if="!$route.meta.hidden"/>
     <transition name="view"><router-view class="center expend" v-if="isRouterActive"></router-view></transition>
     <BackTop :duration="800"/>
+    <a class="github" href="https://github.com/jiujiangzhiyejishuxueyuan/NeteaseCloudMusic" target="_blank">
+      <Icon type="logo-github" />
+      <div>github</div>
+    </a>
     <my-footer v-if="!$route.meta.hidden && !$route.meta.hiddenFooter"/>
   </div>
 </template>
@@ -40,6 +44,17 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/style/sty.styl"
   @import "./common/style/media.styl"
+  .github
+    display block
+    position fixed
+    bottom 80px
+    right 30px
+    padding 5px
+    background rgba(0,0,0,.5)
+    color #fff
+    &:hover
+      color #fff
+      background rgba(0,0,0,.8)
   .view-enter-active, .view-leave-active
     transition opacity .3s
 

@@ -42,11 +42,12 @@
                                 placeholder=""
                                 v-model="keywords"
                                 @focus="searchTipShow = true"
-                                @focusout="searchTipShow = false"
+                                @focusout="searchTipHidden"
                         >
                         <div @click="search" class="btn-search">
                             <Icon type="ios-search"/>
                         </div>
+                        <!--                         搜索提示-->
                         <search-tip :keywords="keywords" v-if="searchTipShow"/>
                     </div>
                     <!--                    用户信息-->
@@ -178,6 +179,9 @@
             },
             search() {
                 window.open(`/music/search?keywords=${this.keywords}&type=1`)
+            },
+            searchTipHidden() {
+                setTimeout(() => this.searchTipShow = false, 100)
             }
         },
         created() {

@@ -11,7 +11,7 @@
     export default {
         data() {
             return {
-                s: 5
+                s: 3
             }
         },
         mounted() {

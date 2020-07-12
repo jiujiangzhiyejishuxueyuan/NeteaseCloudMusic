@@ -1,21 +1,22 @@
 <template>
     <ul class="playlists-list">
-        <li class="playlist flex"
+        <li class="playlist"
             v-for="(playlist,index) in playlists"
             :key="index"
-            @click="$router.replace(`${$route.path}?id=${playlist.id}`)"
             :class="{active: $route.query.id == playlist.id}"
         >
-            <div class="img-box">
-                <img :src="playlist.coverImgUrl+'?param=100y100'" alt="">
-            </div>
-            <div class="info">
-                <div class="name ellipse" :title="playlist.name">{{playlist.name}}</div>
-                <p class="count">
-                    {{playlist.trackCount}}首
-                    <span class="by ellipse" v-if="!isCreator" :title="playlist.creator.nickname"> by {{playlist.creator.nickname}}</span>
-                </p>
-            </div>
+            <router-link :to="`/my/m/playlist?id=${playlist.id}`" class="flex">
+                <div class="img-box">
+                    <img :src="playlist.coverImgUrl+'?param=100y100'" alt="">
+                </div>
+                <div class="info">
+                    <div class="name ellipse" :title="playlist.name">{{playlist.name}}</div>
+                    <p class="count">
+                        {{playlist.trackCount}}首
+                        <span class="by ellipse" v-if="!isCreator" :title="playlist.creator.nickname"> by {{playlist.creator.nickname}}</span>
+                    </p>
+                </div>
+            </router-link>
         </li>
     </ul>
 </template>

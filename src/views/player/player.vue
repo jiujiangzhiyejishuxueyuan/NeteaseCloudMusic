@@ -11,20 +11,9 @@
         <div class="player-content flex justify-center">
             <div class="left"></div>
             <div class="center"  v-show="!immerse">
-                <div class="menu-toolbar flex">
-                    <div class="button text-hv" :class="{active:checked.length}">
-                        <Icon type="ios-add-circle-outline"/>
-                        添加到歌单
-                    </div>
-
-                    <div class="button text-hv" @click="batchDelete" :class="{active:checked.length}">
-                        <Icon type="ios-trash"/>
-                        删除
-                    </div>
-                </div>
                 <div class="music-list">
                     <song-list
-                            :songlists="songlist"
+                            :songs="songlist"
                             :show-footer="false"
                             @checked="(value) => checked=value"
                             player
@@ -34,6 +23,8 @@
                             :btns="btns"
                             @ondelete="ondelete"
                             v-model="checked"
+                            ref="songlist"
+                            @batchDelete="batchDelete"
                     />
                 </div>
             </div>
@@ -88,13 +79,13 @@
 <!--                中间-->
                 <div class="play-info expend">
                     <div class="song-info flex justify-between " v-if="song.name">
-                        <div class="song-mate" >
-                            <a class="text-hv">{{song.name}}</a>-
-                            <span>
-                                <a v-for="(singer,index) in song.ar" :key="index" class="text-hv" @click="skip(singer)">
+                        <div class="song-mate">
+                            <a :href="`/music/song/${song.id}`" target="_blank" class="text-hv">{{song.name}}</a>-
+                            <span v-for="(singer,index) in song.ar" :key="index">
+                                <a :href="`/music/artist/${singer.id}`" class="text-hv" target="_blank">
                                     {{singer.name}}
-                                    <span v-if="index==song.ar.length">/</span>
                                 </a>
+                                <span v-if="index==song.ar.length">/</span>
                             </span>
                         </div>
                         <div class="current-time">
@@ -151,6 +142,7 @@
                        @timeupdate="playmonitor"
                        @loadeddata="songload"
                        autoplay
+                       @error="err"
                 ></audio>
             </div>
         </div>
@@ -208,44 +200,50 @@
                 ],
                 checked: [],
                 bit: '无损',
-                setTime: 0
+                setTime: 0,
             }
         },
         methods: {
+            // audio加载出错时触发
+            err() {
+                this.$Message.error('歌曲加载出错')
+                this.changeMusic(this.nextId)
+            },
             skip(singer) {
                 window.open(`/music/artist/${singer.id}`)
             },
+            // 切换歌曲品质
             switchBit(v) {
                 this.bit = v.text
-                reqSongUrl(this.song.id,v.v.br).then(res => {
+                reqSongUrl(this.song.id, v.v.br).then(res => {
                     this.url = res.data[0].url
                 })
             },
+            // 批量删除
             batchDelete() {
-                console.log('11')
+                this.checked.forEach(item => this.ondelete(item))
             },
             //上一曲
             previous() {
                 let index = this.ids.indexOf(this.song.id)
-                index = index ? index-1 : this.ids.length-1
+                index = index ? index - 1 : this.ids.length - 1
                 this.changeMusic(this.ids[index])
             },
             //歌曲右边删除键
-            ondelete(index) {
-                //console.log('删除',index)
-                let id = this.ids[index]
-                this.ids.splice(index,1)
-                this.songlist.splice(index,1)
-                if(id===this.song.id) {
+            ondelete(id) {
+                let index = this.ids.indexOf(id)
+                this.ids.splice(index, 1)
+                this.songlist.splice(index, 1)
+                if (id === this.song.id) {
                     this.changeMusic(this.nextId)
                 }
-                window.localStorage.setItem('musics',JSON.stringify({ids:this.ids}))
+                window.localStorage.setItem('musics', JSON.stringify({ids: this.ids}))
             },
             //播放中触发
             playmonitor(e) {
                 this.song.currentTime = +this.player.currentTime.toFixed(1)
                 this.progress = +(e.target.currentTime / this.song.moreTime).toFixed(3)
-                if(this.player.ended) {
+                if (this.player.ended) {
                     this.changeMusic(this.nextId)
                 }
             },
@@ -282,15 +280,20 @@
                             document.title = title.substring(1, title.length) + title.substring(0, 1);//截取字符重新赋值给title
                             title = document.title.substring(0, title.length);
                         }, 1000)
-                    }).catch(()=> console.log('未找到歌曲',id))
+                    }).catch(() => {
+                        console.log('未找到歌曲', id)
+                        this.changeMusic(this.nextId)
+                    })
+                    // 歌曲Url
                     reqSongUrl(id).then(res => {
                         this.url = res.data[0].url
-                        if(!this.url) {
+                        if (!this.url) {
                             this.$Message.error('获取播放链接失败')
                             this.changeMusic(this.nextId)
                         }
-                        console.log('切歌 '+this.song.name)
+                        console.log('切歌 ' + this.song.name)
                     })
+                    // 歌曲歌词
                     reqSonglyric(id).then(res => {
                         this.song.lyrics = []
                         if(!res.nolyric) {
@@ -319,8 +322,8 @@
             add(value) {
                 let id = value.ids[0]
                 //console.log('新增一首',id)
-                if(value.index!==-1) {
-                    this.songlist.splice(value.index,1)
+                if (value.index !== -1) {
+                    this.songlist.splice(value.index, 1)
                 }
                 this.ids = value.ids
                 reqSongDetail(id).then(res => {
@@ -329,10 +332,13 @@
                     this.changeMusic(id)
                 })
             },
-            adds(value,count) {
-                let ids = value.slice(-count)
+            adds(value) {
+                console.log(value)
+                let ids = value.ids.slice(0, value.count)
+                //console.log('新增',ids)
+                this.ids = value
                 reqSongDetail(ids.join(',')).then(res => {
-                    this.songlist = res.songs.concat(this.songlist)
+                    this.songlist = [...res.songs, ...this.songlist]
                     this.changeMusic(ids[0])
                 })
             }
@@ -358,8 +364,8 @@
                 if (e.key === 'musics') {
                     let echo = JSON.parse(e.newValue)
                     echo.state = true
-                    window.localStorage.setItem('musics',JSON.stringify(echo))
-                    this[JSON.parse(e.newValue).type](JSON.parse(e.newValue),parseInt(e.newValue.count))
+                    window.localStorage.setItem('musics', JSON.stringify(echo))
+                    this[JSON.parse(e.newValue).type](JSON.parse(e.newValue))
                 }
             })
         },
@@ -613,6 +619,7 @@
                         margin 8px 0
 
                 .nolyric
+                    margin-top 50%
                     height 20px
 
 
@@ -620,18 +627,6 @@
                 height 100%
                 position relative
                 flex 1 0 auto
-                padding-top 50px
-
-                .menu-toolbar
-                    color #fff
-                    position absolute
-                    top 0
-                    left 0
-
-                    .button
-                        border-color #fff
-                        margin-right 20px
-
 
                 .music-list
                     height 100%

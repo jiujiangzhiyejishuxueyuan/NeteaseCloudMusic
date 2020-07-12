@@ -5,12 +5,12 @@
                 <img :src="song.al.picUrl+'?param=140y140'">
             </div>
             <div class="song-header-inner container flex">
-                <div class="cover img-box">
+                <div class="header-info-img">
                     <img :src="song.al.picUrl+'?param=280y280'" alt="">
                 </div>
                 <div class="info">
                     <div class="inner">
-                        <h2 class="name">{{song.name}}{{song.alia&&song.alia.length&&` (${song.alia[0]})`}}</h2>
+                        <h2 class="name">{{song.name}}{{song.alia.length?` (${song.alia[0]})`:''}}</h2>
                         <p class="singer">歌手:
                             <router-link :to="`/music/artist/${singer.id}`" v-for="(singer,index) in song.ar"
                                          :key="index">{{singer.name}}
@@ -24,6 +24,7 @@
                 </div>
             </div>
         </div>
+        <header-info-ske v-else/>
         <div class="lyric container">
             <p class="title">歌词</p>
             <div class="lyric-inner " :class="{all: lyricMore}">
@@ -62,10 +63,11 @@
     import SongControl from "@/components/song-control/song-control";
     import CommentEdit from "@/components/comment-edit/comment-edit";
     import CommentList from "@/components/comment-list/comment-list";
+    import HeaderInfoSke from "@/header-info-ske/header-info-ske";
 
     export default {
         name: "song",
-        components: {CommentList, CommentEdit, SongControl},
+        components: {HeaderInfoSke, CommentList, CommentEdit, SongControl},
         data() {
             return {
                 song: '',
@@ -79,6 +81,7 @@
                 commentLimit: 20
             }
         },
+        inject: ['reload'],
         methods: {
             nextComment(page) {
                 let id = this.id
@@ -88,6 +91,11 @@
                     window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
                 })
             },
+        },
+        watch: {
+            $route() {
+                this.reload()
+            }
         },
         created() {
             this.id = this.$route.params.id
@@ -205,11 +213,5 @@
                 .name
                     font-size 26px
 
-            .cover
-                width 280px
-                height 280px
-
-                img
-                    cursor auto
 
 </style>

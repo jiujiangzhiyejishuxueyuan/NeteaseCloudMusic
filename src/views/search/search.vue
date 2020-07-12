@@ -18,7 +18,7 @@
                     <a @click="$router.replace(`${$route.path}?keywords=${$route.query.keywords}&type=${item.key}`)">{{item.text}}</a>
                 </li>
             </ul>
-            <song-list :songlists="result.songs" v-if="$route.query.type==='1'&&result.songs"/>
+            <song-list :songs="result.songs" v-if="$route.query.type==='1'&&result.songs"/>
             <singer-list :singers="result.artists" v-else-if="$route.query.type==='100'&&result.artists"/>
             <album :albums="result.albums" v-else-if="$route.query.type==='10'&&result.albums"/>
             <PlayList :playlists="result.playlists" v-else-if="$route.query.type==='1000'&&result.playlists"/>
@@ -47,7 +47,7 @@
 <script>
     import songList from '@/components/song-list/song-list'
     import singerList from '@/components/singer-list/singer-list'
-    import album from "@/views/home/album/album"
+    import album from "@/components/album-list/album-list"
     import PlayList from "@/components/play-list/play-list"
     import userList from '@/views/search/user-list/user-list'
     import mvList from '@/components/mv-list/mv-list'

@@ -30,6 +30,12 @@ export const changeplaylistSong = (pid, type, sids) => ajax(`api/playlist/tracks
 export const reqRecommendPlaylist = () => ajax('api/recommend/resource')
 // 获取歌单评论
 export const reqPlaylistComments = (id, limit, offset, before = '') => ajax(`api/comment/playlist?id=${id}&limit=${limit}&offset=${offset}&before=${before}`)
+// 收藏/取消收藏歌单
+export const subPlaylist = (id, t) => ajax(`api/playlist/subscribe?t=${t}&id=${id}`)
+
+// 专辑相关
+// 获取专辑详情
+export const reqAlbumDetail = (id) => ajax(`api/album?id=${id}`)
 
 // 用户相关
 //手机号登陆
@@ -146,17 +152,19 @@ export const reqSingerList = (type, area, initial, limit, offset) => ajax(`api/a
 //获取歌手热门50首
 export const reqSingerHotSong = (id) => ajax(`api/artist/top/song?id=${id}`)
 //获取歌手专辑
-export const reqSingerAlbum = (id, limit, offset) => ajax(`api/artist/album?id=${id}&limit=${limit}&offset=${offset}`)
+export const reqSingerAlbum = (id, limit, offset = 0) => ajax(`api/artist/album?id=${id}&limit=${limit}&offset=${offset}`)
 // 获取歌手描述
 export const reqSingerDesc = (id) => ajax(`api/artist/desc?id=${id}`)
 // 获取歌手mv
-export const reqSingerMv = (id, limit, offset) => ajax(`api/artist/mv?id=${id}&limit=${limit}&offset=${offset}`)
+export const reqSingerMv = (id, limit, offset = 0) => ajax(`api/artist/mv?id=${id}&limit=${limit}&offset=${offset}`)
 // 获取相似歌手
 export const reqSingerSimi = (id) => ajax(`api/simi/artist?id=${id}`)
 // 获取收藏歌手
 export const reqSubSinger = () => ajax('api/artist/sublist')
 // 获取歌手歌曲和部分信息
 export const reqSingerSong = (id) => ajax(`api/artists?id=${id}`)
+// 收藏/取消收藏歌手
+export const subSinger = (id, t) => ajax(`api/artist/sub?id=${id}&t=${t}`)
 
 
 // 电台相关

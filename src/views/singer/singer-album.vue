@@ -11,8 +11,8 @@
 
 <script>
     import {reqSingerAlbum} from "@/api";
-    import Album from "@/views/home/album/album";
-    import AlbumSke from "@/views/home/album/album-ske";
+    import Album from "@/components/album-list/album-list";
+    import AlbumSke from "@/components/album-list/album-ske";
 
     export default {
         name: "singer-album",

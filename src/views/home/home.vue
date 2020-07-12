@@ -3,7 +3,7 @@
         <banner :banners="banners" v-if="banners.length"/>
         <banner-ske v-else/>
         <recommend-hot :list="hotList" title="热门推荐" v-if="hotList.length"/>
-        <ske :row="2" v-else/>
+        <playlistListSke :row="2" v-else/>
         <recommend-today v-if="userInfo&&userInfo.userId"/>
         <new-album :albums="albums" title="新碟上架" v-if="albums.length"/>
         <album-ske :row="2" v-else/>
@@ -12,16 +12,17 @@
 </template>
 
 <script>
-    import ske from '@/components/ske/ske'
+    import playlistListSke from '@/components/playlist-list-ske/playlist-list-ske'
     import banner from "@/views/home/banner/banner";
     import bannerSke from '@/views/home/banner/banner-ske'
     import recommendHot from '@/views/home/recommend-hot/recommend-hot'
     import recommendToday from '@/views/home/recommend-today/recommend-today'
-    import newAlbum from '@/views/home/album/album'
-    import albumSke from '@/views/home/album/album-ske'
+    import newAlbum from '@/components/album-list/album-list'
+    import albumSke from '@/components/album-list/album-ske'
     import rank from "@/views/home/rank/rank/rank";
     import {reqBanner, reqHotSongList, reqNewAlbum} from "@/api";
     import {mapState} from 'vuex'
+
     export default {
         name: 'home',
         components: {
@@ -30,7 +31,7 @@
             recommendToday,
             newAlbum,
             rank,
-            ske,
+            playlistListSke,
             albumSke,
             bannerSke
         },

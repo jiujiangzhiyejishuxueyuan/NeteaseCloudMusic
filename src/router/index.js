@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
+import {reqLoginState, reqUserPlaylist} from "@/api";
 
 Vue.use(VueRouter)
 const routerPush = VueRouter.prototype.push
@@ -19,7 +20,15 @@ export default new VueRouter({
         },
         {
             path: '/my',
-            component: () => import('@/views/m/m'),
+            beforeEnter(to, from, next) {
+                reqLoginState().then(res => {
+                    let id = res.profile.userId
+                    reqUserPlaylist(id).then(res => {
+                        let id = res.playlist[0].id
+                        next({path: `/my/m/playlist?id=${id}`})
+                    })
+                })
+            }
         },
         {
             path: '/my/m',
@@ -91,6 +100,11 @@ export default new VueRouter({
             component: () => import('@/views/song/song')
         },
         {
+            name: 'album',
+            path: '/music/album/:id',
+            component: () => import('@/views/album/album')
+        },
+        {
             name: 'artist',
             path: '/music/artist',
             component: () => import('@/views/artist/artist'),
@@ -118,6 +132,10 @@ export default new VueRouter({
                 {
                     path: 'mv',
                     component: () => import('@/views/singer/singer-mv')
+                },
+                {
+                    path: 'desc',
+                    component: () => import('@/views/singer/desc')
                 }
             ]
         },

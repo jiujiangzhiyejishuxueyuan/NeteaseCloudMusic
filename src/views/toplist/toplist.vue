@@ -56,7 +56,7 @@
                         播放: <span class="count">{{currentToplist.playCount}} </span>次
                     </div>
                 </div>
-                <song-list :songlists="currentToplist.tracks"/>
+                <song-list :songs="currentToplist.tracks"/>
             </div>
             <div class="comment-box">
                 <div class="comment-box-header bb">

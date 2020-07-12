@@ -1,5 +1,5 @@
 <template>
-    <div class="new-album section">
+    <div class="album-list section">
         <div class="container">
             <div class="section-header flex justify-between" v-if="title">
                 <div class="title">
@@ -7,34 +7,36 @@
                 </div>
                 <div class="more gray">
                     更多
-                    <Icon type="ios-arrow-dropright-circle" />
+                    <Icon type="ios-arrow-dropright-circle"/>
                 </div>
             </div>
-            <div class="new-album-items flex flex-wrap">
-                <div class="item-contain" v-for="(item,index) in albums" :key="index">
+            <div class="album-items flex flex-wrap">
+                <div class="item-contain" v-for="(album,index) in albums" :key="index">
                     <div class="item-box">
                         <div class="item-inner">
                             <div class="img-box">
-                                <img :src="item.picUrl+'?param=250y250'">
+                                <router-link :to="`/music/album/${album.id}`"><img :src="album.picUrl+'?param=250y250'">
+                                </router-link>
                             </div>
                             <div class="play-box">
-                                <img src="../../../static/imgs/btn-play.png">
+                                <img src="../../static/imgs/btn-play.png">
                             </div>
                             <i class="album-cover"></i>
                         </div>
                         <div class="item-info">
                             <p class="album-name name-block">
-                                <span>{{item.name}}</span>
+                                <router-link :to="`/music/album/${album.id}`" class="text-hv">{{album.name}}
+                                </router-link>
                             </p>
                             <p class="time block-name-next" v-if="isSinger">
-                                {{item.publishTime | dataFormat(0)}}
+                                {{album.publishTime | dataFormat(0)}}
                             </p>
                             <p class="singer block-name-next" v-else>
-                                <span v-for="(singer,index) in item.artists" :key="index"
-                                      @click="$router.push(`/music/artist/${singer.id}`)">
+                                <router-link v-for="(singer,index) in album.artists" :key="index"
+                                             :to="`/music/artist/${singer.id}`" class="text-hv">
                                     {{singer.name}}
-                                    <span v-if="index+1<item.artists.length">/</span>
-                                </span>
+                                    <span v-if="index+1<album.artists.length">/</span>
+                                </router-link>
                             </p>
                         </div>
                     </div>
@@ -56,10 +58,11 @@
     }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
     $red = #E60026
 
-    .new-album
+    .album-list
+        margin-top 10px
         @media screen and (max-width: 1550px)
             .img-box
                 height 170px !important
@@ -70,29 +73,33 @@
         .section-header
             h1
                 font-size 28px
+
         .item-contain
             width 20%
 
         .item-box
-            cursor pointer
             position relative
             margin 0 21px 25px
             padding 0 12.5px
-            &:hover .img-box img
-                transform scale(1.1)
-            &:hover .play-box
-                display block
+
             .info
                 margin-top 15px
 
         .item-inner
             position relative
+
+            &:hover .img-box img
+                transform scale(1.1)
+
+            &:hover .play-box
+                display block
+
             .play-box
                 display none
                 position absolute
                 top 50%
                 left 50%
-                transform translate(-50%,-50%)
+                transform translate(-50%, -50%)
             .album-cover
                 width 100%
                 height 100%
@@ -106,7 +113,7 @@
                 z-index -1
         .img-box
             width 100%
-            height 190px
+            height 210px
             overflow hidden
             position relative
             border-radius 15px

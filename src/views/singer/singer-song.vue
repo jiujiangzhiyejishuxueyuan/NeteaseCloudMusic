@@ -3,7 +3,7 @@
         <div class="singer-title">
             热门歌曲({{songs.length}}首)
         </div>
-        <song-list :songlists="songs"/>
+        <song-list :songs="songs"/>
     </div>
 </template>
 

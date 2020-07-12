@@ -53,12 +53,9 @@
             }
         },
         created() {
-            reqLoginState().then(res => {
-                this.id = res.profile.userId
-                reqUserPlaylist(this.id).then(res => {
-                    res.playlist.forEach(item => {
-                        item.creator.userId === this.id ? this.createdPlaylist.push(item) : this.subPlaylist.push(item)
-                    })
+            reqUserPlaylist(this.id).then(res => {
+                res.playlist.forEach(item => {
+                    item.creator.userId === this.id ? this.createdPlaylist.push(item) : this.subPlaylist.push(item)
                 })
             })
             reqUserSubCount().then(res => {
@@ -68,7 +65,15 @@
                 this.vLength = res.count
             })
         },
-
+        beforeRouteEnter(to, from, next) {
+            reqLoginState().then(res => {
+                if (res.code === 200) {
+                    next(vm => vm.id = res.profile.userId)
+                } else {
+                    next('/music')
+                }
+            })
+        }
     }
 </script>
 

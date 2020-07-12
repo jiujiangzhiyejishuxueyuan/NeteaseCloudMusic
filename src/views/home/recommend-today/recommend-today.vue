@@ -50,16 +50,16 @@
                 </ul>
             </div>
         </div>
-        <ske :row="playlists.length > 6 ? 2 : 1" v-else/>
+        <playlistListSke :row="playlists.length > 6 ? 2 : 1" v-else/>
     </div>
 </template>
 
 <script>
     import {reqRecommendPlaylist} from "@/api";
-    import Ske from "@/components/ske/ske";
+    import playlistListSke from "@/components/playlist-list-ske/playlist-list-ske";
 
     export default {
-        components: {Ske},
+        components: {playlistListSke},
         data() {
             return {
                 playlists: []

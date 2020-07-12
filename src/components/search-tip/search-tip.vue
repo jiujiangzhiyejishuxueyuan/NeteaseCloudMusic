@@ -24,8 +24,8 @@
             </p>
             <ul class="list">
                 <li class="item ellipse" v-for="(album,index) in tip.albums" :key="index">
-                    <router-link :to="`/music/album/${album.id}`" class="ellipse">{{album.name }} - {{
-                        album.artist.name}}
+                    <router-link :to="`/music/album/${album.id}`" class="ellipse" @click="ss">
+                        {{album.name }} - {{album.artist.name}}
                     </router-link>
                 </li>
             </ul>
@@ -59,12 +59,16 @@
                 hot: []
             }
         },
+        methods: {
+            ss() {
+                console.log('woca')
+            }
+        },
         watch: {
             keywords(value) {
                 if (value) {
                     this.hot = []
                     searchSuggest(value).then(res => {
-                        console.log(res)
                         this.tip = res.result
                     })
                 } else {

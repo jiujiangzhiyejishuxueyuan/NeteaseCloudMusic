@@ -1,10 +1,16 @@
 <template>
-    <div class="song-control flex align-center justify-end" :class="{active: showAdd}" >
+    <div class="song-control flex align-center justify-end" :class="{active: playlistsShow}">
         <span class="item" @click="click(item.event,id)" v-for="(item,index) in btns" :key="index">
             <Icon type="md-heart" v-if="item.event==='onlove'&&like" title="取消喜欢"/>
             <Icon :type="item.icon" v-else :title="item.title"/>
         </span>
-        <add-song-plsylist v-if="showAdd" @close="addClose" :id="id" />
+        <!--        <add-song-plsylist v-if="showAdd" @close="addClose" :id="id" />-->
+        <ul class="playlist-list" v-if="playlistsShow">
+            <li v-for="(playlist,index) in playlists" :key="index" class="ellipse"
+                @click.stop="addToPlaylist(playlist.id)">
+                {{playlist.name}}
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -38,53 +44,50 @@
             }
         },
         components: {
-            addSongPlsylist
+
         },
         data() {
             return {
-                showAdd: false
+                playlistsShow: false,
+                playlists: []
             }
         },
         methods: {
-            click(type,id) {
-                this.$emit(type,id)
+            addToPlaylist(pid) {
+                changeplaylistSong(pid, 'add', this.id).then(res => {
+                    if (res.code === 200) {
+                        this.$Message.success('添加到歌单成功')
+                        this.playlistsShow = false
+                    } else if (res.code === 502) {
+                        this.$Message.info('歌单歌曲重复')
+                    } else {
+                        this.$Message.error('操作失败')
+                    }
+                })
+            },
+            click(type, id) {
+                this.$emit(type, id)
                 this[type] && this[type](id)
             },
-            onadd(id) {
-                this.showAdd = true
-            },
-            addClose() {
-                this.showAdd = false
+            onadd() {
+                this.playlistsShow = true
+                reqUserPlaylist(this.userInfo.userId).then(res => {
+                    this.playlists = res.playlist.filter(item => {
+                        return !item.subscribed
+                    })
+                })
+                setTimeout(() => {
+                    window.onclick = () => {
+                        this.playlistsShow = false
+                        window.onclick = null
+                    }
+                })
             },
             onlove(id) {
                 this.like = !this.like
             },
             onplay(id) {
-                console.log(id)
-                let musics = JSON.parse(window.localStorage.getItem('musics')) || {}
-                musics = musics.ids || []
-                let index = musics.indexOf(id)
-                if(index!==-1) {
-                    musics.splice(index,1)
-                }
-                musics.unshift(id)
-                musics = {
-                    ids: musics,
-                    type: 'add',
-                    index
-                }
-                window.localStorage.setItem('musics',JSON.stringify(musics))
-                setTimeout(()=> {
-                    this.isplayer()
-                },100)
-            },
-            isplayer() {
-                let state = JSON.parse(window.localStorage.getItem('musics')).state
-                if(state) {
-                    this.$Message.success('添加到播放器成功')
-                } else {
-                    window.open('/music/player/audio')
-                }
+                this.publicMethods.playMusic(id, this.$Message)
             }
         },
         computed: {
@@ -118,10 +121,31 @@
         opacity 0
         font-size 20px
         position relative
+
         &.active
             opacity 1
+
         .ivu-icon-md-heart
             color #E91E63
+
+        .playlist-list
+            z-index 11
+            position absolute
+            transform translateX(-100%)
+            left 0
+            text-align left
+            background #ffffff
+            color #333
+            font-size 14px
+
+            li
+                cursor pointer
+                padding 5px 10px
+
+                &:hover
+                    color #fff
+                    background #E91E63
+
         .item
             display block
             width 35px
@@ -130,6 +154,7 @@
             margin-right 5px
             transition all .2s
             cursor pointer
+
             &:hover
-                background rgba(0,0,0,.1)
+                background rgba(0, 0, 0, .1)
 </style>

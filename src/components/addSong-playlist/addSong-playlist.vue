@@ -32,10 +32,6 @@
         },
         created() {
             reqUserPlaylist(this.userInfo.userId).then(res => {
-                console.log(res,res.playlist.length)
-                res.playlist.forEach(item => {
-                    console.log(item.creator.nickname)
-                })
                 this.playlists = res.playlist.filter(item => {
                     return !item.subscribed
                 })

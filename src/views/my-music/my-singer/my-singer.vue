@@ -6,16 +6,19 @@
         <ul class="my-singer-list flex flex-wrap">
             <li class="singer flex" v-for="(singer,index) in singers.data" :key="index">
                 <div class="avatar img-box">
-                    <router-link :to="`/music/artist/${singer.id}`"><img :src="singer.picUrl+'?param=100y100'" alt="">
+                    <router-link :to="`/music/artist/${singer.id}`">
+                        <img :src="singer.picUrl+'?param=100y100'" alt="">
                     </router-link>
                 </div>
                 <div class="info">
                     <p class="name">
                         <router-link :to="`/music/artist/${singer.id}`">{{singer.name}}</router-link>
+                        <span class="alialse">{{singer.alias[0]}}</span>
                     </p>
                     <p class="count">
-                        <span class="album">{{singer.albumSize}}个专辑</span>
-                        <span class="mv">{{singer.mvSize}}个mv</span>
+                        <router-link class="album" :to="`/music/artist/${singer.id}/album`">{{singer.albumSize}}个专辑
+                        </router-link>
+                        <router-link :to="`/music/artist/${singer.id}/mv`" class="mv">{{singer.mvSize}}个mv</router-link>
                     </p>
                 </div>
             </li>
@@ -54,13 +57,23 @@
                     margin-bottom 10px
                     font-weight 600
                     font-size 15px
-                    &:hover
+
+                    .alialse
+                        color #999
+                        font-size 12px
+
+                    a:hover
                         color $blue
             .singer
                 padding 10px 0 10px 10px
                 width 50%
+
+                .count
+                    a:hover
+                        color #00b5e5
+
                 &:hover
-                    background rgba(0,0,0,.02)
+                    background rgba(0, 0, 0, .02)
         .avatar
             width 80px
             height 80px

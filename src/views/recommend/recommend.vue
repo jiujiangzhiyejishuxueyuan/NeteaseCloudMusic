@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <song-list class="container" :songlists="songs" v-if="songs.length"/>
+        <song-list class="container" :songs="songs" v-if="songs.length"/>
         <div class="ske container " v-else>
             <Spin></Spin>
         </div>

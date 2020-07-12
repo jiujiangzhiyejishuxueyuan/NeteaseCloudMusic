@@ -1,14 +1,14 @@
 <template>
     <div class="playlist-detail">
-        <div class="header-info">
+        <div class="header-info" v-if="songlist">
             <div class="background-blur">
                 <img :src="songlist.coverImgUrl+'?param=200y200'">
             </div>
             <div class="info-inner flex container align-center">
-                <div class="img-box">
+                <div class="img-box header-info-img">
                     <img :src="songlist.coverImgUrl+'?param=500y500'" v-if="songlist.coverImgUrl">
                 </div>
-                <div class="content" v-if="songlist.creator">
+                <div class="content flex direction-column justify-between" v-if="songlist.creator">
                     <div class="title ">
                         <h1 class="ellipse" :title="songlist.name">{{songlist.name}}</h1>
                     </div>
@@ -27,16 +27,24 @@
                     </div>
                     <div class="tags" v-if="songlist.tags.length">
                         <span>标签:</span>
-                        <router-link :to="`/music/playlist?cat=${tag}`" v-for="(tag,index) in songlist.tags" :key="index">{{tag}}</router-link>
+                        <router-link :to="`/music/playlist?cat=${tag}`" v-for="(tag,index) in songlist.tags"
+                                     :key="index">{{tag}}
+                        </router-link>
                     </div>
                     <div class="brief ellipse" v-if="songlist.description" :title="songlist.description">
                         <span>简介:</span>
                         {{songlist.description}}
                     </div>
-                    <playlist-control :commentObj="$refs.comment" :id="songlist.id"/>
+                    <playlist-control
+                            @allPlay="allPlay"
+                            @sub="sub"
+                            @scrollToComment="scrollToComment"
+                            :subed="subed"
+                    />
                 </div>
             </div>
         </div>
+        <header-info-ske v-else/>
         <div class="playlist-box">
             <div class="container">
                 <div class="playlist-inner">
@@ -47,7 +55,7 @@
                             播放: <span class="count">{{songlist.playCount}} </span>次
                         </div>
                     </div>
-                    <song-list :songlists="songs" v-if="songs"/>
+                    <song-list :songs="songs" v-if="songs"/>
                     <ul class="songlist-ske" v-else>
                         <li class="song" v-for="index in 10" :key="index"></li>
                     </ul>
@@ -91,12 +99,14 @@
 <script>
     import songList from '@/components/song-list/song-list'
     import playlistControl from '@/components/playlist-control/playlist-control'
-    import {reqPlaylistComments, reqSongDetail, reqSonglistDetail} from "@/api";
+    import {reqPlaylistComments, reqSongDetail, reqSonglistDetail, subPlaylist} from "@/api";
     import CommentList from "@/components/comment-list/comment-list";
     import CommentEdit from "@/components/comment-edit/comment-edit";
+    import HeaderInfoSke from "@/header-info-ske/header-info-ske";
 
     export default {
         components: {
+            HeaderInfoSke,
             CommentEdit,
             CommentList,
             songList,
@@ -109,10 +119,26 @@
                 hotComments: true,
                 comment: '',
                 commentLimit: 20,
-                c: ''
+                c: '',
+                subed: false,
             }
         },
         methods: {
+            allPlay() {
+                const ids = this.songlist.trackIds.map(item => {
+                    return item.id
+                })
+                this.publicMethods.playMusic(ids, this.$Message)
+            },
+            sub() {
+                subPlaylist(this.songlist.id, this.subed ? 2 : 1).then(res => {
+                    if (res.code === 200) {
+                        this.subed = !this.subed
+                    } else {
+                        this.$Message.error('操作失败')
+                    }
+                })
+            },
             scrollToComment() {
                 window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))
             },
@@ -132,7 +158,6 @@
                 let id = this.$route.params.id || this.$route.query.id
                 reqPlaylistComments(id, this.commentLimit, 0).then(res => {
                     this.comment = res
-
                     if (res.hotComments && res.hotComments.length) {
                         this.c = res.hotComments
                     } else {
@@ -142,6 +167,7 @@
                 })
                 reqSonglistDetail(id).then(res => {
                     this.songlist = res.playlist
+                    this.subed = res.playlist.subscribed
                     document.title = res.playlist.name + '-歌单-网易云音乐'
                     let ids = []
                     let startCount = (page - 1) * 20
@@ -205,7 +231,7 @@
 
         .header-info
             position relative
-            padding 80px 0
+            padding 50px 0
 
             .img-box > img
                 cursor auto
@@ -219,15 +245,7 @@
                 .playlist-control
                     margin-top 15px
 
-                    .button
-                        margin-right 20px
-                    .play-all
-                        background #e91e63
-                        color #fff
-                        border-color $red
-                        i
-                            font-size 16px
-                            font-weight 800
+
                 .title
                     padding 0 0 20px
                 .user-name
@@ -269,16 +287,6 @@
 
                         &:hover
                             color $red
-
-            .img-box
-                width 316px
-                height 316px
-                @media screen and (max-width: 1550px)
-                    width 270px
-                    height 270px
-                @media screen and (max-width: 1200px)
-                    width 222px
-                    height 222px
 
         .playlist-box
             background #fff

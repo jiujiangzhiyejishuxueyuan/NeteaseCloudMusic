@@ -52,6 +52,7 @@ export default {
     padding 5px
     background rgba(0,0,0,.5)
     color #fff
+      z-index 9999
     &:hover
       color #fff
       background rgba(0,0,0,.8)

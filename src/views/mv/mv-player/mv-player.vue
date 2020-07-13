@@ -21,15 +21,15 @@
                     <v-player :url="url"/>
                 </div>
                 <div class="video-control flex">
-                    <div class="praised" :class="{active:count.liked}" @click="like">
+                    <div class="praised" :class="{active:count.liked}" @click="jump('like')">
                         <Icon type="md-thumbs-up"/>
                         {{count.likedCount | playCount}}
                     </div>
-                    <div class="subscribe" :class="{active:mv.subed}" @click="sub">
+                    <div class="subscribe" :class="{active:mv.subed}" @click="jump('sub')">
                         <Icon type="md-star"/>
                         {{mv.subCount | playCount}}
                     </div>
-                    <div class="share" @click="share">
+                    <div class="share" @click="jump('share')">
                         <Icon type="ios-share-alt"/>
                         {{mv.shareCount | playCount}}
                     </div>
@@ -113,6 +113,13 @@
             }
         },
         methods: {
+            jump(e, params) {
+                if (this.$store.state.userInfo) {
+                    this[e](...params)
+                } else {
+                    this.$Message.info('请先登录')
+                }
+            },
             share() {
                 this.mv.shareCount++
                 this.$Message.success('分享成功!')
@@ -179,6 +186,7 @@
             reqMvDetail(id).then(res => {
                 this.subed = res.subed
                 this.mv = res.data
+                document.title = res.data.name + ' - mv - 网易云音乐'
             })
             reqMvUrl(id).then(res => {
                 this.url = res.data.url

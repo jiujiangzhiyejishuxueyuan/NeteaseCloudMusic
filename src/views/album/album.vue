@@ -50,7 +50,8 @@
         <song-list :songs="songs" class="container"/>
         <div class="other-album container">
             <h2 class="title bb">歌手其他专辑</h2>
-            <album-list :albums="otherAlbums" is-singer/>
+            <album-list :albums="otherAlbums" is-singer v-if="otherAlbums.length"/>
+            <album-ske :row="1" hidden-header v-else/>
         </div>
     </div>
 </template>
@@ -60,11 +61,12 @@
     import PlaylistControl from "@/components/playlist-control/playlist-control";
     import SongList from "@/components/song-list/song-list";
     import albumList from '@/components/album-list/album-list'
-    import HeaderInfoSke from "@/header-info-ske/header-info-ske";
+    import HeaderInfoSke from "@/components/header-info-ske/header-info-ske";
+    import AlbumSke from "@/components/album-list/album-ske";
 
     export default {
         name: "album",
-        components: {HeaderInfoSke, SongList, PlaylistControl, albumList},
+        components: {AlbumSke, HeaderInfoSke, SongList, PlaylistControl, albumList},
         data() {
             return {
                 songs: [],
@@ -105,7 +107,10 @@
 
             },
             allPlay() {
-
+                let ids = this.songs.map(item => {
+                    return item.id
+                })
+                this.publicMethods.playMusic(ids)
             },
         },
         inject: ['reload'],

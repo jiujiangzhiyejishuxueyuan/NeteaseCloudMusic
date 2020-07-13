@@ -2,7 +2,7 @@
     <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
             <div class="swiper-slide"  v-for="(banner,index) in banners" :key="index">
-                <img :src="banner.imageUrl" @click="skip(banner)">
+                <img :src="banner.imageUrl+'?param1080y400'" @click="skip(banner)">
             </div>
         </div>
         <div class="swiper-pagination"></div>
@@ -49,7 +49,10 @@
 <style lang="stylus" rel="stylesheet/stylus">
 .swiper-container
     margin 20px 0
+
     .swiper-slide
+        img
+            width 1080px
         @media screen and (max-width: 1550px)
             img
                 width 900px

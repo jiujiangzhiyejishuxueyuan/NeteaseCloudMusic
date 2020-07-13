@@ -69,9 +69,10 @@
             reqLoginState().then(res => {
                 if (res.code === 200) {
                     next(vm => vm.id = res.profile.userId)
-                } else {
-                    next('/music')
                 }
+            }).catch(() => {
+                console.log('22')
+                next('/music')
             })
         }
     }

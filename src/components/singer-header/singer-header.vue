@@ -126,7 +126,7 @@
         .desc
             position relative
             line-height 21px
-            padding-right 50px
+            padding 0 50px
             margin 10px auto 0
             max-width 80%
             .more

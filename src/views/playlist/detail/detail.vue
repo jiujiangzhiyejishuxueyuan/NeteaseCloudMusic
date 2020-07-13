@@ -19,7 +19,7 @@
                         <router-link :to="`/user/home?id=${songlist.creator.userId}`" title="查看主页">
                             {{songlist.creator.nickname}}
                         </router-link>
-                        <div class="createTime">{{songlist.createTime | dataFormat}} 创建</div>
+                        <div class="createTime">{{songlist.createTime | dataFormat(0)}} 创建</div>
                     </div>
                     <div class="playcount">
                         <span>播放量:</span>
@@ -102,7 +102,7 @@
     import {reqPlaylistComments, reqSongDetail, reqSonglistDetail, subPlaylist} from "@/api";
     import CommentList from "@/components/comment-list/comment-list";
     import CommentEdit from "@/components/comment-edit/comment-edit";
-    import HeaderInfoSke from "@/header-info-ske/header-info-ske";
+    import HeaderInfoSke from "@/components/header-info-ske/header-info-ske";
 
     export default {
         components: {
@@ -131,13 +131,17 @@
                 this.publicMethods.playMusic(ids, this.$Message)
             },
             sub() {
-                subPlaylist(this.songlist.id, this.subed ? 2 : 1).then(res => {
-                    if (res.code === 200) {
-                        this.subed = !this.subed
-                    } else {
-                        this.$Message.error('操作失败')
-                    }
-                })
+                if (this.$store.state.userInfo) {
+                    subPlaylist(this.songlist.id, this.subed ? 2 : 1).then(res => {
+                        if (res.code === 200) {
+                            this.subed = !this.subed
+                        } else {
+                            this.$Message.error('操作失败')
+                        }
+                    })
+                } else {
+                    this.$Message.info('请先登录')
+                }
             },
             scrollToComment() {
                 window.scrollTo(0, (this.$refs.comment.getBoundingClientRect().top + window.scrollY))

@@ -62,6 +62,7 @@
                     opacity 1 !important
             .img-box
                 position relative
+                height 150px
                 @media screen and (max-width: 1550px)
                     height 107px
                 @media screen and (max-width: 1200px)

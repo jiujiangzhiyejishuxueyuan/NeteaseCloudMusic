@@ -70,21 +70,29 @@
                 this[type] && this[type](id)
             },
             onadd() {
-                this.playlistsShow = true
-                reqUserPlaylist(this.userInfo.userId).then(res => {
-                    this.playlists = res.playlist.filter(item => {
-                        return !item.subscribed
+                if (this.userInfo) {
+                    this.playlistsShow = true
+                    reqUserPlaylist(this.userInfo.userId).then(res => {
+                        this.playlists = res.playlist.filter(item => {
+                            return !item.subscribed
+                        })
                     })
-                })
-                setTimeout(() => {
-                    window.onclick = () => {
-                        this.playlistsShow = false
-                        window.onclick = null
-                    }
-                })
+                    setTimeout(() => {
+                        window.onclick = () => {
+                            this.playlistsShow = false
+                            window.onclick = null
+                        }
+                    })
+                } else {
+                    this.$Message.info('请先登录')
+                }
             },
             onlove(id) {
-                this.like = !this.like
+                if (this.userInfo) {
+                    this.like = !this.like
+                } else {
+                    this.$Message.info('请先登录')
+                }
             },
             onplay(id) {
                 this.publicMethods.playMusic(id, this.$Message)
@@ -98,15 +106,15 @@
                 },
                 set(value) {
                     if(value) {
-                        likeSong(this.id,true).then(res => {
+                        likeSong(this.id, true).then(res => {
                             this.$Message.success('添加到我喜欢的音乐成功')
                             this.likeIds.push(this.id)
-                        }).catch(error => this.$Message.error('添加失败'))
+                        }).catch(error => this.$Message.error('喜欢失败'))
                     } else {
-                        likeSong(this.id,false).then(res => {
+                        likeSong(this.id, false).then(res => {
                             this.$Message.success('取消喜欢成功')
-                            this.likeIds.splice(this.likeIds.indexOf(this.id),1)
-                        }).catch(error => this.$Message.error('取消失败'))
+                            this.likeIds.splice(this.likeIds.indexOf(this.id), 1)
+                        }).catch(error => this.$Message.error('取消喜欢失败'))
                     }
                 }
             }

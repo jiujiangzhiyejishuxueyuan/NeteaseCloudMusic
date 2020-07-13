@@ -20,11 +20,11 @@
                     <v-player :url="url" v-if="url" @ready="vReady = true"/>
                 </div>
                 <div class="control flex">
-                    <div class="praised" :class="{active:liked}" @click="giveLike">
+                    <div class="praised" :class="{active:liked}" @click="jump('giveLike')">
                         <Icon type="md-thumbs-up"/>
                         {{video.praisedCount | playCount}}
                     </div>
-                    <div class="subscribe" @click="subVideo">
+                    <div class="subscribe" @click="jump('subVideo')">
                         <Icon type="md-star"/>
                         {{video.subscribeCount | playCount}}
                     </div>
@@ -109,6 +109,13 @@
         },
         inject: ['reload'],
         methods: {
+            jump(e, params) {
+                if (this.userInfo) {
+                    this[e](...params)
+                } else {
+                    this.$Message.info('请先登录')
+                }
+            },
             //评论翻页
             pageTurning(page) {
                 this.commentsPage = page

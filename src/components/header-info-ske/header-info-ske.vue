@@ -26,6 +26,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     #header-info-ske
+        padding 40px 0
         .cover, .name, .creator, .desc, .time, .contorl div
             animation ske .8s linear infinite alternate
 

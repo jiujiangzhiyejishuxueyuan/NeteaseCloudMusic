@@ -63,7 +63,7 @@
     import SongControl from "@/components/song-control/song-control";
     import CommentEdit from "@/components/comment-edit/comment-edit";
     import CommentList from "@/components/comment-list/comment-list";
-    import HeaderInfoSke from "@/header-info-ske/header-info-ske";
+    import HeaderInfoSke from "@/components/header-info-ske/header-info-ske";
 
     export default {
         name: "song",

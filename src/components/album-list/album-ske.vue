@@ -31,14 +31,20 @@
 <style lang="stylus" rel="stylesheet/stylus">
     $h = rgba(0,0,0,.05)
     .album-ske
+        .album-ske-list
+            margin-top 10px
+
         .album-ske-item
             width 20%
             padding 0 25px 20px
-            .singer,.inner,.name,.title
+
+            .singer, .inner, .name, .title
                 background $h
-                animation ske .8s  linear infinite alternate
+                animation ske .8s linear infinite alternate
+
             .info
                 margin-top 10px
+
                 .singer
                     margin-top 10px
                     border-radius 10px
@@ -51,10 +57,12 @@
                     height 25px
             .inner
                 border-radius 15px
-                height 190px
+                height 210px
                 width 100%
+                @media screen and (max-width: 1550px)
+                    height 170px !important
                 @media screen and (max-width: 1200px)
-                    height 150px
+                    height 133px !important
         .album-ske-header
             height 60px
             .title

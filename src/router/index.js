@@ -27,6 +27,8 @@ export default new VueRouter({
                         let id = res.playlist[0].id
                         next({path: `/my/m/playlist?id=${id}`})
                     })
+                }).catch(() => {
+                    next('/music')
                 })
             }
         },
@@ -198,6 +200,13 @@ export default new VueRouter({
             component: () => import('@/views/video/video'),
             meta: {
                 title: '视频'
+            },
+            beforeEnter(to, from, next) {
+                reqLoginState().then(res => {
+                    next()
+                }).catch(() => {
+                    next('/music')
+                })
             }
         },
         {
@@ -223,7 +232,8 @@ export default new VueRouter({
             path: '/music/player/audio',
             component: () => import('@/views/player/player'),
             meta: {
-                hidden: true
+                hidden: true,
+                title: '播放器'
             }
         },
         {

@@ -2,7 +2,7 @@
     <div class="my-song-list" :class="{isplayer: player}">
         <!--        播放器头-->
         <div class="menu-toolbar flex" v-if="player">
-            <div class="button text-hv" :class="{active:value.length}" @click="switchPlaylistsShow('top')">
+            <div class="button" :class="{active:value.length}" @click="switchPlaylistsShow('top')">
                 <Icon type="ios-add-circle-outline"/>
                 添加到歌单
                 <ul class="playlist-list top" v-if="playlistsShow==='top'">
@@ -12,7 +12,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="button text-hv" @click="batchDelete" :class="{active:value.length}">
+            <div class="button" @click="batchDelete" :class="{active:value.length}">
                 <Icon type="ios-trash"/>
                 删除
             </div>

@@ -1,12 +1,8 @@
 <template>
     <div class="player-audio">
         <div class="player-header flex justify-between">
-            <div class="logo" @click="$router.replace('/music')">
-
-            </div>
-            <div class="right">
-
-            </div>
+            <div class="logo" @click="$router.replace('/music')"></div>
+            <div class="right"></div>
         </div>
         <div class="player-content flex justify-center">
             <div class="left"></div>
@@ -62,7 +58,7 @@
             <div class="section-container flex align-center">
 <!--                左侧按钮-->
                 <div class="action-left flex">
-                    <div class="mode">
+                    <div class="mode" @click="$Message.info('厉害')">
                         <Icon type="md-checkmark-circle-outline"/>
                     </div>
                     <div class="prev" @click="previous">
@@ -147,7 +143,7 @@
             </div>
         </div>
         <div class="player-bg">
-            <img :src="song.al.picUrl" alt="" v-if="song.ar">
+            <img :src="song.al.picUrl+'?params108y72'" alt="" v-if="song.ar">
         </div>
     </div>
 </template>
@@ -221,7 +217,19 @@
             },
             // 批量删除
             batchDelete() {
-                this.checked.forEach(item => this.ondelete(item))
+                let current = false
+                this.checked.forEach(item => {
+                    let index = this.ids.indexOf(item)
+                    this.ids.splice(index, 1)
+                    this.songlist.splice(index, 1)
+                    if (item === this.song.id) {
+                        current = true
+                    }
+                })
+                if (current) {
+                    this.changeMusic(this.nextId)
+                }
+                window.localStorage.setItem('musics', JSON.stringify({ids: this.ids}))
             },
             //上一曲
             previous() {
@@ -273,7 +281,6 @@
                             m: song.m && {v: song.m, text: '高清', sty: 'm'},
                             l: song.l && {v: song.l, text: '标准', sty: 'l'}
                         }
-                        let artist = ''
                         let title = `正在播放 ${song.name} - ${song.ar[0].name}..`
 
                         this.setTime = setInterval(() => {
@@ -316,6 +323,7 @@
                     this.song = {}
                     this.progress = 0
                     this.isplay = false
+                    this.song.lyrics = false
                 }
 
             },
@@ -336,7 +344,7 @@
                 console.log(value)
                 let ids = value.ids.slice(0, value.count)
                 //console.log('新增',ids)
-                this.ids = value
+                this.ids = [...this.ids, ...ids]
                 reqSongDetail(ids.join(',')).then(res => {
                     this.songlist = [...res.songs, ...this.songlist]
                     this.changeMusic(ids[0])
@@ -556,7 +564,7 @@
                             width 100px
 
         .player-bg
-            position absolute
+            position fixed
             top 0
             right 0
             bottom 0

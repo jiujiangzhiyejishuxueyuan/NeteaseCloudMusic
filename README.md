@@ -1,7 +1,7 @@
 # NeteaseCloundMusic
 #### vusjs打造网易云音乐pc端
 #### api地址: https://github.com/Binaryify/NeteaseCloudMusicApi
-#### 项目预览地址:http://music.pengwenli.top/ 最后打包时间7.6
+#### 项目预览地址:http://music.pengwenli.top/ 最后打包时间7.13
 #### 运行此项目前先运行api
 ###### 仅适配pc端大中(1550)小(1200)屏幕,未对手机屏做适配
 ### 已实现功能
@@ -21,7 +21,6 @@
 
 ### 暂未实现功能
 
-- 专辑详情
 - 电台详情
 - 电台播放
 - 电台列表

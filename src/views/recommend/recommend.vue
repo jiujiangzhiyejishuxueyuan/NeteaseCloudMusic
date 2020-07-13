@@ -90,7 +90,8 @@
         },
         mounted() {
             reqRecommendSongs().then(res => {
-                this.songs = res.recommend
+                console.log(res);
+                this.songs = res.recommend || res.data.dailySongs
             })
             reqLoginState().then(res => {
                 let id = res.profile.userId
@@ -98,6 +99,7 @@
                     this.playCount = res.listenSongs
                 })
                 reqLikeSong(id).then(res => {
+                    console.log(res)
                     this.likeCount = res.ids.length
                 })
             })

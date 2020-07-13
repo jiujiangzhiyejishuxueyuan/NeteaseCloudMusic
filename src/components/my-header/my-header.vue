@@ -129,11 +129,11 @@
                                 text: '歌手',
                                 icon: 'md-person'
                             },
-                            {
-                                link: '/music/dj',
-                                text: '个人电台',
-                                icon: 'ios-headset-outline'
-                            },
+                            // {
+                            //     link: '/music/dj',
+                            //     text: '个人电台',
+                            //     icon: 'ios-headset-outline'
+                            // },
                         ]
                     },
                     {
@@ -158,10 +158,10 @@
                             }
                         ]
                     },
-                    {
-                        text: '朋友',
-                        link: '/friend'
-                    }
+                    // {
+                    //     text: '朋友',
+                    //     link: '/friend'
+                    // }
                 ],
                 loginShow: false,
                 userInfo: '',

@@ -13,6 +13,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     $h = rgba(0,0,0,.05)
     .banner-ske
+        margin-top 20px
         .btn,.center
             background  $h
             animation ske .8s  linear infinite alternate

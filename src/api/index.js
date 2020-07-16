@@ -23,7 +23,7 @@ export const reqSonglist = (num, end, cat = '全部') => ajax(`api/top/playlist/
 //获取歌单列表
 export const reqplaylist = (num, offset, cat) => ajax(`api/top/playlist?limit=${num}&offset=${offset}&cat=${cat}`)
 //获取歌单详情
-export const reqSonglistDetail = (id) => ajax(`api/playlist/detail?id=${id}`)
+export const reqPlatlistDetail = (id) => ajax(`api/playlist/detail?id=${id}`)
 //添加或删除歌单歌曲
 export const changeplaylistSong = (pid, type, sids) => ajax(`api/playlist/tracks?op=${type}&pid=${pid}&tracks=${sids}`)
 //获取每日推荐歌单

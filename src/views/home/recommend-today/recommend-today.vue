@@ -25,24 +25,25 @@
                             </div>
                         </router-link>
                     </li>
-                    <li class="item img-scale-hover" v-for="(playlist,index) in playlists" :key="index">
+                    <li class="item " v-for="(playlist,index) in playlists" :key="index">
                         <router-link :to="`/music/playlist/${playlist.id}`">
-                            <div class="item-box" :title="playlist.copywriter">
+                            <div class="item-box img-scale-hover" :title="playlist.copywriter">
                                 <div class="img-box img-scale">
                                     <img :src="playlist.picUrl+'?param=200y200'" alt="">
                                 </div>
-                                <div class="play-box">
+                                <div class="playlist-all-btn-play absolute-center" title="播放歌单"
+                                     @click.prevent="play(playlist)">
                                     <img src="../../../static/imgs/btn-play.png" alt="">
                                 </div>
                                 <p class="play-count">
-                                    <Icon type="ios-headset" />
+                                    <Icon type="ios-headset"/>
                                     {{playlist.playcount | playCount}}
                                 </p>
                                 <div class="tip">
                                     {{playlist.copywriter}}
                                 </div>
                             </div>
-                            <div class="title" :title="playlist.name">
+                            <div class="title text-hv" :title="playlist.name">
                                 {{playlist.name}}
                             </div>
                         </router-link>
@@ -55,7 +56,7 @@
 </template>
 
 <script>
-    import {reqRecommendPlaylist} from "@/api";
+    import {reqPlatlistDetail, reqRecommendPlaylist} from "@/api";
     import playlistListSke from "@/components/playlist-list-ske/playlist-list-ske";
 
     export default {
@@ -98,9 +99,17 @@
                 }
             }
         },
+        methods: {
+            play(playlist) {
+                reqPlatlistDetail(playlist.id).then(res => {
+                    let ids = res.playlist.trackIds.map(item => item.id)
+                    this.publicMethods.playMusic(ids)
+                })
+            }
+        },
         created() {
             reqRecommendPlaylist().then(res => {
-                this.playlists = res.recommend.length>13 ? res.recommend.slice(0,13) : res.recommend.slice(0,6)
+                this.playlists = res.recommend.length > 13 ? res.recommend.slice(0, 13) : res.recommend.slice(0, 6)
             })
         }
     }
@@ -115,8 +124,7 @@
                 .tip
                     transform none
                 .play-count
-                    display none
-
+                    opacity 0
         .tip
             position absolute
             top 0
@@ -126,13 +134,19 @@
             padding 5px
             color #fff
             text-align left
-            background rgba(0,0,0,.3)
+            background rgba(0, 0, 0, .3)
             overflow hidden
             transition all .3s
             transform translateY(-100%)
+            @media screen and (max-width: 1200px)
+                font-size 10px
         .img-box
             background #FAFAFA
             .content
                 font-size 100px
                 color #C62F2F
+                @media screen and (max-width: 1550px)
+                    font-size 83px
+                @media screen and (max-width: 1200px)
+                    font-size 65px
 </style>

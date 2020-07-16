@@ -1,5 +1,7 @@
+import {Message} from "view-design";
+
 export default {
-    playMusic(ids, message) {
+    playMusic(ids) {
         if (ids) {
             let musics = JSON.parse(window.localStorage.getItem('musics')) || {}
             musics = musics.ids || []
@@ -32,7 +34,7 @@ export default {
             setTimeout(() => {
                 let state = JSON.parse(window.localStorage.getItem('musics')).state
                 if (state) {
-                    message.success('添加到播放器成功')
+                    Message.success('添加到播放器成功')
                 } else {
                     window.open('/music/player/audio')
                 }

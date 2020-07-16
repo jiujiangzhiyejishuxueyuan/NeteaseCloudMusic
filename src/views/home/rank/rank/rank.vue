@@ -21,8 +21,8 @@
                             </div>
                             <div class="rank-item-info">
                                 <h2 class="title">{{playlist.name}}</h2>
-                                <div class="btn-play-songlist">
-                                    <Icon type="ios-play" />
+                                <div class="btn-play-songlist" @click="play(index)">
+                                    <Icon type="ios-play"/>
                                     播放榜单
                                 </div>
                             </div>
@@ -73,15 +73,24 @@
         components: {songControl},
         data() {
             return {
-                list:[],
-                likeIds: []
+                list: [],
+                likeIds: [],
+                ids: []
+            }
+        },
+        methods: {
+            play(index) {
+                this.publicMethods.playMusic(this.ids[index])
             }
         },
         created() {
-            const list = [19723756,3779629,3778678]
-            list.forEach(async item => {
-                const result = await reqTopListDetail(item)
-                this.list.push(result.playlist)
+            const list = [19723756, 3779629, 3778678]
+            list.forEach((item, index) => {
+                reqTopListDetail(item).then(res => {
+                    this.list.push(res.playlist)
+                    this.ids[index] = res.playlist.trackIds.map(item => item.id)
+                })
+
             })
             reqLoginState().then(res => {
                 reqLikeSong(res.profile.userId).then(res => {

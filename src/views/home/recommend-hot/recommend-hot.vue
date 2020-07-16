@@ -13,20 +13,21 @@
             <div class="list-box">
                 <ul class="list-inner flex flex-wrap justify-between">
                     <li class="item" v-for="(item,index) in list" :key="index">
-                        <router-link :to="`/music/playlist/${item.id}`">
+                        <router-link :to="`/music/playlist/${item.id}`" :title="item.name">
                             <div class="item-box img-scale-hover">
                                 <div class="img-box img-scale">
-                                    <img :src="item.coverImgUrl+'?param=200y200'" >
+                                    <img :src="item.coverImgUrl+'?param=200y200'">
                                 </div>
-                                <div class="play-box">
+                                <div class="playlist-all-btn-play absolute-center" title="播放歌单"
+                                     @click.prevent="play(item)">
                                     <img src="../../../static/imgs/btn-play.png" alt="">
                                 </div>
                                 <p class="play-count" :title="'播放量:'+item.playCount">
-                                    <Icon type="ios-headset" />
+                                    <Icon type="ios-headset"/>
                                     {{item.playCount | playCount}}
                                 </p>
                             </div>
-                            <div class="title">
+                            <div class="title text-hv">
                                 {{item.name}}
                             </div>
                         </router-link>
@@ -39,10 +40,20 @@
 
 <script>
 
+    import {reqPlatlistDetail} from "@/api";
+
     export default {
         props: {
-            list:Array,
-            title:String
+            list: Array,
+            title: String
+        },
+        methods: {
+            play(playlist) {
+                reqPlatlistDetail(playlist.id).then(res => {
+                    let ids = res.playlist.trackIds.map(item => item.id)
+                    this.publicMethods.playMusic(ids)
+                })
+            }
         }
 
     }
@@ -65,8 +76,7 @@
                 padding 0 10px 10px
                 &:hover .main-box img
                     transform scale(1.1)
-                &:hover .play-box
-                    display block
+
                 .play-count
                     position absolute
                     top 6px
@@ -88,12 +98,10 @@
                     overflow hidden
                 .item-box
                     position relative
-                .play-box
-                    display none
-                    position absolute
-                    top 50%
-                    left 50%
-                    transform translate(-50%,-50%)
+
+                    &:hover .playlist-all-btn-play
+                        opacity 1
+
                 .img-box
                     overflow hidden
                     border-radius 8px

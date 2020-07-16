@@ -18,7 +18,8 @@
                                 <router-link :to="`/music/album/${album.id}`"><img :src="album.picUrl+'?param=250y250'">
                                 </router-link>
                             </div>
-                            <div class="play-box">
+                            <div class="playlist-all-btn-play absolute-center" title="播放专辑"
+                                 @click.prevent="play(album)">
                                 <img src="../../static/imgs/btn-play.png">
                             </div>
                             <i class="album-cover"></i>
@@ -49,11 +50,21 @@
 
 <script>
 
+    import {reqAlbumDetail} from "@/api";
+
     export default {
         props: {
             albums: Array,
             title: String,
             isSinger: Boolean
+        },
+        methods: {
+            play(album) {
+                reqAlbumDetail(album.id).then(res => {
+                    let ids = res.songs.map(item => item.id)
+                    this.publicMethods.playMusic(ids)
+                })
+            }
         }
     }
 </script>
@@ -91,15 +102,9 @@
             &:hover .img-box img
                 transform scale(1.1)
 
-            &:hover .play-box
-                display block
+            &:hover .playlist-all-btn-play
+                opacity 1
 
-            .play-box
-                display none
-                position absolute
-                top 50%
-                left 50%
-                transform translate(-50%, -50%)
             .album-cover
                 width 100%
                 height 100%

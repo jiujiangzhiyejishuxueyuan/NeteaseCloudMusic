@@ -1,13 +1,13 @@
 <template>
     <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"  v-for="(banner,index) in banners" :key="index">
+            <div class="swiper-slide" v-for="(banner,index) in banners" :key="index">
                 <img :src="banner.imageUrl+'?param1080y400'" @click="skip(banner)">
             </div>
         </div>
         <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div><!--左箭头。如果放置在swiper-container外面，需要自定义样式。-->
-        <div class="swiper-button-next"></div><!--右箭头。如果放置在swiper-container外面，需要自定义样式。-->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
 </template>
 
@@ -37,9 +37,16 @@
         },
         methods: {
             skip(banner) {
-                this.$Message.success(`跳转${banner.targetType}类${banner.targetId}号`)
-                if(banner.url) {
+                let type = {
+                    '1': '/music/song',
+                    '1004': '/mv',
+                    '10': '/music/album',
+                    '1014': '/video'
+                }
+                if (banner.url) {
                     window.open(banner.url)
+                } else {
+                    this.$router.push(`${type[banner.targetType]}/${banner.targetId}`)
                 }
             }
         }

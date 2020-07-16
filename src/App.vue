@@ -44,16 +44,39 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/style/sty.styl"
   @import "./common/style/media.styl"
+  .playlist-all-btn-play
+      z-index 20
+      transition all .4s
+      opacity 0
+      width 60px
+      height 60px
+      border-radius 50%
+      cursor pointer
+      @media screen and (max-width: 1550px)
+          width 50px
+          height 50px
+      @media screen and (max-width: 1200px)
+          width 40px
+          height 40px
+
+      img
+          width 100%
+          height 100%
+
+      &:hover
+          background #000
+
   .github
-    display block
-    position fixed
-    bottom 80px
-    right 30px
-    padding 5px
-    background rgba(0,0,0,.5)
-    color #fff
+      display block
+      position fixed
+      bottom 80px
+      right 30px
+      padding 5px
+      background rgba(0, 0, 0, .5)
+      color #fff
       z-index 9999
-    &:hover
+
+      &:hover
       color #fff
       background rgba(0,0,0,.8)
   .view-enter-active, .view-leave-active

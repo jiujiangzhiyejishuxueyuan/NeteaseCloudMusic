@@ -30,7 +30,14 @@
             </div>
         </div>
         <!--        内容-->
-        <div class="songlist-inner">
+        <ul class="songlist-ske" v-if="!songs.length&&!player">
+            <li class="song flex justify-between align-center" v-for="index in 10" :key="index">
+                <div class="song-name"></div>
+                <div class="song-singer"></div>
+                <div class="song-album"></div>
+            </li>
+        </ul>
+        <div class="songlist-inner" v-else>
             <div class="scroll">
                 <div :class="{active:song.id===pid}"
                      :key="index"
@@ -285,6 +292,28 @@
             .song-check
                 color #fff !important
                 border-color rgba(255, 255, 255, .8) !important
+
+        .songlist-ske
+            .song
+                border-radius 15px
+                overflow hidden
+                height 50px
+                margin 15px 0
+                padding 0 20px
+
+                .song-name, .song-singer, .song-album
+                    animation ske .8s linear infinite alternate
+                    background rgba(0, 0, 0, .05)
+                    height 50%
+
+                .song-singer
+                    width 20%
+
+                .song-album
+                    width 15%
+
+                .song-name
+                    width 40%
 
         .playlist-list
             z-index 11

@@ -39,15 +39,15 @@
                         {{comment.total}} 评论
                     </div>
                     <div class="comment-header flex" ref="comment">
-                        <a class="sort" :class="{active:hotComments}" @click="hotComments = true"
-                           v-if="c">最热评论</a>
-                        <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
+                        <a class="sort" :class="{active:ishot}" @click="ishot = true"
+                           v-if="c.length">最热评论</a>
+                        <a class="sort" :class="{active:!ishot}" @click="ishot = false">最新评论</a>
                     </div>
                     <comment-edit :id="id.toString()" type="1" class="input"/>
                     <comment-list
                             :id="id.toString()"
                             type="1"
-                            :comments="hotComments ? c : comment.comments"
+                            :comments="ishot ? c : comment.comments"
                             v-if="comment.total>0"
                     />
                     <Page
@@ -55,7 +55,7 @@
                             :total="comment.total"
                             :page-size="commentLimit"
                             @on-change="nextComment"
-                            v-if="comment&&!hotComments&&comment.total>20"
+                            v-if="comment&&!ishot&&comment.total>20"
                     />
                 </div>
             </div>
@@ -107,9 +107,9 @@
                 id: 0,
                 relateMvs: [],
                 comment: '',
-                hotComments: true,
+                ishot: false,
                 commentLimit: 20,
-                c: ''
+                c: [],
             }
         },
         methods: {
@@ -205,8 +205,8 @@
             })
             reqMvComments(id, this.commentLimit, 0).then(res => {
                 this.c = res.hotComments
-                if (!res.hotComments) {
-                    this.hotComments = false
+                if (res.hotComments && res.hotComments.length) {
+                    this.hotComments = true
                 }
                 this.comment = res
             })

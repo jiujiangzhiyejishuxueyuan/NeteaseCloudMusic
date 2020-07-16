@@ -9,7 +9,7 @@
                                 <img alt="背景图" :src="playlist.coverImgUrl+'?param=300y300'">
                             </div>
                         </router-link>
-                        <div class="btn-play absolute-center">
+                        <div class="btn-play absolute-center" title="播放歌单">
                             <img src="../../static/imgs/btn-play.png" alt="">
                         </div>
                     </div>

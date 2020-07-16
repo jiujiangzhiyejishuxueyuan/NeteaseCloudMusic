@@ -55,10 +55,7 @@
                             播放: <span class="count">{{songlist.playCount}} </span>次
                         </div>
                     </div>
-                    <song-list :songs="songs" v-if="songs"/>
-                    <ul class="songlist-ske" v-else>
-                        <li class="song" v-for="index in 10" :key="index"></li>
-                    </ul>
+                    <song-list :songs="songs"/>
                 </div>
             </div>
         </div>
@@ -99,7 +96,7 @@
 <script>
     import songList from '@/components/song-list/song-list'
     import playlistControl from '@/components/playlist-control/playlist-control'
-    import {reqPlaylistComments, reqSongDetail, reqSonglistDetail, subPlaylist} from "@/api";
+    import {reqPlaylistComments, reqSongDetail, reqPlatlistDetail, subPlaylist} from "@/api";
     import CommentList from "@/components/comment-list/comment-list";
     import CommentEdit from "@/components/comment-edit/comment-edit";
     import HeaderInfoSke from "@/components/header-info-ske/header-info-ske";
@@ -128,7 +125,7 @@
                 const ids = this.songlist.trackIds.map(item => {
                     return item.id
                 })
-                this.publicMethods.playMusic(ids, this.$Message)
+                this.publicMethods.playMusic(ids)
             },
             sub() {
                 if (this.$store.state.userInfo) {
@@ -169,7 +166,7 @@
                     }
 
                 })
-                reqSonglistDetail(id).then(res => {
+                reqPlatlistDetail(id).then(res => {
                     this.songlist = res.playlist
                     this.subed = res.playlist.subscribed
                     document.title = res.playlist.name + '-歌单-网易云音乐'
@@ -200,6 +197,8 @@
         },
         watch:{
             $route() {
+                this.songlist = ''
+                this.songs = []
                 this.render()
             }
         },
@@ -225,13 +224,7 @@
                 font-size 18px
                 margin-bottom 20px
 
-        .songlist-ske
-            .song
-                animation ske .8s linear infinite alternate
-                background rgba(0, 0, 0, .05)
-                border-radius 15px
-                height 50px
-                margin 15px 0
+
 
         .header-info
             position relative

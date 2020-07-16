@@ -1,13 +1,13 @@
 <template>
     <div id="header-info-ske">
-        <div class="container flex">
+        <div class="container flex info-inner">
             <div class="cover header-info-img"></div>
             <div class="info">
                 <div class="name"></div>
                 <div class="creator"></div>
                 <div class="time"></div>
                 <div class="desc"></div>
-                <div class="contorl flex">
+                <div class="control flex">
                     <div></div>
                     <div></div>
                     <div></div>
@@ -27,7 +27,8 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     #header-info-ske
         padding 40px 0
-        .cover, .name, .creator, .desc, .time, .contorl div
+
+        .cover, .name, .creator, .desc, .time, .control div
             animation ske .8s linear infinite alternate
 
         .info
@@ -35,7 +36,7 @@
             margin-left 30px
             position relative
 
-            .contorl
+            .control
                 position absolute
                 bottom 20px
 

@@ -95,7 +95,7 @@
                 }
             },
             onplay(id) {
-                this.publicMethods.playMusic(id, this.$Message)
+                this.publicMethods.playMusic(id)
             }
         },
         computed: {

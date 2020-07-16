@@ -68,17 +68,17 @@ export default {
 
   .github
       display block
-      position fixed
-      bottom 80px
-      right 30px
-      padding 5px
-      background rgba(0, 0, 0, .5)
-      color #fff
-      z-index 9999
+    position fixed
+    bottom 80px
+    right 30px
+    padding 5px
+    background rgba(0, 0, 0, .5)
+    color #fff
+    z-index 9999
 
-      &:hover
+    &:hover
       color #fff
-      background rgba(0,0,0,.8)
+      background rgba(0, 0, 0, .8)
   .view-enter-active, .view-leave-active
     transition opacity .3s
 

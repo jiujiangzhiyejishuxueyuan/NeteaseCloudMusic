@@ -1,39 +1,50 @@
 <template>
-    <div v-swiper:mySwiper="swiperOption">
-        <div class="swiper-wrapper">
+    <div class="swiper-container">
+        <div class="swiper-wrapper" v-if="banners.length">
             <div class="swiper-slide" v-for="(banner,index) in banners" :key="index">
-                <img :src="banner.imageUrl+'?param1080y400'" @click="skip(banner)">
+                <div class="img-box">
+                    <img :src="banner.imageUrl+'?param1080y400'" @click="skip(banner)">
+                </div>
             </div>
         </div>
+        <banner-ske v-else/>
+        <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 -->
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>
 </template>
 
 <script>
+    import Swiper from 'Swiper'
+    import bannerSke from '@/views/home/banner/banner-ske'
 
     export default {
+        components: {
+            bannerSke
+        },
         props: {
             banners: Array
         },
-        data () {
-            return {
-                swiperOption: {
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable :true,
-                    },
-                    loop : true,
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                }
-            }
-        },
         mounted() {
-            this.mySwiper.slideTo(1, 1000, false)
+            var mySwiper = new Swiper('.swiper-container', {
+                loop: true, // 循环模式选项
+                // 如果需要分页器
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                // 如果需要前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                // 如果需要滚动条
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                },
+            })
         },
         methods: {
             skip(banner) {
@@ -58,12 +69,16 @@
     margin 20px 0
 
     .swiper-slide
-        img
+        .img-box
+            margin 0 auto
             width 1080px
+            height 400px
         @media screen and (max-width: 1550px)
-            img
+            .img-box
                 width 900px
+                height 333px
         @media screen and (max-width: 1200px)
-            img
+            .img-box
                 width 800px
+                height 296px
 </style>

@@ -20,7 +20,11 @@ module.exports = {
     configureWebpack: {
         plugins: [
             new BundleAnalyzerPlugin()
-        ]
+        ],
+        externals: {
+            'echarts': 'echarts',// 使用cdn
+            'Swiper': 'Swiper'
+        }
     },
 
 }

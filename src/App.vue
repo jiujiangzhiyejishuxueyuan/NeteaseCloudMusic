@@ -1,10 +1,12 @@
 <template>
   <div id="app" class="flex direction-column">
     <my-header v-if="!$route.meta.hidden"/>
-    <transition name="view"><router-view class="center expend" v-if="isRouterActive"></router-view></transition>
+    <transition name="view">
+      <router-view class="center expend" v-if="isRouterActive"></router-view>
+    </transition>
     <BackTop :duration="800"/>
     <a class="github" href="https://github.com/jiujiangzhiyejishuxueyuan/NeteaseCloudMusic" target="_blank">
-      <Icon type="logo-github" />
+      <Icon type="logo-github"/>
       <div>github</div>
     </a>
     <my-footer v-if="!$route.meta.hidden && !$route.meta.hiddenFooter"/>
@@ -44,16 +46,20 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/style/sty.styl"
   @import "./common/style/media.styl"
+  .start
+    width 100vw
+    height 100vh
+
   .playlist-all-btn-play
-      z-index 20
-      transition all .4s
-      opacity 0
-      width 60px
-      height 60px
-      border-radius 50%
-      cursor pointer
-      @media screen and (max-width: 1550px)
-          width 50px
+    z-index 20
+    transition all .4s
+    opacity 0
+    width 60px
+    height 60px
+    border-radius 50%
+    cursor pointer
+    @media screen and (max-width: 1550px)
+      width 50px
           height 50px
       @media screen and (max-width: 1200px)
           width 40px
@@ -68,7 +74,7 @@ export default {
 
   .github
     display block
-      position fixed
+    position fixed
     bottom 80px
     right 30px
     padding 5px

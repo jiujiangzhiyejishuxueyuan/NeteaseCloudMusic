@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
 import {reqLoginState, reqUserPlaylist} from "@/api";
+import home from "@/views/home/home";
 
 Vue.use(VueRouter)
 const routerPush = VueRouter.prototype.push
@@ -16,7 +17,7 @@ export default new VueRouter({
     routes: [
         {
             path: '/music'
-            , component: () => import('@/views/home/home')
+            , component: home
         },
         {
             path: '/my',

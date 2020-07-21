@@ -4,8 +4,6 @@ import router from './router'
 import store from './store'
 import '@/filters'
 
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
 import methods from './utils/pubulicMethods'
 import 'view-design/dist/styles/iview.css'
 import {Icon,LoadingBar,Page,Input,Message,Slider,Spin,BackTop  } from "view-design";
@@ -22,7 +20,6 @@ Vue.component('BackTop',BackTop )
 // Vue.component('Dropdown',Dropdown)
 Vue.prototype.publicMethods = methods
 Vue.prototype.$Message = Message
-Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {

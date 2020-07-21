@@ -1,6 +1,6 @@
 <template>
     <div class="video-player">
-        <div class="video-player-header container flex justify-between">
+        <div class="video-player-header container flex justify-between" v-if="video.title">
             <div class="info">
                 <h2 class="title">{{video.title}}</h2>
                 <p class="time" v-if="video.publishTime">发布时间:{{video.publishTime | dataFormat}}</p>
@@ -10,6 +10,20 @@
                 </p>
             </div>
             <user-card :id="video.creator.userId" v-if="video.creator"/>
+        </div>
+        <div class="video-player-header-ske flex justify-between container" v-else>
+            <div class="info">
+                <div class="title"></div>
+                <div class="time"></div>
+                <div class="count"></div>
+            </div>
+            <div class="card flex">
+                <div class="avatar"></div>
+                <div class="main">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
         </div>
         <div class="video-player-inner container flex">
             <div class="left">
@@ -28,7 +42,7 @@
                         <Icon type="md-star"/>
                         {{video.subscribeCount | playCount}}
                     </div>
-                    <div class="share">
+                    <div class="share" @click="$Message.success('分享成功')">
                         <Icon type="ios-share-alt"/>
                         {{video.shareCount | playCount}}
                     </div>
@@ -294,24 +308,67 @@
                         display block
                         padding 10px 0
                         margin-right 20px
+
                         &.active
                             color $blue
                             border-bottom 1px solid $blue
+
                 .input
                     padding-bottom 30px
                     margin-bottom 20px
                     border-bottom 1px solid #e5e9f0
+
                 .no-comment
                     text-align center
                     padding 50px 0
+
+        .video-player-header-ske
+            .card
+                margin-right 15%
+                width 140px
+
+                .main div
+                    width 80px
+                    height 20px
+                    margin-left 10px
+                    margin-bottom 5px
+                    animation ske .8s linear infinite alternate
+
+                .avatar
+                    animation ske .8s linear infinite alternate
+                    width 50px
+                    height 50px
+                    border-radius 50%
+
+            .info
+                width 70%
+
+                div
+                    margin-bottom 10px
+                    animation ske .8s linear infinite alternate
+                    height 18px
+
+                .title
+                    width 80%
+                    height 30px
+
+                .time
+                    width 20%
+
+                .count
+                    width 30%
+
         .video-player-header
             .user-card
-                margin-right 14%
+                margin-right 15%
+
             .time, .count
                 margin-top 10px
                 color #999
+
             .count
                 margin-bottom 15px
+
             .play-count
                 margin-right 20px
             .title

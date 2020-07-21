@@ -187,6 +187,12 @@
                         margin-top 10px
                 .cover
                     width 215px
+                    @media screen and (max-width: 1550px)
+                        width 173px
+                        height 173px
+                    @media screen and (max-width: 1200px)
+                        width 140px
+                        height 140px
 
         .toplist-list-scroll
             position fixed

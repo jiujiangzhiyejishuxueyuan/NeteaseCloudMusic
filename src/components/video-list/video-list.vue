@@ -10,7 +10,6 @@
             <p class="name flex" v-if="video.creator">
                 <i class="mv" v-if="video.type===0"></i>
                 <span class="by" v-else>by</span>
-
                 <span class="users" v-if="video.creator.length">
                     <router-link
                             :to="video.type!==0?`/user/home?id=${art.userId}`:`/music/artist/${art.userId}`"
@@ -22,7 +21,15 @@
                         <span v-if="index+1<video.creator.length">/</span>
                     </router-link>
                 </span>
-                <a class="text-hv ellipse" :href="`/user/home?id=${video.creator.userId}`" target="_blank" v-else>{{video.creator.nickname}}</a>
+                <a
+                        class="text-hv ellipse"
+                        :href="`/user/home?id=${video.creator.userId}`"
+                        target="_blank"
+                        :title="video.creator.nickname"
+                        v-else
+                >
+                    {{video.creator.nickname}}
+                </a>
             </p>
         </li>
     </ul>

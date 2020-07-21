@@ -15,7 +15,7 @@
                     <li class="item" v-for="(item,index) in list" :key="index">
                         <router-link :to="`/music/playlist/${item.id}`" :title="item.name">
                             <div class="item-box img-scale-hover">
-                                <div class="img-box img-scale">
+                                <div class="img-box img-scale playlist-min-imgbox">
                                     <img :src="item.coverImgUrl+'?param=200y200'">
                                 </div>
                                 <div class="playlist-all-btn-play absolute-center" title="播放歌单"
@@ -98,17 +98,12 @@
                     overflow hidden
                 .item-box
                     position relative
-
                     &:hover .playlist-all-btn-play
                         opacity 1
 
                 .img-box
                     overflow hidden
                     border-radius 8px
-                    img
-                        width 100%
-                        height 100%
-                        transition .4s
 
 
 

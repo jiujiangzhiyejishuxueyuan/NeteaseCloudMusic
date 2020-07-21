@@ -67,8 +67,8 @@ export default {
           background #000
 
   .github
-      display block
-    position fixed
+    display block
+      position fixed
     bottom 80px
     right 30px
     padding 5px

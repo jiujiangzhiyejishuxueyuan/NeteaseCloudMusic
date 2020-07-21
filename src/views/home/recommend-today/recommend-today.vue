@@ -28,7 +28,7 @@
                     <li class="item " v-for="(playlist,index) in playlists" :key="index">
                         <router-link :to="`/music/playlist/${playlist.id}`">
                             <div class="item-box img-scale-hover" :title="playlist.copywriter">
-                                <div class="img-box img-scale">
+                                <div class="img-box img-scale playlist-min-imgbox">
                                     <img :src="playlist.picUrl+'?param=200y200'" alt="">
                                 </div>
                                 <div class="playlist-all-btn-play absolute-center" title="播放歌单"

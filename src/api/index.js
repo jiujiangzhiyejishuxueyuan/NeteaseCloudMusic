@@ -1,5 +1,4 @@
 import ajax from "@/api/ajax";
-import {off} from "view-design/src/utils/dom";
 
 // 首页相关
 //获取首页轮播图

@@ -25,7 +25,9 @@
                             <span class="follow item" v-if="!user.profile.followed">关注</span>
                             <span class="followed item" v-else><span class="t">已关注</span> <span class="t-h">取消关注</span></span>
                         </div>
-                        <div class="artist" v-if="user.profile.artistId">查看歌手页</div>
+                        <router-link :to="`/music/artist/${user.profile.artistId}`" class="artist block"
+                                     v-if="user.profile.artistId">查看歌手页
+                        </router-link>
                     </div>
                     <div class="info-user-type flex flex-wrap">
                         <div class="authen flex" v-for="(anthen,index) in user.profile.allAuthTypes" :key="index">
@@ -65,7 +67,7 @@
 </template>
 
 <script>
-    import {reqUserInfo, reqUserPlaylist, reqUserRecord} from "@/api";
+    import {reqUserInfo} from "@/api";
     import {mapState} from 'vuex'
     import areaList from '@/api/area-list'
 
@@ -172,7 +174,7 @@
                     width 100%
 
             .info-inner
-                margin-left 80px
+                margin-left 30px
                 text-align left
                 width 80%
                 .social

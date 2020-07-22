@@ -37,11 +37,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="album-control">
-                        <playlist-control
-                                @allPlay="allPlay"
-                                @sub="sub"
-                        />
+                    <div class="album-control flex">
+                        <div class="button active" @click="allPlay">
+                            <Icon type="ios-play-outline"/>
+                            全部播放
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,6 @@
 
 <script>
     import {reqAlbumDetail, reqSingerAlbum} from "@/api";
-    import PlaylistControl from "@/components/playlist-control/playlist-control";
     import SongList from "@/components/song-list/song-list";
     import albumList from '@/components/album-list/album-list'
     import HeaderInfoSke from "@/components/header-info-ske/header-info-ske";
@@ -66,7 +65,7 @@
 
     export default {
         name: "album",
-        components: {AlbumSke, HeaderInfoSke, SongList, PlaylistControl, albumList},
+        components: {AlbumSke, HeaderInfoSke, SongList, albumList},
         data() {
             return {
                 songs: [],
@@ -126,6 +125,7 @@
     #album
         text-align left
 
+
         .other-album
             margin-top 20px
 
@@ -135,6 +135,9 @@
         .album-header
             position relative
             padding 50px 0
+
+            .go-comment
+                display none
 
             .info
                 max-width 75%

@@ -125,13 +125,20 @@
                 font-size 24px
         .my-music-content
             padding-top 30px
-            margin-left 320px
+            margin-left 255px
             width 1000px
+
+            #my-mv .video-list .img-box
+                height 95px
+                @media screen and (max-width: 1550px)
+                    height 85px
+                @media screen and (max-width: 1200px)
+                    height 68px
         .nav-list
             position fixed
             top 70px
             height 100vh
-            width 310px
+            width 250px
             overflow auto
             text-align left
             padding-top 30px
@@ -142,7 +149,7 @@
                 .playlists:hover
                     background #fff
                 &>li
-                    font-size 16px
+                    font-size 14px
                     font-weight 600
                     cursor pointer
                     color #000
@@ -160,7 +167,5 @@
                 -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);
                 border-radius: 10px;
                 background: transparent;
-        .wocao
-            color #000
 
 </style>

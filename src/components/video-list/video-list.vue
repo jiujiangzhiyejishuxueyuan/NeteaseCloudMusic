@@ -5,10 +5,10 @@
                 <div class="img-box img-scale">
                     <img :src="video.coverUrl+'?param=360y200'" alt="" :title="video.title">
                 </div>
-                <p class="title ellipse text-hv">{{video.title}}</p>
+                <p class="title ellipse text-hv" :title="video.title">{{video.title}}</p>
             </a>
             <p class="name flex" v-if="video.creator">
-                <i class="mv" v-if="video.type===0"></i>
+                <i class="mv" v-if="video.type===0" title="mv"></i>
                 <span class="by" v-else>by</span>
                 <span class="users" v-if="video.creator.length">
                     <router-link
@@ -16,6 +16,7 @@
                             class="text-hv ellipse"
                             v-for="(art,index) in video.creator"
                             :key="index"
+                            :title="art.userName"
                     >
                         {{art.userName}}
                         <span v-if="index+1<video.creator.length">/</span>
@@ -72,6 +73,9 @@
                 margin-right 7px
 
             .name
+                .users
+                    width 85%
+
                 a
                     display block
     .disabled

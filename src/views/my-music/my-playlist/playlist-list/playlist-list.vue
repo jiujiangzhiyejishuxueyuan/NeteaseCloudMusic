@@ -33,23 +33,30 @@
 <style lang="stylus" rel="stylesheet/stylus">
     .playlists-list
         .playlist
-            padding 10px 0 10px 20px
+            padding 5px 0 0 20px
+            margin 3px 0
             cursor pointer
-            &.active,&:hover
-                background rgba(0,0,0,.05)
+
+            &.active, &:hover
+                background rgba(0, 0, 0, .05)
+
             .info
                 width 190px
-                padding 5px 0
                 margin-left 10px
+
+                .name
+                    width 160px
+
                 .by
                     max-width 100px
                     margin-left 10px
 
                 .count
-                    margin-top 20px
+                    margin-top 5px
                     color #999
                     font-size 12px
+
             .img-box
-                width 70px
-                height 70px
+                width 50px
+                height 50px
 </style>

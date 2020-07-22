@@ -156,6 +156,7 @@
             i
                 font-size 30px
         .ivu-slider-button
+            transition none
             opacity 0
         .bottom
             position absolute

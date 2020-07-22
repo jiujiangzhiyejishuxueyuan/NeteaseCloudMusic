@@ -4,7 +4,7 @@
             <Icon type="ios-play-outline"/>
             全部播放
         </div>
-        <div class="button" @click="$emit('sub')" :class="{subed: subed}">
+        <div class="button " @click="$emit('sub')" :class="{subed: subed}">
             <span v-if="subed">
                 <Icon type="ios-heart"/>
                 <span class="s"> 已收藏 </span>

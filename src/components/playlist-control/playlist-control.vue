@@ -5,10 +5,9 @@
             全部播放
         </div>
         <div class="button " @click="$emit('sub')" :class="{subed: subed}">
-            <span v-if="subed">
+            <span v-if="subed" title="取消收藏">
                 <Icon type="ios-heart"/>
                 <span class="s"> 已收藏 </span>
-                <span class="hv">取消收藏</span>
             </span>
             <span v-else>
                 <Icon type="md-heart-outline"/>
@@ -47,16 +46,6 @@
             &.subed
                 border-color #E91E63
                 color #E91E63
-
-                &:hover
-                    border-color rgba(0, 0, 0, .3)
-                    background rgba(0, 0, 0, .3)
-
-                    .hv
-                        display inline
-
-                    .s
-                        display none
 
 
 </style>

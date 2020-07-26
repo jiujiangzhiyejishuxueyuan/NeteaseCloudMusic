@@ -26,7 +26,7 @@
             </div>
             <div class="right flex direction-column" :class="{immerse:immerse}">
                 <div class="song-cover" v-show="!immerse">
-                    <img :src="song.al.picUrl+'params=200y200'" alt="" v-if="song.al">
+                    <img :src="song.al.picUrl+'?param=200y200'" alt="" v-if="song.al">
                 </div>
                 <div class="song-info" v-if="song.name&&!immerse">
                     <p class="song_name ">歌曲名: <span class="ellipse">{{song.name}}</span></p>

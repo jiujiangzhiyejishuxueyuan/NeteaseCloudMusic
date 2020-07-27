@@ -230,7 +230,7 @@ export default new VueRouter({
         },
         {
             name: 'player',
-            path: '/music/player/audio',
+            path: '/music/player',
             component: () => import('@/views/player/player'),
             meta: {
                 hidden: true,

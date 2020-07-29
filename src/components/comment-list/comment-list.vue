@@ -90,6 +90,7 @@
                     if (res.code === 200) {
                         this.$Message.success('发送评论成功')
                     }
+                    this.sendCommentId = ''
                 }).catch(() => {
                     this.$Message.error('发送评论失败')
                 })

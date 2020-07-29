@@ -115,7 +115,7 @@
             }
         },
         methods: {
-            jump(e, params) {
+            jump(e, params=[]) {
                 if (this.$store.state.userInfo) {
                     this[e](...params)
                 } else {

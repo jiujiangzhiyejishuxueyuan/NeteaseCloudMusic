@@ -124,7 +124,7 @@
         },
         inject: ['reload'],
         methods: {
-            jump(e, params) {
+            jump(e, params=[]) {
                 if (this.userInfo) {
                     this[e](...params)
                 } else {

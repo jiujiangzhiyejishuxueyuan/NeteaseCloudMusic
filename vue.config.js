@@ -21,8 +21,8 @@ module.exports = {
         plugins: [
             new BundleAnalyzerPlugin()
         ],
-        externals: {
-            'echarts': 'echarts',// 使用cdn
+        externals: {  // 使用cdn
+            'echarts': 'echarts',
             'Swiper': 'Swiper'
         }
     },

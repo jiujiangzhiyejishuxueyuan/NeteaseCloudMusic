@@ -15,7 +15,8 @@
                     <div class="item-box">
                         <div class="item-inner">
                             <div class="img-box">
-                                <router-link :to="`/music/album/${album.id}`"><img :src="album.picUrl+'?param=250y250'">
+                                <router-link :to="`/music/album/${album.id}`">
+                                    <img :src="album.picUrl+'?param=250y250'">
                                 </router-link>
                             </div>
                             <div class="playlist-all-btn-play absolute-center" title="播放专辑"
@@ -87,6 +88,7 @@
 
         .item-contain
             width 20%
+            z-index 2
 
         .item-box
             position relative

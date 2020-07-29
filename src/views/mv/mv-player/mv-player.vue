@@ -14,11 +14,11 @@
         </div>
         <div class="mv-player-content container flex">
             <div class="left">
-                <div class="player">
+                <div class="player" :class="{'player-ske':!vReady}">
                     <div class="background-blur">
                         <img :src="mv.cover" alt="">
                     </div>
-                    <v-player :url="url"/>
+                    <v-player :url="url" @ready="vReady = true"/>
                 </div>
                 <div class="video-control flex">
                     <div class="praised" :class="{active:count.liked}" @click="jump('like')">
@@ -47,7 +47,7 @@
                     <comment-list
                             :id="id.toString()"
                             type="1"
-                            :comments="ishot ? c : comment.comments"
+                            :comments="ishot&&c.length ? c : comment.comments"
                             v-if="comment.total>0"
                     />
                     <Page
@@ -57,6 +57,7 @@
                             @on-change="nextComment"
                             v-if="comment&&!ishot&&comment.total>20"
                     />
+                    <div class="text-center" v-else>没有更多评论了~`</div>
                 </div>
             </div>
             <div class="right">
@@ -110,6 +111,7 @@
                 ishot: false,
                 commentLimit: 20,
                 c: [],
+                vReady: false
             }
         },
         methods: {
@@ -204,9 +206,9 @@
                 })
             })
             reqMvComments(id, this.commentLimit, 0).then(res => {
-                this.c = res.hotComments
                 if (res.hotComments && res.hotComments.length) {
-                    this.hotComments = true
+                    this.c = res.hotComments
+                    this.ishot = true
                 }
                 this.comment = res
             })
@@ -288,15 +290,7 @@
                         color #757575
                         font-size 35px
 
-                .player
-                    width 100%
-                    max-height 590px
-                    position relative
 
-                    &.player-ske
-                        animation ske .8s linear infinite alternate
-                        background rgba(0, 0, 0, .05)
-                        height 580px
 
         .mv-player-header
             margin-top 20px

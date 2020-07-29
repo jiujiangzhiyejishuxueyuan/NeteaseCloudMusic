@@ -2,7 +2,7 @@
     <div id="user">
         <div class="header-info">
             <div class="background-blur" v-if="user">
-                <img :src="user.profile.backgroundUrl||user.profile.avatarUrl">
+                <img :src="(user.profile.backgroundUrl||user.profile.avatarUrl)+'?param=100y100'">
             </div>
             <div class="container header-inner flex">
                 <div class="avatar-box" @click="$router.replace(`/user/home?id=${user.profile&&user.profile.userId}`)">
@@ -21,9 +21,9 @@
                         <span class="gender man" v-if="user.profile.gender===1" title="男"></span>
                         <span class="gender woman" v-if="user.profile.gender===2" title="女"></span>
                         <div class="control flex" v-if="userInfo&&(userInfo.userId!==user.profile.userId)">
-                            <span class="message item">发消息</span>
-                            <span class="follow item" v-if="!user.profile.followed">关注</span>
-                            <span class="followed item" v-else><span class="t">已关注</span> <span class="t-h">取消关注</span></span>
+<!--                            <span class="message item">发消息</span>-->
+                            <span class="follow item" v-if="!user.profile.followed" @click="follow(1)">关注</span>
+                            <span class="followed item" v-else @click="follow(0)"><span class="t">已关注</span> <span class="t-h">取消关注</span></span>
                         </div>
                         <router-link :to="`/music/artist/${user.profile.artistId}`" class="artist block"
                                      v-if="user.profile.artistId">查看歌手页
@@ -31,7 +31,7 @@
                     </div>
                     <div class="info-user-type flex flex-wrap">
                         <div class="authen flex" v-for="(anthen,index) in user.profile.allAuthTypes" :key="index">
-                            <i class="sign" :class="anthen.type===4?'person':'v'" v-if="anthen.desc"></i>
+                            <i class="sign" :class="anthen.type===4?'person':'v'" v-if="anthen.desc" title="官方认证"></i>
                             {{anthen.desc}}
                             <span class="tag" v-for="(tag,index) in anthen.tags" :key="index">{{tag}}</span>
                         </div>
@@ -62,7 +62,9 @@
                 </div>
             </div>
         </div>
-        <transition name="view"><router-view :user="user.profile"></router-view></transition>
+        <transition name="view">
+            <router-view :user="user.profile"></router-view>
+        </transition>
     </div>
 </template>
 
@@ -70,6 +72,7 @@
     import {reqUserInfo} from "@/api";
     import {mapState} from 'vuex'
     import areaList from '@/api/area-list'
+    import {follow} from "../../api";
 
     export default {
         data() {
@@ -95,6 +98,11 @@
                         }
                     })
                 }).catch(() => this.$router.replace({name:'404'}))
+            },
+            follow(t) {
+                follow(this.user.profile.userId,t).then(() => {
+                    this.user.profile.followed = !this.user.profile.followed
+                })
             }
         },
         computed: {

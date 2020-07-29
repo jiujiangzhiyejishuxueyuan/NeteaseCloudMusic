@@ -36,7 +36,7 @@ export default {
                 if (state) {
                     Message.success('添加到播放器成功')
                 } else {
-                    window.open('/music/player/audio')
+                    window.open('/music/player')
                 }
             }, 100)
         }

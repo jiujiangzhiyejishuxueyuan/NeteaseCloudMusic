@@ -2,7 +2,7 @@
     <ul class="dj-list flex-wrap flex">
         <li class="dj-item" v-for="(dj,index) in djs" :key="index">
             <div class="img-box">
-                <img :src="dj.picUrl" alt="">
+                <img :src="dj.picUrl+'?param=250y250'" alt="">
             </div>
             <div class="info">
                 <p class="title ellipse text-hv">{{dj.name}}</p>

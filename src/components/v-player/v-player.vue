@@ -116,6 +116,19 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+    .player
+        width 100%
+        max-height 590px
+        position relative
+
+        &.player-ske
+            animation ske .8s linear infinite alternate
+            background rgba(0, 0, 0, .05)
+            height 580px
+            @media screen and (max-width: 1550px)
+                height 480px
+            @media screen and (max-width: 1200px)
+                height 400px
     .v-player
         position relative
         height 100%

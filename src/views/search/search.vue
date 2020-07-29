@@ -164,7 +164,6 @@
             }
         },
         created() {
-            console.log(this.$route.query.keywords)
             if (!this.$route.query.keywords) {
                 this.$router.replace('/music')
             } else {
@@ -183,6 +182,8 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     $red = #e91e63
     #search
+        .item-contain
+            z-index 2
         .not-found
             padding 150px 0
 

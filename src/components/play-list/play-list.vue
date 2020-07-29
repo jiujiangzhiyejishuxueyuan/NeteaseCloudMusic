@@ -14,9 +14,9 @@
                         </div>
                     </div>
                     <div class="info ellipse">
-                        <a class="text-hv">{{playlist.name}}</a>
+                        <a class="text-hv" :title="playlist.name">{{playlist.name}}</a>
                     </div>
-                    <div class="play-count" :title="playlist.playCount">
+                    <div class="play-count" :title="'播放量:'+playlist.playCount">
                         <Icon type="ios-headset" />
                         {{playlist.playCount | playCount}}
                     </div>
@@ -54,7 +54,7 @@
                     @media screen and (max-width: 1200px)
                         width 172px !important
                         height 172px !important
-                    @media screen and (max-width: 1500px)
+                    @media screen and (max-width: 1550px)
                         width 212px
                         height 212px
                 .btn-play

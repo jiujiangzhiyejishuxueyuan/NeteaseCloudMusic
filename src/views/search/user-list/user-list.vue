@@ -14,12 +14,13 @@
             </div>
             <div class="right flex">
                 <div class="control">
-                    <a class="mail">
-                        <Icon type="ios-mail-outline" />发私信
+                    <a class="followed" v-if="user.followed" @click="follow(user,0)">
+                        已关注
                     </a>
-                    <a class="follow">
+                    <a class="follow" v-else @click="follow(user,1)">
                         <Icon type="md-add" />关注
                     </a>
+
                 </div>
             </div>
         </li>
@@ -27,9 +28,18 @@
 </template>
 
 <script>
+    import {follow} from "@/api";
+
     export default {
         props: {
             users: Array,
+        },
+        methods: {
+            follow(user,t) {
+                follow(user.userId,t).then(() => {
+                    user.followed = !user.followed
+                })
+            }
         }
     }
 </script>
@@ -58,11 +68,14 @@
             .control
                 margin 0 15px
                 a
-                    padding 3px 5px
-                    border 1px #999 solid
-                    border-radius 10px
+                    text-align center
+                    cursor pointer
                     display block
-                    margin-bottom 10px
+                    padding 4px 0
+                    width 80px
+                    margin-left 20px
+                    border-radius 5px
+                    border 2px solid rgba(0,0,0,.4)
                     &:hover
                         color #fff
                         background $red

@@ -1,17 +1,16 @@
 <template>
     <div class="singer-inner">
         <!--            热门歌曲-->
-        <div class="songs" v-if="songlist">
-
+        <div class="songs" v-if="!noSong">
             <div class="section-header bb">
                 <span class="title">
                     热门歌曲
                 </span>
-                <router-link :to="$route.path+'/song'" class="more" v-if="songlist&&songlist.songs.length>20">
+                <router-link :to="$route.path+'/song'" class="more" v-if="songlist.length>20">
                     查看全部
                 </router-link>
             </div>
-            <song-list :songs="songlist&&songlist.songs.slice(0,20) || []"/>
+            <song-list :songs="songlist.length&&songlist.slice(0,20) || []"/>
         </div>
         <!--        热门专辑-->
         <div class="album" v-if="album">
@@ -57,10 +56,11 @@
         data() {
             return {
                 desc: '',
-                songlist: '',
+                songlist: [],
                 album: '',
                 mv: '',
-                simiSingers: []
+                simiSingers: [],
+                noSong: false
             }
         },
         created() {
@@ -69,7 +69,10 @@
                 this.album = res
             })
             reqSingerHotSong(id).then(res => {
-                this.songlist = res
+                this.songlist = res.songs
+                if (!res.songs.length) {
+                    this.noSong = true
+                }
             })
             reqSingerMv(id, 5, 0).then(res => {
                 this.mv = res

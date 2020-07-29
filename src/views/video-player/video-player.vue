@@ -81,6 +81,7 @@
                             @on-change="pageTurning"
                             :current="commentsPage"
                     />
+                    <div class="text-center" v-else>没有更多评论了~`</div>
                 </div>
             </div>
             <video-related :videos="relatedVideos"/>
@@ -373,14 +374,6 @@
                 margin-right 20px
             .title
                 font-size 18px
-        .player
-            width 100%
-            max-height 590px
-            position relative
 
-            &.player-ske
-                animation ske .8s linear infinite alternate
-                background rgba(0, 0, 0, .05)
-                height 580px
 
 </style>

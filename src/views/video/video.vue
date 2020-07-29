@@ -122,7 +122,7 @@
                 }
             }).catch(() => this.$Message.error('获取标签列表失败'))
             window.addEventListener('scroll', () => {
-                if (document.body.scrollHeight - window.scrollY < 1500 && this.oldLength !== this.videoList.length) {
+                if (document.body.scrollHeight  - window.innerHeight - window.scrollY < 500 && this.oldLength !== this.videoList.length) {
                     this.oldLength = this.videoList.length
                     if (this.currentTag) {
                         this.reqdata(5)

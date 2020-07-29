@@ -54,8 +54,6 @@
             render() {
                 this.songs.forEach((item,index) => {
                     item.lyrics.range.forEach(num => {
-                        // let txt = item.lyrics.txt.substring(num.first,num.second)
-                        // console.log(txt)
                         item.lyrics.txt = item.lyrics.txt.replace('周杰伦',`<font color=#e91e63>周杰伦</font>`)
                     })
                     let lyric = {

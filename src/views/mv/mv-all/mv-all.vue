@@ -11,13 +11,8 @@
         </div>
         <div class="mv-all-inner container">
             <mv-list :mvs="mvs" :ske-count="25"/>
+            <video-list-ske :count="20" v-if="loading"/>
         </div>
-        <page
-                :current="$route.query.page || 1"
-                :total="count"
-                :page-size="50"
-                @on-change="changePage"
-        />
     </div>
 </template>
 
@@ -25,10 +20,11 @@
     import MvSelector from "@/views/mv/mv-selector";
     import {reqMv} from "@/api";
     import MvList from "@/components/mv-list/mv-list";
+    import VideoListSke from "../../../components/video-list-ske/video-list-ske";
 
     export default {
         name: "mv-all",
-        components: {MvList, MvSelector},
+        components: {VideoListSke, MvList, MvSelector},
         data() {
             return {
                 selector: [
@@ -38,7 +34,9 @@
                 ],
                 mvs: [],
                 hasMore: true,
-                count: 0
+                offset: 50,
+                loading: false,
+                oldLength: 0
             }
         },
         methods: {
@@ -46,15 +44,28 @@
                 let area = this.$route.query.area || ''
                 let type = this.$route.query.type || ''
                 let order = this.$route.query.order || '最新'
-                let page = this.$route.query.page || 1
                 let limit = 50
-                let offset = (page - 1) * limit
+                this.offset = 50
+                this.hasMore = true
+                this.loading = false
+                this.oldLength = 0
                 this.mvs = []
-                reqMv(area, type, order, limit, offset).then(res => {
+                reqMv(area, type, order, limit, 0).then(res => {
                     this.mvs = res.data
                     this.hasMore = res.hasMore
-                    this.count = res.count
                 })
+                window.onscroll= () => {
+                    if (document.body.scrollHeight - window.innerHeight - window.scrollY < 200 && this.oldLength !== this.mvs.length) {
+                        this.oldLength = this.mvs.length
+                        this.loading = true
+                        reqMv(area, type, order, 20, this.offset).then(res => {
+                            this.mvs = [...this.mvs,...res.data]
+                            this.offset += res.data.length
+                            this.hasMore = res.hasMore
+                            this.loading = false
+                        })
+                    }
+                }
             },
             changePage(page) {
                 let query = {...this.$route.query}

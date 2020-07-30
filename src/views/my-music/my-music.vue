@@ -91,32 +91,35 @@
                     .content
                         width 60%
 
-        .header-info, #header-info-ske
-            padding 0 0 10px
+            .header-info, #header-info-ske
+                padding 0 0 10px
+                .content
+                    width 73%
+                    margin-left 20px
 
-            .info-inner
-                padding-left 20px
+                .info-inner
+                    padding-left 20px
 
-                .img-box, .cover
-                    width 210px
-                    height 210px
-                @media screen and (max-width: 1550px)
                     .img-box, .cover
-                        width 183px
-                        height 183px
+                        width 210px
+                        height 210px
+                    @media screen and (max-width: 1550px)
+                        .img-box, .cover
+                            width 183px
+                            height 183px
 
-                    .control
-                        opacity 0
-                @media screen and (max-width: 1200px)
-                    .img-box, .cover
-                        width 160px
-                        height 160px
+                        .control
+                            opacity 0
+                    @media screen and (max-width: 1200px)
+                        .img-box, .cover
+                            width 160px
+                            height 160px
 
-                    .control
-                        opacity 0
+                        .control
+                            opacity 0
 
-            .background-blur
-                display none
+                .background-blur
+                    display none
         .section-header
             text-align left
             padding 3px 0

@@ -1,6 +1,6 @@
 <template>
     <div class="toplist flex container">
-        <div class="toplist-list-scroll" v-if="currentToplist">
+        <div class="toplist-list-scroll" v-if="completeToplist">
             <div class="list-box">
                 <div class="list-type">云音乐特色榜</div>
                 <ul class="toplist-list">
@@ -34,42 +34,33 @@
                 </ul>
             </div>
         </div>
-        <div class="toplist-inner" v-if="currentToplist">
-            <div class="toplist-inner-header flex">
+        <div class="toplist-inner">
+            <div class="toplist-inner-header flex" v-if="currentToplist">
                 <div class="img-box cover">
                     <img :src="currentToplist.coverImgUrl+'?param=400y400'" alt="">
                 </div>
                 <div class="info">
                     <h2 class="name">{{currentToplist.name}}</h2>
                     <div class="updateTime">
-                        <Icon type="ios-time-outline" /> 最近更新: {{currentToplist.trackNumberUpdateTime | dataFormat}}
+                        <Icon type="ios-time-outline" /> 最近更新: {{currentToplist.trackUpdateTime | dataFormat}}
                     </div>
                     <p class="desc ellipse text-wrap" :title="currentToplist.description">{{currentToplist.description}}</p>
                     <playlist-control />
+                    <router-link :to="`/music/playlist/${toplistId}`" class="go-playlist">去歌单页查看</router-link>
                 </div>
             </div>
+            <header-info-ske s v-else />
             <div class="songlist-box">
                 <div class="toplist-songlist-header">
                     <span class="title">歌曲列表</span>
-                    <span class="song-count">{{currentToplist.trackCount}}首歌</span>
+                    <span class="song-count">{{currentToplist.trackCount||0}}首歌</span>
                     <div class="play-count">
-                        播放: <span class="count">{{currentToplist.playCount}} </span>次
+                        播放: <span class="count">{{currentToplist.playCount||0}} </span>次
                     </div>
                 </div>
-                <song-list :songs="currentToplist.tracks"/>
-            </div>
-            <div class="comment-box">
-                <div class="comment-box-header bb">
-                    <span class="title">评论</span>
-                    <span class="comment-count">共<span class="count">2</span>条评论</span>
-                </div>
-                <div class="inner">
-                    <comment-edit />
-                    <comment-list />
-                </div>
+                <song-list :songs="currentToplist.tracks||[]"/>
             </div>
         </div>
-        <Spin v-else></Spin>
     </div>
 </template>
 
@@ -77,12 +68,10 @@
     import {reqTopList, reqTopListDetail} from "@/api"
     import playlistControl from '@/components/playlist-control/playlist-control'
     import SongList from "@/components/song-list/song-list"
-    import CommentEdit from "@/components/comment-edit/comment-edit"
-    import CommentList from "@/components/comment-list/comment-list";
+    import HeaderInfoSke from "@/components/header-info-ske/header-info-ske";
     export default {
         components: {
-            CommentList,
-            CommentEdit,
+            HeaderInfoSke,
             SongList,
             playlistControl
         },
@@ -91,25 +80,32 @@
                 featureToplists: [],
                 toplists: [],
                 currentToplist: '',
-                toplistId: ''
+                toplistId: '',
+                completeToplist: false
             }
         },
-        inject:['reload'],
         created() {
-            let toplistId = this.$route.query.id || 19723756
-            this.toplistId = parseInt(toplistId)
             reqTopList().then(res => {
                 res.list.forEach(item => {
                     item.ToplistType ? this.featureToplists.push(item) : this.toplists.push(item)
                 })
+                this.completeToplist = true
             })
-            reqTopListDetail(toplistId).then(res => {
-                this.currentToplist = res.playlist
-            })
+            this.render()
+        },
+        methods: {
+            render() {
+                let toplistId = this.$route.query.id || 19723756
+                this.toplistId = parseInt(toplistId)
+                this.currentToplist = ''
+                reqTopListDetail(toplistId).then(res => {
+                    this.currentToplist = res.playlist
+                })
+            }
         },
         watch: {
             $route() {
-                this.reload()
+                this.render()
             }
         }
     }
@@ -120,15 +116,23 @@
     $blueh = #00b5e5
     .toplist
         margin-top 70px
+        .cover
+            width 215px
+            height 215px
+
+        .playlist-control
+            .sub,.to-comment
+                display none
+
+
         .ivu-spin
             margin 40% auto 0
 
         .toplist-inner
-
+            width 1000px
             padding-top 50px
             margin-left 300px
-            @media screen and (max-width: 1200px)
-                margin-left 240px
+
             .comment-box
                 margin-top 30px
                 .inner
@@ -166,33 +170,23 @@
             .toplist-inner-header
                 text-align left
                 .info
-                    width 80%
+                    width 75%
                     margin-left 20px
-                    .name
-                        margin-top 10px
+                    position relative
+                    .go-playlist
+                        position absolute
+                        right 0
+                        top 0
                     .desc
-                        width 850px
+                        width 100%
                         margin-top 20px
                         font-size 12px
                         color #999
                     .playlist-control
-                        margin-top 50px
-                        .play-all
-                            color #fff
-                            border-color $blue
-                            background $blue
-                            &:hover
-                                background $blueh
+                        margin-top 20px
                     .updateTime
                         margin-top 10px
-                .cover
-                    width 215px
-                    @media screen and (max-width: 1550px)
-                        width 173px
-                        height 173px
-                    @media screen and (max-width: 1200px)
-                        width 140px
-                        height 140px
+
 
         .toplist-list-scroll
             position fixed
@@ -200,7 +194,7 @@
             text-align left
             padding-top 40px
             padding-right 5px
-            width 260px
+            width 250px
             height 100vh
             overflow auto
             @media screen and (max-width: 1200px)
@@ -244,6 +238,20 @@
                 color #000
                 font-size 18px
                 font-weight 400
-        .toplist-inner
-            width 80%
+        @media screen and (max-width: 1550px)
+            .toplist-inner
+                width 920px
+                margin-left 260px
+            .cover
+                width 173px
+                height 173px
+        @media screen and (max-width: 1200px)
+            .toplist-inner-header .info
+                width 70% !important
+            .cover
+                width 170px
+                height 170px
+            .toplist-inner
+                width 745px
+                margin-left 240px
 </style>

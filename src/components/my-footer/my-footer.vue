@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer id="footer">
         <div class="container">
             <h1>网易云音乐</h1>
         </div>
@@ -11,12 +11,11 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    footer
-        background #F2F2F2
-        height 200px
+    #footer
+        background #fff
+        height 100px
         color #000
+        line-height 100px
         .container
             overflow hidden
-        h1
-            margin-top 100px
 </style>

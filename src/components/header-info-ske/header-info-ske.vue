@@ -1,5 +1,5 @@
 <template>
-    <div id="header-info-ske">
+    <div id="header-info-ske" :class="{s:s}">
         <div class="container flex info-inner">
             <div class="cover header-info-img"></div>
             <div class="info">
@@ -7,7 +7,7 @@
                 <div class="creator"></div>
                 <div class="time"></div>
                 <div class="desc"></div>
-                <div class="control flex">
+                <div class="control flex" v-if="!s">
                     <div></div>
                     <div></div>
                     <div></div>
@@ -20,13 +20,19 @@
 
 <script>
     export default {
-        name: "header-info-ske"
+        name: "header-info-ske",
+        props: {
+            s: Boolean
+        }
     }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     #header-info-ske
         padding 40px 0
+
+        &.s
+            padding 0
 
         .cover, .name, .creator, .desc, .time, .control div
             animation ske .8s linear infinite alternate

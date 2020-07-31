@@ -44,9 +44,9 @@
                 if (!this.reply) {
                     submitComment(this.id, this.type, this.value, 1).then(res => {
                         this.$Message.success('评论成功')
+                        this.value = ''
                     })
                 }
-                this.value = ''
             }
         }
     }

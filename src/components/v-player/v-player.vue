@@ -14,6 +14,14 @@
                 <Icon type="md-play"/>
             </div>
             <div class="footer" @click.stop v-show="footShow">
+                <div class="hv-time" :style="{transform: `translateX(${left}px)`,opacity: hvTimeShow?1:0}">
+                    <div class="text">{{hvTime | sminute}}</div>
+                    <div class="point">
+                        <Icon type="md-arrow-dropdown" />
+                        <Icon type="md-arrow-dropup" />
+
+                    </div>
+                </div>
                 <Slider
                         v-model="currentTime"
                         show-tip="never"
@@ -23,7 +31,7 @@
                 ></Slider>
                 <div class="control flex justify-between align-center">
                     <div class="time">
-                        {{parseInt(this.currentTime||0) | sminute}} / {{parseInt(this.video.duration||0) | sminute}}
+                        {{parseInt(currentTime||0) | sminute}} / {{parseInt(video.duration||0) | sminute}}
                     </div>
                     <div class="right">
                         <div class="control flex">
@@ -60,14 +68,29 @@
                 ready: false,
                 fullScreen: false,
                 footShow: true,
-                set: ''
+                set: '',
+                left: 0,
+                hvTime: 0,
+                hvTimeShow: false
             }
         },
+        inject:['reload'],
         methods: {
             readyPlay() {
                 this.isplay = true
                 this.ready = true
                 this.$emit('ready')
+                let offsetLeft = document.querySelector('.left').offsetLeft
+                let $ = document.querySelector('.ivu-slider-wrap')
+                $.onmousemove = (e) => {
+                    this.left = e.x-offsetLeft
+                    let width = $.offsetWidth
+                    this.hvTime = parseInt(this.left/width*this.video.duration || 0)
+                    this.hvTimeShow = true
+                }
+                $.onmouseleave = () => {
+                    this.hvTimeShow = false
+                }
             },
             playing() {
                 this.currentTime = this.video.currentTime
@@ -80,7 +103,10 @@
         watch: {
             isplay(value) {
                 if (value) {
-                    this.video.play()
+                    this.video.play().then().catch(()=> {
+                        this.$Message.info('播放失败')
+                        this.reload()
+                    })
                 } else {
                     this.video.pause()
                 }
@@ -205,6 +231,20 @@
             &.show
                 opacity 1
 
+            .hv-time
+                position absolute
+                left -25px
+                color #fff
+                top -38px
+                .point
+                    font-size 20px
+                    i
+                        display block
+                .text
+                    padding 0 10px
+                    background rgba(0,0,0,.7)
+
+
             .control
                 margin-right 20px
 
@@ -225,20 +265,14 @@
                 position absolute
                 width 100%
                 top 0
-
                 &:hover
-                    top -10px
-
-                    .ivu-slider-wrap
-                        height 20px
-
                     .ivu-slider-button
-                        width 25px
-                        height 25px
                         opacity 1
-
+                        cursor pointer
                         &:hover
-                            transform scale(1.1)
+                            transform none
+                    .ivu-slider-wrap
+                        height 5px
 
                 .ivu-slider-wrap
                     height 3px

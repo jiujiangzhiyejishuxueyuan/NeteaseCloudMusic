@@ -117,8 +117,8 @@
     .toplist
         margin-top 70px
         .cover
-            width 215px
-            height 215px
+            width 205px
+            height 205px
 
         .playlist-control
             .sub,.to-comment
@@ -130,7 +130,7 @@
 
         .toplist-inner
             width 1000px
-            padding-top 50px
+            padding-top 30px
             margin-left 300px
 
             .comment-box

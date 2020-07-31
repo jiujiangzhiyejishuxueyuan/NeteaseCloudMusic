@@ -1,8 +1,8 @@
 <template>
     <ul class="mv-list flex flex-wrap" v-if="mvs.length">
-        <li class="mv-item img-scale-hover" v-for="(mv,index) in mvs" :key="index">
+        <li class="mv-item" v-for="(mv,index) in mvs" :key="index">
             <a :href="`/mv/${mv.id}`" target="_blank">
-                <div class="img-box img-scale">
+                <div class="img-box img-scale" title="播放mv">
                     <img :src="(mv.cover||mv.imgurl16v9||imgurl)+'?param=260y150'" alt="">
                     <div class="shadow">
                         <div class="btn-play absolute-center">
@@ -12,7 +12,7 @@
                 </div>
             </a>
             <div class="info" v-if="mv.artistName">
-                <a :href="`/mv/${mv.id}`" target="_blank" class="title ellipse text-hv">{{mv.name}}</a>
+                <a :href="`/mv/${mv.id}`" target="_blank" class="title ellipse text-hv" :title="mv.name">{{mv.name}}</a>
                 <p class="art ellipse" v-if="!hiddenArt">
                     <span class="arts" v-if="mv.artists">
                         <a class="name text-hv"
@@ -20,13 +20,21 @@
                            :href="`/music/artist/${art.id}`"
                            :key="index"
                            target="_blank"
+                           :title="art.name"
                         >
                         {{art.name }}
                         <i v-if="index<mv.artists.length-1">/</i>
                     </a>
                     </span>
                     <span v-else>
-                        <a target="_blank" :href="`/music/artist/${mv.artist.id}`" class="name text-hv">{{mv.artist.name}}</a>
+                        <a
+                                target="_blank"
+                                :href="`/music/artist/${mv.artist.id}`"
+                                class="name text-hv"
+                                :title="mv.artist.name"
+                        >
+                            {{mv.artist.name}}
+                        </a>
                     </span>
                 </p>
             </div>
@@ -57,9 +65,6 @@
             padding 0 10px
             margin-bottom 20px
             transition all .2s
-            &:hover
-                .shadow
-                    opacity 1 !important
             .img-box
                 position relative
                 height 150px
@@ -67,7 +72,9 @@
                     height 107px
                 @media screen and (max-width: 1200px)
                     height 84px
-
+                &:hover
+                    .shadow
+                        opacity 1 !important
                 .shadow
                     opacity 0
                     position absolute

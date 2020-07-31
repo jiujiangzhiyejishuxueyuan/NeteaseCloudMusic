@@ -13,7 +13,7 @@
             <div class="album-items flex flex-wrap">
                 <div class="item-contain" v-for="(album,index) in albums" :key="index">
                     <div class="item-box">
-                        <div class="item-inner">
+                        <div class="item-inner img-scale">
                             <div class="img-box">
                                 <router-link :to="`/music/album/${album.id}`">
                                     <img :src="album.picUrl+'?param=250y250'">
@@ -100,9 +100,6 @@
 
         .item-inner
             position relative
-
-            &:hover .img-box img
-                transform scale(1.1)
 
             &:hover .playlist-all-btn-play
                 opacity 1

@@ -44,7 +44,8 @@
                                 @focus="searchTipShow = true"
                                 @focusout="searchTipHidden"
                         >
-                        <div @click="search" class="btn-search">
+                        <!--             搜索按钮           -->
+                        <div @click="search" class="btn-search" title="搜索">
                             <Icon type="ios-search"/>
                         </div>
                         <!--                         搜索提示-->
@@ -54,7 +55,11 @@
                     <div class="user">
                         <div class="h-avatar img">
                             <img :src="userInfo.avatarUrl+'?param=80y80'"
-                                 v-if="userInfo.userId&&!userInfo.defaultAvatar" title="我的主页" alt="我的主页">
+                                 v-if="userInfo.userId&&!userInfo.defaultAvatar"
+                                 title="我的主页"
+                                 alt="我的主页"
+                                 @click="$router.push(`/user/home?id=${userInfo.userId}`)"
+                            >
                             <img src="../../static/imgs/no-login.png" alt="" v-else>
                         </div>
                         <div class="info-box">

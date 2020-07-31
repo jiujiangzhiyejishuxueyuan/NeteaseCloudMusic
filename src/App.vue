@@ -61,16 +61,16 @@
         @media screen and (max-width: 1550px)
             width 50px
             height 50px
-            @media screen and (max-width: 1200px)
-                width 40px
-                height 40px
+        @media screen and (max-width: 1200px)
+            width 40px
+            height 40px
 
-            img
-                width 100%
-                height 100%
+        img
+            width 100%
+            height 100%
 
-            &:hover
-                background #000
+        &:hover
+            background #000
 
 
     .view-enter-active, .view-leave-active

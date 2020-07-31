@@ -9,7 +9,7 @@
                     <span v-else>-</span>
                 </div>
             </div>
-            <div class="cover img-box">
+            <div class="cover img-box img-scale" title="播放mv">
                 <a :href="`/mv/${mv.id}`" target="_blank">
                     <img :src="mv.cover+'?param=400y200'" alt="">
                 </a>
@@ -18,7 +18,7 @@
                 <a :href="`/mv/${mv.id}`" target="_blank" class="name text-hv ellipse" :title="mv.name">{{mv.name}}</a>
                 <p class="arts ellipse text-wrap">
                     <a target="_blank" :href="`/music/artist/${art.id}`" class="art text-hv"
-                       v-for="(art,index) in mv.artists" :key="index">
+                       v-for="(art,index) in mv.artists" :key="index" :title="art.name">
                         {{art.name}}
                         <i v-if="index<mv.artists.length-1">/</i>
                     </a>
@@ -56,7 +56,7 @@
 
             .cover
                 box-sizing content-box
-                padding 20px
+                margin  20px
                 width 250px
                 height 125px
                 @media screen and (max-width: 1200px)

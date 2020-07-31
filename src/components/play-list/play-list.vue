@@ -3,9 +3,9 @@
         <ul class="flex flex-wrap">
             <li v-for="(playlist,index) in playlists" :key="index">
                 <div class="content img-scale-hover" :title="playlist.name">
-                    <div class="cover relative">
+                    <div class="cover relative img-scale">
                         <router-link :to="`/music/playlist/${playlist.id}`">
-                            <div class="img-box img-scale ">
+                            <div class="img-box ">
                                 <img alt="背景图" :src="playlist.coverImgUrl+'?param=300y300'">
                             </div>
                         </router-link>
@@ -43,14 +43,13 @@
             margin-bottom 20px
             .content
                 padding 0 14px
-                &:hover .btn-play
+                .cover:hover .btn-play
                     opacity 1
-
-
                 .img-box
                     border-radius 10px
                     width 100%
                     height 252px
+                    overflow hidden
                     @media screen and (max-width: 1200px)
                         width 172px !important
                         height 172px !important
@@ -66,6 +65,10 @@
                     line-height 60px
                     border-radius 50%
                     cursor pointer
+                    overflow hidden
+                    img
+                        width 100%
+                        height 100%
                     &:hover
                         background #000
 

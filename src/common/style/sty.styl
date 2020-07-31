@@ -77,14 +77,15 @@ div a
   width 100%
   height 100%
   display block
-.img-scale-hover&:hover .img-scale
-  cursor pointer
-  img
-    transform scale(1.1)
 .img-scale
   overflow hidden
   img
     transition all .3s
+  &:hover
+    .btn-play img
+      transform none
+    img
+      transform scale(1.1)
 .text-hv:hover
   cursor pointer
   color #E60026 !important

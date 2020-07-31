@@ -1,12 +1,11 @@
 <template>
     <div id="video-related">
         <ul class="related-list" v-if="videos.length>=10">
-            <li class="related-item flex img-scale-hover" v-for="(video,index) in videos" :key="index">
-                <div class="img-box img-scale " :title="video.title">
+            <li class="related-item flex" v-for="(video,index) in videos" :key="index">
+                <div class="img-box img-scale" :title="video.title">
                     <router-link :to="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`">
                         <img :src="(video.coverUrl || video.cover)+'?param=300y170'" alt="">
                     </router-link>
-
                 </div>
                 <div class="info">
                     <router-link :to="`/video/${video.vid}`" class="title ellipse" :title="video.title">

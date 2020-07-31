@@ -14,8 +14,8 @@
                 <ul class="list-inner flex flex-wrap justify-between">
                     <li class="item" v-for="(item,index) in list" :key="index">
                         <router-link :to="`/music/playlist/${item.id}`" :title="item.name">
-                            <div class="item-box img-scale-hover">
-                                <div class="img-box img-scale playlist-min-imgbox">
+                            <div class="item-box img-scale">
+                                <div class="img-box  playlist-min-imgbox">
                                     <img :src="item.coverImgUrl+'?param=200y200'">
                                 </div>
                                 <div class="playlist-all-btn-play absolute-center" title="播放歌单"
@@ -70,7 +70,6 @@
             margin-top 20px
             width 100%
             .item
-                cursor pointer
                 width 14%
                 margin-bottom 20px
                 padding 0 10px 10px

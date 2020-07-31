@@ -3,7 +3,7 @@
         <div class="video-header">
             <ul class="category flex flex-wrap justify-center container">
                 <li class="tag title">热门分类 :</li>
-                <li class="tag" v-for="(cat,index) in category" :key="index">
+                <li class="tag" v-for="(cat,index) in category" :key="index" :title="cat.name">
                     <router-link :to="`/video?id=${cat.id}`">{{cat.name}}</router-link>
                 </li>
             </ul>
@@ -16,7 +16,7 @@
                 <li class="tag">
                     <router-link to="/video" :class="{active: !currentTag}">全部视频</router-link>
                 </li>
-                <li class="tag" v-for="(tag,index) in tags" :key="index">
+                <li class="tag" v-for="(tag,index) in tags" :key="index" :title="tag.name">
                     <router-link :to="`/video?id=${tag.id}`" :class="{active: parseInt(currentTag)===tag.id}">
                         {{tag.name}}
                     </router-link>

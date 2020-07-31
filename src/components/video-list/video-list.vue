@@ -1,6 +1,6 @@
 <template>
     <ul class="video-list flex flex-wrap">
-        <li class="video-item img-scale-hover" v-for="(video,index) in videos" :key="index">
+        <li class="video-item" v-for="(video,index) in videos" :key="index">
             <a :href="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`" target="_blank">
                 <div class="img-box img-scale">
                     <img :src="video.coverUrl+'?param=360y200'" alt="" :title="video.title">

@@ -55,7 +55,7 @@
                     this.hasMore = res.hasMore
                 })
                 window.onscroll= () => {
-                    if (document.body.scrollHeight - window.innerHeight - window.scrollY < 200 && this.oldLength !== this.mvs.length) {
+                    if (document.body.scrollHeight - window.innerHeight - window.scrollY < 200 && (this.oldLength !== this.mvs.length)) {
                         this.oldLength = this.mvs.length
                         this.loading = true
                         reqMv(area, type, order, 20, this.offset).then(res => {

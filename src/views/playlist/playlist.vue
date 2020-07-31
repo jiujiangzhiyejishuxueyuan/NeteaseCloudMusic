@@ -90,7 +90,7 @@
             let i = 0
             let page = to.query.page || 1
             let cat = to.query.cat || '全部'
-            console.log('before')
+            let songlists = []
             reqHotTags().then(res => {
                 hotTags = res.tags
                 i++
@@ -98,7 +98,7 @@
                     next(vm => {
                         vm.hotTags = hotTags
                         vm.tags = ctags
-                        vm.songlists = res
+                        vm.songlists = songlists
                         vm.cat = cat
                     })
                 }
@@ -126,18 +126,19 @@
                     next(vm => {
                         vm.hotTags = hotTags
                         vm.tags = ctags
-                        vm.songlists = res
+                        vm.songlists = songlists
                         vm.cat = cat
                     })
                 }
             })
             reqplaylist(25,(page-1)*25,cat).then(res => {
+                songlists = res
                 i++
                 if(i===3) {
                     next(vm => {
                         vm.hotTags = hotTags
                         vm.tags = ctags
-                        vm.songlists = res
+                        vm.songlists = songlists
                         vm.cat = cat
                     })
                 }
@@ -159,9 +160,6 @@
             $route() {
                 this.render()
             }
-        },
-        created() {
-            console.log('created')
         },
         methods: {
             checkMore(index) {

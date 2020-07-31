@@ -11,7 +11,7 @@
                     <span class="item " @click="recordType='all'" :class="{disabled: recordType!=='all'}"> 所有时间</span>
                 </div>
             </div>
-            <record-list :songs="record.slice(0,10)"/>
+            <record-list :songs="record.slice(0,10)" :loading="recordLoading"/>
             <div class="record-footer">
                 <a class="text-hv">查看更多</a>
             </div>
@@ -53,7 +53,8 @@
                 createdPlaylist: [],
                 subPlaylist: [],
                 id:'',
-                user: ''
+                user: '',
+                recordLoading: false
             }
         },
         created() {
@@ -83,12 +84,15 @@
                 this.render()
             },
             recordType(value) {
+                this.recordLoading = true
                 if(value==='week') {
                     reqUserRecord(this.id).then(res => {
+                        this.recordLoading = false
                         this.record = res.weekData
                     })
                 } else if(value==='all') {
                     reqUserRecord(this.id,0).then(res => {
+                        this.recordLoading = false
                         this.record = res.allData
                     })
                 }

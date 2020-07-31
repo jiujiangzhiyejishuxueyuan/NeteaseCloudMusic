@@ -61,7 +61,7 @@
                         {{comments.total}} 评论
                     </div>
                     <div class="comment-header bb flex" ref="comment">
-                        <a class="sort" :class="{active:hotComments}" @click="hotComments = true">最热评论</a>
+                        <a class="sort" :class="{active:hotComments}" @click="hotComments = true" v-if="havaHotComment">最热评论</a>
                         <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
                     </div>
                     <comment-edit :id="video.vid" type="5" class="input"/>
@@ -79,7 +79,6 @@
                             @on-change="pageTurning"
                             :current="commentsPage"
                     />
-                    <div class="text-center" v-else>没有更多评论了~`</div>
                 </div>
             </div>
             <video-related :videos="relatedVideos"/>
@@ -118,6 +117,7 @@
                 hotComments: true,
                 vReady: false,
                 commentsPage: 1,
+                havaHotComment: true
             }
         },
         inject: ['reload'],
@@ -214,7 +214,14 @@
             })
             reqVideoComments(id, 5).then(res => {
                 this.comments = res
-                this.commentsList = res.hotComments
+                if (res.hotComments.length) {
+                    this.havaHotComment = true
+                    this.commentsList = res.hotComments
+                } else {
+                    this.havaHotComment = false
+                    this.hotComments = false
+                    this.commentsList = res.comments
+                }
                 
             })
         },

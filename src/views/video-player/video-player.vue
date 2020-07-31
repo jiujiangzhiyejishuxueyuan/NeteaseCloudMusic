@@ -69,11 +69,9 @@
                             :comments="commentsList"
                             :id="video.vid"
                             type="5"
-                            v-if="commentsList.length"
+                            :loading="!comments.code"
                     />
-                    <div class="no-comment" v-else>
-                        暂无更多评论
-                    </div>
+
                     <Page
                             :total="hotComments?commentsList.length:comments.total"
                             :page-size="20"
@@ -119,7 +117,7 @@
                 id: '',
                 hotComments: true,
                 vReady: false,
-                commentsPage: 1
+                commentsPage: 1,
             }
         },
         inject: ['reload'],
@@ -136,6 +134,7 @@
                 this.commentsPage = page
                 let limit = 20
                 let offset = (page - 1) * limit
+                this.comments = {}
                 if (!this.hotComments) {
                     reqVideoComments(this.id, limit, offset).then(res => {
                         this.comments = res
@@ -216,6 +215,7 @@
             reqVideoComments(id, 5).then(res => {
                 this.comments = res
                 this.commentsList = res.hotComments
+                
             })
         },
         watch: {
@@ -224,15 +224,18 @@
             },
             hotComments(value) {
                 this.commentsPage = 1
+                this.comments = {}
                 if(value) {
                     reqHotComments(this.id, 5, 20, 0).then(res => {
                         this.comments = res
                         this.commentsList = res.hotComments
+                        
                     })
                 } else {
                     reqVideoComments(this.id).then(res => {
                         this.comments = res
                         this.commentsList = res.comments
+                        
                     })
                 }
             }
@@ -361,7 +364,9 @@
 
         .video-player-header
             .user-card
-                margin-right 15%
+                width 340px
+                @media screen and (max-width: 1200px)
+                    width 280px
 
             .time, .count
                 margin-top 10px

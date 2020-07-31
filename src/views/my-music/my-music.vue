@@ -83,13 +83,8 @@
 
         .playlist-detail
             .container
-                width 1000px
-                @media screen and (max-width: 1550px)
-                    width 820px
-                @media screen and (max-width: 1200px)
-                    width 740px
-                    .content
-                        width 60%
+                width inherit
+                margin 0
 
             .header-info, #header-info-ske
                 padding 0 0 10px
@@ -99,6 +94,12 @@
 
                 .info-inner
                     padding-left 20px
+                    .title
+                        padding 0
+                        h1
+                            font-weight normal
+                            font-size 22px
+
 
                     .img-box, .cover
                         width 210px
@@ -112,8 +113,8 @@
                             opacity 0
                     @media screen and (max-width: 1200px)
                         .img-box, .cover
-                            width 160px
-                            height 160px
+                            width 175px
+                            height 175px
 
                         .control
                             opacity 0
@@ -129,7 +130,7 @@
         .my-music-content
             padding-top 30px
             margin-left 255px
-            width 1000px
+            width 1100px
 
             #my-mv .video-list .img-box
                 height 95px

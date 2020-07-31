@@ -4,7 +4,7 @@
             <div class="background-blur">
                 <img :src="songlist.coverImgUrl+'?param=200y200'">
             </div>
-            <div class="info-inner flex container align-center">
+            <div class="info-inner flex container">
                 <div class="img-box header-info-img">
                     <img :src="songlist.coverImgUrl+'?param=500y500'" v-if="songlist.coverImgUrl">
                 </div>
@@ -76,11 +76,12 @@
                 <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
             </div>
             <comment-edit :id="songlist.id.toString()" type="2" class="input"/>
-            <comment-list :id="songlist.id.toString()" type="2"
-                          :comments="hotComments ? c : comment.comments" v-if="comment.total>0"/>
-            <div class="no-comments" v-else>
-                暂无评论
-            </div>
+            <comment-list
+                    :id="songlist.id.toString()"
+                    type="2"
+                    :comments="hotComments ? c : comment.comments"
+                    :loading="!comment.code"
+            />
             <Page
                     class="comment"
                     :total="comment.total"
@@ -114,7 +115,7 @@
                 songlist: '',
                 songs: [],
                 hotComments: true,
-                comment: '',
+                comment: {comments:[]},
                 commentLimit: 20,
                 c: '',
                 subed: false,
@@ -146,12 +147,15 @@
             nextComment(page) {
                 let id = this.$route.params.id || this.$route.query.id
                 let offset = this.commentLimit * (page - 1)
+                this.comment.comments = []
+                this.comment.code = 0
+                this.scrollToComment()
                 reqPlaylistComments(id, this.commentLimit, offset).then(res => {
                     this.comment = res
                     if (!res.hotComments) {
                         this.hotComments = false
                     }
-                    this.scrollToComment()
+
                 })
             },
             render() {
@@ -218,7 +222,7 @@
                 font-size 16px
 
             .comment-edit
-                margin-bottom 50px
+                margin-bottom 20px
 
             .comment-count
                 font-size 18px

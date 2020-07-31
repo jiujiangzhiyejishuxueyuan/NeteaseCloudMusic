@@ -90,6 +90,7 @@
             let i = 0
             let page = to.query.page || 1
             let cat = to.query.cat || '全部'
+            console.log('before')
             reqHotTags().then(res => {
                 hotTags = res.tags
                 i++
@@ -159,9 +160,12 @@
                 this.render()
             }
         },
+        created() {
+            console.log('created')
+        },
         methods: {
             checkMore(index) {
-                if(index==this.showMoreTag&&this.showMore) {
+                if(index===this.showMoreTag&&this.showMore) {
                     this.showMore = false
                 } else {
                     this.showMore = true

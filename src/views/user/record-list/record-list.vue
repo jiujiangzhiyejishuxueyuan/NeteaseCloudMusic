@@ -1,5 +1,5 @@
 <template>
-    <ul class="record-list">
+    <ul class="record-list" v-if="!loading">
         <li class="flex justify-between" v-for="(item,index) in songs" :key="index">
             <div class="info flex">
                 <div class="index">{{index+1}}</div>
@@ -18,6 +18,15 @@
             </div>
         </li>
     </ul>
+    <ul class="record-list-ske" v-else>
+        <li class="record-item-ske flex justify-between align-center" v-for="index in 10" :key="index">
+            <div class="flex left">
+                <div class="name ske-ani"></div>
+                <div class="singer ske-ani"></div>
+            </div>
+            <div class="score ske-ani"></div>
+        </li>
+    </ul>
 </template>
 
 <script>
@@ -26,7 +35,8 @@
     import {mapState} from 'vuex'
     export default {
         props: {
-            songs: Array
+            songs: Array,
+            loading: Boolean
         },
         components: {
             songControl
@@ -48,6 +58,23 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+    .record-list-ske
+        .record-item-ske
+            height 49px
+            div
+                height 25px
+
+            .score
+                height 45px
+                width 40%
+            .left
+                width 20%
+
+                .singer
+                    margin-left 20px
+                    width 120px
+                .name
+                    width 60%
     .record-list
         li
             .info

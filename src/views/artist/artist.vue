@@ -17,7 +17,7 @@
                     <a>{{style.text}}</a>
                 </li>
             </ul>
-            <ul class="letter flex">
+            <ul class="letter flex flex-wrap">
                 <li :class="{active: str===''}"
                     @click="$router.replace(`/music/artist?${currentType!==-1?`&type=${currentType}`:''}${currentStyle!==-1?`&style=${currentStyle}`:''}`)"><a>全部</a></li>
                 <li v-for="(item,index) in 26" :key="index" :class="{active: String.fromCharCode(item+64)===str}"
@@ -26,10 +26,7 @@
                 </li>
             </ul>
         </div>
-        <singer-list :singers="singers" v-if="singers.length"/>
-        <div class="ske container flex justify-center" v-else>
-            <Spin></Spin>
-        </div>
+        <singer-list :singers="singers"/>
         <div class="page-skip flex justify-center">
             <div class="previous" :class="{disable: page===1 }" @click="page!=1&&changePage(-1)">上一页</div>
             <div class="next" :class="{disable: !more}" @click="more&&changePage(1)">下一页</div>

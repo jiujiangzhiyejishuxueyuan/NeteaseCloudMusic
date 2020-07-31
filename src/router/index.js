@@ -116,11 +116,11 @@ export default new VueRouter({
             }
         },
         {
-            name: 'singer',
             path: '/music/artist/:id',
             component: () => import('@/views/singer/index'),
             children: [
                 {
+                    name: 'singer',
                     path: '',
                     component: () => import('@/views/singer/singer')
                 },
@@ -139,7 +139,7 @@ export default new VueRouter({
                 {
                     path: 'desc',
                     component: () => import('@/views/singer/desc')
-                }
+                },
             ]
         },
         {

@@ -38,18 +38,16 @@
                 border-radius 5px
                 animation ske .8s linear infinite alternate
                 background rgba(0, 0, 0, .06)
-
+            wh(w,h,mt)
+                height h
+                width w
+                margin-top mt
             .name
-                margin-top 5px
-                height 21px
-                width 80%
+                wh(60%,21px,11px)
 
             .art
-                margin-top 5px
-                height 18px
-                width 60%
+                wh(40%,21px,11px)
 
             .inner
-                height 150px
-                width 270px
+                wh(260px,150px,0)
 </style>

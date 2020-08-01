@@ -54,38 +54,47 @@
                 offset: 0,
                 oldLength: 0,
                 more: true,
-                ids: []
+                ids: [],
+                reqNum: 0
             }
         },
         methods: {
-            reqdata(count) {
-                for (let i = 0; i < count; i++) {
-                    reqVideoList(this.currentTag, this.offset).then(res => {
-                        this.more = res.hasmore
-                        res.datas.forEach(item => {
-                            if (!this.ids.includes(item.data.vid)) {
-                                this.ids.push(item.data.vid)
-                                this.videoList.push(item.data)
-                            }
-                        })
+            reqdata() {
+                console.log('掉我干啥')
+                reqVideoList(this.currentTag, this.offset).then(res => {
+                    this.more = res.hasmore
+                    res.datas.forEach(item => {
+                        if (!this.ids.includes(item.data.vid)) {
+                            this.ids.push(item.data.vid)
+                            this.videoList.push(item.data)
+                        }
                     })
-                    this.offset++
-                }
+                    if(this.reqNum>4) {
+                        this.reqNum = 0
+                    } else {
+                        this.reqNum++
+                        this.reqdata()
+                    }
+                })
+                this.offset += 8
             },
-            reqAlldata(count) {
-                for (let i = 0; i < count; i++) {
-                    reqAllVideo(this.offset).then(res => {
-                        this.more = res.hasmore
-                        res.datas.forEach(item => {
-                            if (!this.ids.includes(item.data.vid)) {
-                                this.ids.push(item.data.vid)
-                                this.videoList.push(item.data)
-                            }
-                        })
-
+            reqAlldata() {
+                reqAllVideo(this.offset).then(res => {
+                    this.more = res.hasmore
+                    res.datas.forEach(item => {
+                        if (!this.ids.includes(item.data.vid)) {
+                            this.ids.push(item.data.vid)
+                            this.videoList.push(item.data)
+                        }
                     })
-                    this.offset += 8
-                }
+                    if(this.reqNum>4) {
+                        this.reqNum = 0
+                    } else {
+                        this.reqNum++
+                        this.reqAlldata()
+                    }
+                })
+                this.offset += 8
             },
             render() {
                 this.currentTag = this.$route.query.id
@@ -94,6 +103,7 @@
                 this.more = true
                 this.oldLength = 0
                 if (this.currentTag) {
+                    console.log('???')
                     if (this.currentTag !== '1000') {
                         this.reqdata(5)
                     } else {
@@ -125,9 +135,9 @@
                 if (document.body.scrollHeight  - window.innerHeight - window.scrollY < 1000 && (this.oldLength !== this.videoList.length)) {
                     this.oldLength = this.videoList.length
                     if (this.currentTag) {
-                        this.reqdata(5)
+                        this.reqdata()
                     } else {
-                        this.reqAlldata(5)
+                        this.reqAlldata()
                     }
                 }
             })

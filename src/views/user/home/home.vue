@@ -1,7 +1,7 @@
 <template>
     <div class="user-home">
         <div class="record container" v-if="record.length">
-            <div class="record-header section-header">
+            <div class="record-header section-header" ref="record">
                 <span class="section-header-title">
                     听歌排行
                     <span class="total">累计听歌{{user.listenSongs}}首</span>
@@ -11,9 +11,9 @@
                     <span class="item " @click="recordType='all'" :class="{disabled: recordType!=='all'}"> 所有时间</span>
                 </div>
             </div>
-            <record-list :songs="record.slice(0,10)" :loading="recordLoading"/>
+            <record-list :songs="recordMore?record:record.slice(0,10)" :loading="recordLoading"/>
             <div class="record-footer">
-                <a class="text-hv">查看更多</a>
+                <a class="text-hv" @click="cutRecordMore">{{recordMore?'收起':'查看更多'}}</a>
             </div>
         </div>
         <div class="my-playlist container">
@@ -54,7 +54,8 @@
                 subPlaylist: [],
                 id:'',
                 user: '',
-                recordLoading: false
+                recordLoading: false,
+                recordMore: false
             }
         },
         created() {
@@ -77,6 +78,12 @@
                         item.creator.userId === this.id ? this.createdPlaylist.push(item) : this.subPlaylist.push(item)
                     })
                 })
+            },
+            cutRecordMore() {
+                if (this.recordMore) {
+                    window.scrollTo(0, (this.$refs.record.getBoundingClientRect().top + window.scrollY))
+                }
+                this.recordMore = !this.recordMore
             }
         },
         watch: {

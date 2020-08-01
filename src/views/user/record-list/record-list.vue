@@ -3,12 +3,12 @@
         <li class="flex justify-between" v-for="(item,index) in songs" :key="index">
             <div class="info flex">
                 <div class="index">{{index+1}}</div>
-                <span class="name">{{item.song.name}}</span>
+                <router-link class="name" :to="`/music/song/${item.song.id}`">{{item.song.name}}</router-link>
                 <span class="artist ellipse">-
-                    <a v-for="(art,index) in item.song.ar" :key="index">
+                    <router-link :to="`/music/artist/${art.id}`" v-for="(art,index) in item.song.ar" :key="index">
                         {{art.name}}
                         <span v-if="index+1<item.song.ar.length">/</span>
-                    </a>
+                    </router-link>
                 </span>
                 <song-control :id="item.song.id" :likeIds="likeIds"/>
             </div>

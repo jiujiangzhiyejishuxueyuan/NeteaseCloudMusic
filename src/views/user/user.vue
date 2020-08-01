@@ -6,7 +6,7 @@
             </div>
             <div class="container header-inner flex">
                 <div class="avatar-box" @click="$router.replace(`/user/home?id=${user.profile&&user.profile.userId}`)">
-                    <img :src="user.profile&&user.profile.avatarUrl+'?param=400y400'" alt="">
+                    <img :src="user.profile&&user.profile.avatarUrl+'?param=400y400'" alt="" title="主页">
                 </div>
                 <div class="info-inner" v-if="user.profile">
                     <div class="info-inner-header flex align-center">
@@ -177,6 +177,7 @@
                     width 100%
                     filter blur(30px)
             .avatar-box
+                cursor pointer
                 width 20%
                 img
                     width 100%

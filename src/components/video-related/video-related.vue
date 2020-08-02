@@ -24,6 +24,7 @@
                                 :href="video.type!==0?`/user/home?id=${user.userId}`:`/music/artist/${user.userId}`"
                                 class="text-hv"
                                 v-for="(user,index) in video.creator" :key="index"
+                                :title="user.userName"
                         >
                             {{user.userName}}
                             <span v-if="index+1<video.creator.length">/</span>
@@ -31,7 +32,7 @@
 
                     </div>
 
-                    <p class="play-count">播放次数:{{(video.playTime || video.playCount) |playCount}}</p>
+                    <p class="play-count" :title="`播放次数:${video.playTime || video.playCount}`">播放次数:{{(video.playTime || video.playCount) |playCount}}</p>
                 </div>
             </li>
         </ul>

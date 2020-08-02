@@ -1,6 +1,6 @@
 <template>
     <div class="mv-player">
-        <div class="mv-player-header container flex align-center">
+        <div class="mv-player-header container flex align-center" v-if="mv">
             <i class="mv"></i>
             <span class="name">{{mv.name}}</span>
             <ul class="artists ellipse flex">
@@ -11,6 +11,10 @@
                     <i v-if="index<mv.artists.length-1">/ </i>
                 </li>
             </ul>
+        </div>
+        <div class="mv-player-header-ske container flex align-end" v-else>
+            <div class="name ske-ani"></div>
+            <div class="art ske-ani"></div>
         </div>
         <div class="mv-player-content container flex">
             <div class="left">
@@ -290,8 +294,15 @@
                         color #757575
                         font-size 35px
 
-
-
+        .mv-player-header-ske
+            margin-top 20px
+            .name
+                width 25%
+                height 36px
+            .art
+                margin-left 20px
+                width 10%
+                height 16px
         .mv-player-header
             margin-top 20px
             text-align left

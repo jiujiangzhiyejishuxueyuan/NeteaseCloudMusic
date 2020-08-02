@@ -367,6 +367,7 @@
                     width 20%
 
                 .count
+                    margin-bottom 15px
                     width 30%
 
         .video-player-header

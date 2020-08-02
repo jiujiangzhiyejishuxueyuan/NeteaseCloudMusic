@@ -37,6 +37,12 @@
                         <div class="control flex">
                             <Icon type="md-volume-up" @click="video.muted=true" v-if="!video.muted" title="静音"/>
                             <Icon type="md-volume-mute" @click="video.muted=false" v-else title="取消静音"/>
+                            <Slider
+                                    show-tip="never"
+                                    v-model="video.volume"
+                                    :step="0.01"
+                                    :max="1"
+                            />
                             <Icon type="md-qr-scanner" @click="fullScreen = !fullScreen"
                                   :title="fullScreen?'退出全屏':'全屏'"/>
                         </div>
@@ -104,7 +110,6 @@
             isplay(value) {
                 if (value) {
                     this.video.play().then().catch(()=> {
-                        this.$Message.info('播放失败')
                         this.reload()
                     })
                 } else {
@@ -193,6 +198,7 @@
             width 60px
             height 40px
             i
+                transform translateX(4px)
                 font-size 30px
         .ivu-slider-button
             transition none
@@ -247,12 +253,17 @@
 
             .control
                 margin-right 20px
+                transform translateY(2px)
+
+                .ivu-slider
+                    transform translateY(-2px)
+                    width 80px
+                    margin-right 20px
 
                 i
                     cursor pointer
                     color #fff
                     font-size 30px
-                    margin-right 10px
 
                     &:hover
                         color #00a1d6
@@ -261,7 +272,7 @@
                 margin-left 20px
                 line-height 40px
                 color #fff
-            .ivu-slider
+            &>.ivu-slider
                 position absolute
                 width 100%
                 top 0
@@ -290,7 +301,7 @@
             max-height 590px
             width 1050px
             @media screen and (max-width: 1550px)
-                max-width 850px
+                max-width 849px
                 height 480px
             @media screen and (max-width: 1200px)
                 max-width 710px

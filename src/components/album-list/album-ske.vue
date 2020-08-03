@@ -1,8 +1,5 @@
 <template>
     <div class="album-ske container">
-        <div class="album-ske-header" v-if="!hiddenHeader">
-            <div class="title"></div>
-        </div>
         <ul class="album-ske-list flex flex-wrap">
             <li class="album-ske-item" v-for="index in row*5" :key="index">
                 <div class="inner"></div>
@@ -12,7 +9,6 @@
                 </div>
             </li>
         </ul>
-
     </div>
 </template>
 
@@ -23,7 +19,6 @@
                 type: Number,
                 default: () => 2
             },
-            hiddenHeader: Boolean
         }
     }
 </script>
@@ -63,14 +58,6 @@
                     height 170px !important
                 @media screen and (max-width: 1200px)
                     height 133px !important
-        .album-ske-header
-            height 60px
-            .title
-                animation ske .8s  linear infinite alternate
-                border-radius 10px
-                margin-left 10px
-                width 120px
-                height 40px
-                background $h
+
 
 </style>

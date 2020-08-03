@@ -5,8 +5,7 @@
         <recommend-hot :list="hotList" title="热门推荐" v-if="hotList.length"/>
         <playlistListSke :row="2" v-else/>
         <recommend-today v-if="userInfo&&userInfo.userId"/>
-        <new-album :albums="albums" title="新碟上架" v-if="albums.length"/>
-        <album-ske :row="2" v-else/>
+        <new-album-list />
         <rank/>
     </div>
 </template>
@@ -17,29 +16,25 @@
     import bannerSke from '@/views/home/banner/banner-ske'
     import recommendHot from '@/views/home/recommend-hot/recommend-hot'
     import recommendToday from '@/views/home/recommend-today/recommend-today'
-    import newAlbum from '@/components/album-list/album-list'
-    import albumSke from '@/components/album-list/album-ske'
     import rank from "@/views/home/rank/rank/rank";
-    import {reqBanner, reqHotSongList, reqNewAlbum} from "@/api";
-    import {mapState} from 'vuex'
-
+    import {reqBanner, reqHotSongList, reqLoginState, reqNewAlbum} from "@/api";
+    import NewAlbumList from "@/views/home/new-album-list/new-album-list";
     export default {
         name: 'home',
         components: {
+            NewAlbumList,
             banner,
             recommendHot,
             recommendToday,
-            newAlbum,
             rank,
             playlistListSke,
-            albumSke,
             bannerSke
         },
         data() {
             return {
                 hotList: [],
-                albums:[],
-                banners: []
+                banners: [],
+                userInfo: ''
             }
         },
         async created() {
@@ -47,12 +42,9 @@
             this.banners = banners.banners
             const result = await reqHotSongList(14,'hot')
             this.hotList = result.playlists
-            const albums = await reqNewAlbum(0,10)
-            this.albums = albums.albums
-
-        },
-        computed: {
-            ...mapState(['userInfo'])
+            reqLoginState().then(res => {
+                this.userInfo = res.profile
+            })
         }
     }
 </script>

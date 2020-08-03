@@ -16,7 +16,7 @@
 
 <script>
     import addSongPlsylist from '@/components/addSong-playlist/addSong-playlist'
-    import {changeplaylistSong, likeSong, reqUserPlaylist} from "@/api";
+    import {changeplaylistSong, likeSong, reqLoginState, reqUserPlaylist} from "@/api";
     import {mapState} from 'vuex'
     export default {
         props: {
@@ -49,7 +49,8 @@
         data() {
             return {
                 playlistsShow: false,
-                playlists: []
+                playlists: [],
+                userInfo: ''
             }
         },
         methods: {
@@ -99,7 +100,6 @@
             }
         },
         computed: {
-            ...mapState(['userInfo']),
             like: {
                 get() {
                     return this.likeIds.includes(this.id)
@@ -118,6 +118,11 @@
                     }
                 }
             }
+        },
+        created() {
+            reqLoginState().then(res => {
+                this.userInfo = res.profile
+            })
         }
     }
 </script>
@@ -145,6 +150,7 @@
             background #ffffff
             color #333
             font-size 14px
+            box-shadow 0 3px 5px rgba(0,0,0,.3)
 
             li
                 cursor pointer

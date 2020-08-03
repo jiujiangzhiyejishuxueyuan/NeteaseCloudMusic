@@ -1,6 +1,6 @@
 <template>
     <div id="playlist-list">
-        <ul class="flex flex-wrap">
+        <ul class="flex flex-wrap" v-if="playlists.length">
             <li v-for="(playlist,index) in playlists" :key="index">
                 <div class="content img-scale-hover" :title="playlist.name">
                     <div class="cover relative img-scale">
@@ -23,12 +23,15 @@
                 </div>
             </li>
         </ul>
+        <playlist-ske :row="5" v-else/>
     </div>
 </template>
 
 <script>
+    import PlaylistSke from "@/components/play-list/playlist-ske";
     export default {
         name: 'play-list',
+        components: {PlaylistSke},
         props: {
             playlists:Array
         }

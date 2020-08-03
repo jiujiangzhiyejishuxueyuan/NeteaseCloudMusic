@@ -54,12 +54,11 @@
                     } else {
                         this.$Message.error('操作失败')
                     }
-                    console.log(res);
                 })
             }
         },
         created() {
-            let id = this.$route.params.id
+            let id = +this.$route.params.id
             reqSingerAlbum(id, 1, 0).then(res => {
                 this.singer = res.artist
                 document.title = `${this.singer.name} - 歌手 - 网易云音乐`
@@ -71,7 +70,7 @@
                 if (res.code === 200) {
                     reqSubSinger().then(res => {
                         let b = res.data.every(item => {
-                            return item.id != id
+                            return item.id !== id
                         })
                         this.followed = !b
                     })

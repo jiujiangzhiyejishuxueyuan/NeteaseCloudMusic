@@ -195,10 +195,7 @@
                     reqUserInfo(res.profile.userId).then(res => {
                         this.userInfo = res.profile
                         this.userInfo.level = res.level
-                        this.$store.commit('receive_userinfo', this.userInfo)
                     })
-                } else {
-                    this.$store.commit('receive_userinfo', '')
                 }
             }).catch(error => {
                 error.toString()

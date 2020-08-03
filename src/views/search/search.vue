@@ -18,15 +18,15 @@
                     <a @click="$router.replace(`${$route.path}?keywords=${$route.query.keywords}&type=${item.key}`)">{{item.text}}</a>
                 </li>
             </ul>
-            <song-list :songs="result.songs" v-if="$route.query.type==='1'&&result.songs"/>
-            <singer-list :singers="result.artists" v-else-if="$route.query.type==='100'&&result.artists"/>
-            <album :albums="result.albums" v-else-if="$route.query.type==='10'&&result.albums"/>
-            <PlayList :playlists="result.playlists" v-else-if="$route.query.type==='1000'&&result.playlists"/>
-            <userList :users="result.userprofiles" v-else-if="$route.query.type==='1002'&&result.userprofiles"/>
-            <mv-list :mvs="result.mvs" v-else-if="$route.query.type==='1004'&&result.mvs"/>
+            <song-list :songs="result.songs||[]" v-if="$route.query.type==='1'&&result!==0"/>
+            <singer-list :singers="result.artists||[]" v-else-if="$route.query.type==='100'&&result!==0"/>
+            <album :albums="result.albums||[]" v-else-if="$route.query.type==='10'&&result!==0"/>
+            <PlayList :playlists="result.playlists||[]" v-else-if="$route.query.type==='1000'&&result!==0"/>
+            <userList :users="result.userprofiles||[]" v-else-if="$route.query.type==='1002'&&result.userprofiles"/>
+            <mv-list :mvs="result.mvs||[]" v-else-if="$route.query.type==='1004'&&result!==0"/>
             <lyric-list :songs="result.songs" v-else-if="$route.query.type==='1006'&&result.songs"/>
             <dj-list :djs="result.djRadios" v-else-if="$route.query.type==='1009'&&result.djRadios"/>
-            <video-list :videos="result.videos" v-else-if="$route.query.type==='1014'&&result.videos"/>
+            <video-list :videos="result.videos||[]" v-else-if="$route.query.type==='1014'&&result!==0"/>
             <div class="ske container " v-else-if="result!==0">
                 <Spin></Spin>
             </div>
@@ -173,7 +173,12 @@
         },
         watch: {
             $route() {
-                this.reload()
+                this.result = ''
+                if (!this.$route.query.keywords) {
+                    this.$router.replace('/music')
+                } else {
+                    this.search()
+                }
             }
         }
     }

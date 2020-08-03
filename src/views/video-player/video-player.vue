@@ -88,7 +88,7 @@
 
 <script>
     import {
-        reqHotComments,
+        reqHotComments, reqLoginState,
         reqRelatedVideo,
         reqVideoComments,
         reqVideoDetail,
@@ -117,7 +117,8 @@
                 hotComments: true,
                 vReady: false,
                 commentsPage: 1,
-                havaHotComment: true
+                havaHotComment: true,
+                userInfo: ''
             }
         },
         inject: ['reload'],
@@ -193,6 +194,9 @@
         created() {
             this.id = this.$route.params.id
             let id = this.id
+            reqLoginState().then(res => {
+                this.userInfo = res.profile
+            })
             reqVideoDetail(id).then(res => {
                 this.video = res.data
                 document.title = this.video.title + '- 视频 - 网易云音乐'
@@ -246,9 +250,6 @@
                     })
                 }
             }
-        },
-        computed: {
-            ...mapState(['userInfo']),
         }
     }
 </script>

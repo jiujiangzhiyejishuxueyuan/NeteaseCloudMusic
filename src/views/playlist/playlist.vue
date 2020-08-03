@@ -61,8 +61,7 @@
                         </a>
                     </div>
                 </div>
-                <play-list :playlists="songlists.playlists" v-if="songlists.playlists&&songlists.playlists.length"/>
-                <playlist-ske :row="5" v-else/>
+                <play-list :playlists="songlists.playlists||[]"/>
                 <Page
                         :total="songlists.total"
                         :page-size="25"
@@ -77,11 +76,9 @@
 <script>
     import {reqHotTags, reqplaylist, reqTags} from "@/api";
     import playList from '@/components/play-list/play-list'
-    import playlistSke from '@/components/play-list/playlist-ske'
     export default {
         components: {
             playList,
-            playlistSke
         },
         beforeRouteEnter(to,from,next) {
             let hotTags

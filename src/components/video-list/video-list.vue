@@ -1,16 +1,17 @@
 <template>
-    <ul class="video-list flex flex-wrap">
-        <li class="video-item" v-for="(video,index) in videos" :key="index">
-            <a :href="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`" target="_blank">
-                <div class="img-box img-scale">
-                    <img :src="video.coverUrl+'?param=360y200'" alt="" :title="video.title">
-                </div>
-                <p class="title ellipse text-hv" :title="video.title">{{video.title}}</p>
-            </a>
-            <p class="name flex" v-if="video.creator">
-                <i class="mv" v-if="video.type===0" title="mv"></i>
-                <span class="by" v-else>by</span>
-                <span class="users" v-if="video.creator.length">
+    <div id="video-list">
+        <ul class="video-list flex flex-wrap" v-if="videos.length">
+            <li class="video-item" v-for="(video,index) in videos" :key="index">
+                <a :href="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`" target="_blank">
+                    <div class="img-box img-scale">
+                        <img :src="video.coverUrl+'?param=360y200'" alt="" :title="video.title">
+                    </div>
+                    <p class="title ellipse text-hv" :title="video.title">{{video.title}}</p>
+                </a>
+                <p class="name flex" v-if="video.creator">
+                    <i class="mv" v-if="video.type===0" title="mv"></i>
+                    <span class="by" v-else>by</span>
+                    <span class="users" v-if="video.creator.length">
                     <router-link
                             :to="video.type!==0?`/user/home?id=${art.userId}`:`/music/artist/${art.userId}`"
                             class="text-hv ellipse"
@@ -22,22 +23,26 @@
                         <span v-if="index+1<video.creator.length">/</span>
                     </router-link>
                 </span>
-                <a
-                        class="text-hv ellipse"
-                        :href="`/user/home?id=${video.creator.userId}`"
-                        target="_blank"
-                        :title="video.creator.nickname"
-                        v-else
-                >
-                    {{video.creator.nickname}}
-                </a>
-            </p>
-        </li>
-    </ul>
+                    <a
+                            class="text-hv ellipse"
+                            :href="`/user/home?id=${video.creator.userId}`"
+                            target="_blank"
+                            :title="video.creator.nickname"
+                            v-else
+                    >
+                        {{video.creator.nickname}}
+                    </a>
+                </p>
+            </li>
+        </ul>
+        <video-list-ske :count="10" v-else/>
+    </div>
 </template>
 
 <script>
+    import VideoListSke from "@/components/video-list-ske/video-list-ske";
     export default {
+        components: {VideoListSke},
         props: {
             videos: Array
         },

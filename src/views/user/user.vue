@@ -69,19 +69,22 @@
 </template>
 
 <script>
-    import {reqUserInfo} from "@/api";
-    import {mapState} from 'vuex'
+    import {reqLoginState, reqUserInfo} from "@/api";
     import areaList from '@/api/area-list'
-    import {follow} from "../../api";
+    import {follow} from "@/api";
 
     export default {
         data() {
             return {
                 user: '',
                 areaList,
+                userInfo: ''
             }
         },
         created() {
+            reqLoginState().then(res => {
+                this.userInfo = res.profile
+            })
             this.render()
         },
         inject:['reload'],
@@ -106,7 +109,6 @@
             }
         },
         computed: {
-            ...mapState(['userInfo']),
             birthday() {
                 let year = new Date(this.user.profile.birthday).getFullYear()
                 year = year % 100

@@ -19,7 +19,7 @@
         <div class="my-playlist container">
             <div class="section-header">
                 <span class="section-header-title">
-                    {{user.profile&&($store.state.userInfo.userId!==user.profile.userId) ? user.profile.nickname : '我'}}创建的歌单
+                    {{user.profile&&user.profile.nickname}}创建的歌单
                     ({{createdPlaylist.length}})
                 </span>
             </div>
@@ -28,7 +28,7 @@
         <div class="sub-playlist container" v-if="subPlaylist.length">
             <div class="section-header">
                 <span class="section-header-title">
-                    {{user.profile&&($store.state.userInfo.userId!==user.profile.userId) ? user.profile.nickname : '我'}}收藏的歌单
+                    {{user.profile&&user.profile.nickname}}收藏的歌单
                     ({{subPlaylist.length}})
                 </span>
             </div>
@@ -64,7 +64,7 @@
         methods: {
             render() {
                 this.id = parseInt(this.$route.query.id)
-                this.subPlaylis = []
+                this.subPlaylist = []
                 this.createdPlaylist = []
                 reqUserInfo(this.id).then(res => {
                     this.user = res

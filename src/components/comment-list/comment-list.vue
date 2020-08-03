@@ -58,7 +58,7 @@
 </template>
 
 <script>
-    import {giveCommentLike, submitComment} from "@/api";
+    import {giveCommentLike, reqLoginState, submitComment} from "@/api";
     import {mapState} from 'vuex'
     import commentEdit from '@/components/comment-edit/comment-edit'
     export default {
@@ -73,7 +73,8 @@
         },
         data() {
             return {
-                sendCommentId: ''
+                sendCommentId: '',
+                userInfo: ''
             }
         },
         methods: {
@@ -102,7 +103,6 @@
                 }
             },
             sendComment(value) {
-                console.log(value)
                 submitComment(this.id, this.type, value, 2, this.sendCommentId).then(res => {
                     if (res.code === 200) {
                         this.$Message.success('发送评论成功')
@@ -118,8 +118,10 @@
                 })
             }
         },
-        computed: {
-            ...mapState(['userInfo'])
+        created() {
+            reqLoginState().then(res => {
+                this.userInfo = res.profile
+            })
         }
     }
 </script>

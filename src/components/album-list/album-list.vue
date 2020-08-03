@@ -1,17 +1,7 @@
 <template>
-    <div class="album-list section">
-        <div class="container">
-            <div class="section-header flex justify-between" v-if="title">
-                <div class="title">
-                    <h1>新碟上架</h1>
-                </div>
-                <div class="more gray">
-                    更多
-                    <Icon type="ios-arrow-dropright-circle"/>
-                </div>
-            </div>
-            <div class="album-items flex flex-wrap">
-                <div class="item-contain" v-for="(album,index) in albums" :key="index">
+    <div class="album-list container">
+        <ul class="album-items flex flex-wrap" v-if="albums.length">
+                <li class="item-contain" v-for="(album,index) in albums" :key="index">
                     <div class="item-box">
                         <div class="item-inner img-scale">
                             <div class="img-box">
@@ -42,21 +32,21 @@
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
-
-        </div>
+                </li>
+            </ul>
+        <album-ske :row="2" v-else/>
     </div>
 </template>
 
 <script>
 
     import {reqAlbumDetail} from "@/api";
+    import AlbumSke from "@/components/album-list/album-ske";
 
     export default {
+        components: {AlbumSke},
         props: {
             albums: Array,
-            title: String,
             isSinger: Boolean
         },
         methods: {
@@ -82,9 +72,6 @@
             .img-box
                 height 133px !important
 
-        .section-header
-            h1
-                font-size 28px
 
         .item-contain
             width 20%
@@ -99,6 +86,7 @@
                 margin-top 15px
 
         .item-inner
+            overflow visible
             position relative
 
             &:hover .playlist-all-btn-play

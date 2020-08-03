@@ -88,6 +88,7 @@
 
 <script>
     import {
+        reqLoginState,
         reqMvComments,
         reqMvDetail,
         reqMvInfo,
@@ -115,12 +116,13 @@
                 ishot: false,
                 commentLimit: 20,
                 c: [],
-                vReady: false
+                vReady: false,
+                userInfo: ''
             }
         },
         methods: {
             jump(e, params=[]) {
-                if (this.$store.state.userInfo) {
+                if (this.userInfo) {
                     this[e](...params)
                 } else {
                     this.$Message.info('请先登录')
@@ -189,6 +191,9 @@
         created() {
             let id = this.$route.params.id
             this.id = id
+            reqLoginState().then(res => {
+                this.userInfo = res.profile
+            })
             reqMvDetail(id).then(res => {
                 this.subed = res.subed
                 this.mv = res.data

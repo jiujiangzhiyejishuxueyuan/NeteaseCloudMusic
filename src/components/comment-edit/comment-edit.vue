@@ -23,19 +23,17 @@
 
 <script>
     import {mapState} from 'vuex'
-    import {submitComment} from "@/api";
+    import {reqLoginState, submitComment} from "@/api";
     export default {
         props: {
             id: String,
             type: String,
             reply: Boolean
         },
-        computed: {
-            ...mapState(['userInfo'])
-        },
         data() {
             return {
-                value: ''
+                value: '',
+                userInfo: ''
             }
         },
         methods: {
@@ -48,6 +46,11 @@
                     })
                 }
             }
+        },
+        created() {
+            reqLoginState().then(res => {
+                this.userInfo = res.profile
+            })
         }
     }
 </script>

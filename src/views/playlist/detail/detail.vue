@@ -72,7 +72,7 @@
             </div>
             <div class="comment-header flex" ref="comment">
                 <a class="sort" :class="{active:hotComments}" @click="hotComments = true"
-                   v-if="c">最热评论</a>
+                   v-if="c.length">最热评论</a>
                 <a class="sort" :class="{active:!hotComments}" @click="hotComments = false">最新评论</a>
             </div>
             <comment-edit :id="songlist.id.toString()" type="2" class="input"/>
@@ -97,7 +97,7 @@
 <script>
     import songList from '@/components/song-list/song-list'
     import playlistControl from '@/components/playlist-control/playlist-control'
-    import {reqPlaylistComments, reqSongDetail, reqPlatlistDetail, subPlaylist} from "@/api";
+    import {reqPlaylistComments, reqSongDetail, reqPlatlistDetail, subPlaylist, reqLoginState} from "@/api";
     import CommentList from "@/components/comment-list/comment-list";
     import CommentEdit from "@/components/comment-edit/comment-edit";
     import HeaderInfoSke from "@/components/header-info-ske/header-info-ske";
@@ -117,8 +117,9 @@
                 hotComments: true,
                 comment: {comments:[]},
                 commentLimit: 20,
-                c: '',
+                c: [],
                 subed: false,
+                userInfo: ''
             }
         },
         methods: {
@@ -129,10 +130,11 @@
                 this.publicMethods.playMusic(ids)
             },
             sub() {
-                if (this.$store.state.userInfo) {
+                if (this.userInfo) {
                     subPlaylist(this.songlist.id, this.subed ? 2 : 1).then(res => {
                         if (res.code === 200) {
                             this.subed = !this.subed
+                            this.$Message.success('收藏成功')
                         } else {
                             this.$Message.error('操作失败')
                         }
@@ -161,6 +163,9 @@
             render() {
                 const page = this.$route.query.page || 1
                 let id = this.$route.params.id || this.$route.query.id
+                reqLoginState().then(res => {
+                    this.userInfo = res.profile
+                })
                 reqPlaylistComments(id, this.commentLimit, 0).then(res => {
                     this.comment = res
                     if (res.hotComments && res.hotComments.length) {

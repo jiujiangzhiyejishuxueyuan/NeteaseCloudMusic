@@ -31,7 +31,7 @@
 
 <script>
     import songControl from '@/components/song-control/song-control'
-    import {reqLikeSong} from "@/api";
+    import {reqLikeSong, reqLoginState} from "@/api";
     import {mapState} from 'vuex'
     export default {
         props: {
@@ -43,16 +43,15 @@
         },
         data() {
             return {
-                likeIds: []
+                likeIds: [],
             }
         },
         created() {
-            reqLikeSong(this.userInfo.userId).then(res => {
-                this.likeIds = res.ids
+            reqLoginState().then(res => {
+                reqLikeSong(res.profile.userId).then(res => {
+                    this.likeIds = res.ids
+                })
             })
-        },
-        computed: {
-            ...mapState(['userInfo'])
         }
     }
 </script>

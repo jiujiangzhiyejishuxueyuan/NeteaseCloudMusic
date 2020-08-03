@@ -16,7 +16,7 @@
             </div>
         </li>
     </ul>
-    <singer-list-ske :num="20" v-else/>
+    <singer-list-ske :num="24" v-else/>
 </template>
 
 <script>

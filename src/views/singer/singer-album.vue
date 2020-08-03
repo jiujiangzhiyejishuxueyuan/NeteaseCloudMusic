@@ -3,20 +3,18 @@
         <div class="singer-title" ref="top">
             全部专辑({{count}}张)
         </div>
-        <album :albums="albums" is-singer v-if="albums.length"/>
-        <album-ske hidden-header :row="5" v-else/>
+        <album-list :albums="albums" is-singer/>
         <Page :page-size="limit" :total="count" @on-change="changePage"/>
     </div>
 </template>
 
 <script>
     import {reqSingerAlbum} from "@/api";
-    import Album from "@/components/album-list/album-list";
-    import AlbumSke from "@/components/album-list/album-ske";
+    import albumList from "@/components/album-list/album-list";
 
     export default {
         name: "singer-album",
-        components: {AlbumSke, Album},
+        components: { albumList},
         data() {
             return {
                 count: 0,

@@ -2,13 +2,8 @@
     <ul class="mv-list flex flex-wrap" v-if="mvs.length">
         <li class="mv-item" v-for="(mv,index) in mvs" :key="index">
             <a :href="`/mv/${mv.id}`" target="_blank">
-                <div class="img-box img-scale" :title="mv.name">
+                <div class="img-box video-shadow" :title="mv.name">
                     <img :src="(mv.cover||mv.imgurl16v9||imgurl)+'?param=260y150'" alt="">
-                    <div class="shadow">
-                        <div class="btn-play absolute-center">
-                            <img src="../../static/imgs/btn-play.png" alt="">
-                        </div>
-                    </div>
                 </div>
             </a>
             <div class="info" v-if="mv.artistName">
@@ -72,22 +67,7 @@
                     height 107px
                 @media screen and (max-width: 1200px)
                     height 84px
-                &:hover
-                    .shadow
-                        opacity 1 !important
-                .shadow
-                    opacity 0
-                    position absolute
-                    top 0
-                    left 0
-                    width 100%
-                    height 100%
-                    z-index 2
-                    background rgba(0, 0, 0, .4)
 
-                    .btn-play
-                        width 50px
-                        height 50px
             .info
                 text-align left
                 .title

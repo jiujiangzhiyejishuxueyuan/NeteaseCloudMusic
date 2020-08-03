@@ -2,9 +2,9 @@
     <div id="video-list">
         <ul class="video-list flex flex-wrap" v-if="videos.length">
             <li class="video-item" v-for="(video,index) in videos" :key="index">
-                <a :href="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`" target="_blank">
-                    <div class="img-box img-scale">
-                        <img :src="video.coverUrl+'?param=360y200'" alt="" :title="video.title">
+                <a :href="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`" target="_blank" :title="video.title">
+                    <div class="img-box video-shadow">
+                        <img :src="video.coverUrl+'?param=360y200'" alt="">
                     </div>
                     <p class="title ellipse text-hv" :title="video.title">{{video.title}}</p>
                 </a>

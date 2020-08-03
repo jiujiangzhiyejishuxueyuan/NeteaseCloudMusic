@@ -9,8 +9,8 @@
                     <span v-else>-</span>
                 </div>
             </div>
-            <div class="cover img-box img-scale" :title="mv.name">
-                <a :href="`/mv/${mv.id}`" target="_blank">
+            <div class="cover img-box " :title="mv.name">
+                <a class="block video-shadow" :href="`/mv/${mv.id}`" target="_blank">
                     <img :src="mv.cover+'?param=400y200'" alt="">
                 </a>
             </div>

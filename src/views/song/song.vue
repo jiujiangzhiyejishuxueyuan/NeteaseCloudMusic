@@ -25,13 +25,14 @@
             </div>
         </div>
         <header-info-ske v-else/>
-        <div class="lyric container">
+        <div class="lyric container" v-if="lyrics.length">
             <p class="title">歌词</p>
             <div class="lyric-inner " :class="{all: lyricMore}">
                 <p class="lyric-item" v-for="(lyric,index) in lyrics" :key="index">{{lyric.text}}</p>
             </div>
             <div class="btn-more" @click="lyricMore=!lyricMore">{{lyricMore?'收起':'展开'}}</div>
         </div>
+        <div class="nolyric text-left container" v-else>纯音乐,请欣赏</div>
         <div class="comment container" ref="comment">
             <p class="comment-count">
                 共 {{ comment.total }} 条评论
@@ -119,7 +120,7 @@
                 }
             })
             reqSonglyric(this.id).then(res => {
-                if (!res.nolyric) {
+                if (res.lrc) {
                     let lrc = res.lrc.lyric.split('\n')
                     lrc.forEach((item) => {
                         let time = (item.substring(item.indexOf("[") + 1, item.indexOf("]"))).split(':')
@@ -138,6 +139,8 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     #song
+        .nolyric
+            margin 50px auto
         .background-blur
             background #ffffff
 

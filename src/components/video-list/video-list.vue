@@ -35,7 +35,7 @@
                 </p>
             </li>
         </ul>
-        <video-list-ske :count="10" v-else/>
+        <video-list-ske :count="skeCount" v-else/>
     </div>
 </template>
 
@@ -44,7 +44,11 @@
     export default {
         components: {VideoListSke},
         props: {
-            videos: Array
+            videos: Array,
+            skeCount: {
+                type: Number,
+                default: () => 10
+            }
         },
     }
 </script>

@@ -187,7 +187,7 @@
             .info-inner
                 margin-left 30px
                 text-align left
-                width 80%
+                width 78%
                 .social
                     margin-top 10px
                     color #666

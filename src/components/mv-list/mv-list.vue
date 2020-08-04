@@ -3,7 +3,7 @@
         <li class="mv-item" v-for="(mv,index) in mvs" :key="index">
             <a :href="`/mv/${mv.id}`" target="_blank">
                 <div class="img-box video-shadow" :title="mv.name">
-                    <img :src="(mv.cover||mv.imgurl16v9||imgurl)+'?param=260y150'" alt="">
+                    <img :src="(mv.cover||mv.imgurl16v9||mv.imgurl)+'?param=260y150'" alt="">
                 </div>
             </a>
             <div class="info" v-if="mv.artistName">

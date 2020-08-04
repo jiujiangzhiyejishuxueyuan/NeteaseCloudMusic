@@ -23,7 +23,7 @@
                 </li>
             </ul>
         </div>
-        <video-list :videos="videoList" class="container"/>
+        <video-list :videos="videoList" :ske-count="20" class="container"/>
         <div class="ske container" v-if="more">
             <spin/>
         </div>
@@ -148,7 +148,7 @@
 <style lang="stylus" rel="stylesheet/stylus">
     $red = #E60026
     #video
-        .video-list
+        #video-list
             margin-top 20px
 
         .video-header
@@ -166,6 +166,7 @@
                 max-height 80px
                 overflow hidden
                 background #f2f2f2
+                z-index 5
                 @media screen and (min-width: 1550px)
                     width 1400px
 

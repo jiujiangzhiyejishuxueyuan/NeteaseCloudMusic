@@ -84,14 +84,6 @@
             }
         },
         created() {
-            const list = [19723756, 3779629, 3778678]
-            list.forEach((item, index) => {
-                reqTopListDetail(item).then(res => {
-                    this.list.push(res.playlist)
-                    this.ids[index] = res.playlist.trackIds.map(item => item.id)
-                })
-
-            })
             reqLoginState().then(res => {
                 reqLikeSong(res.profile.userId).then(res => {
                     this.likeIds = res.ids
@@ -99,6 +91,18 @@
             })
 
         },
+        mounted() {
+            let el = document.querySelector('.home-rank')
+            this.publicMethods.onShow(el,() => {
+                const list = [19723756, 3779629, 3778678]
+                list.forEach((item, index) => {
+                    reqTopListDetail(item).then(res => {
+                        this.list.push(res.playlist)
+                        this.ids[index] = res.playlist.trackIds.map(item => item.id)
+                    })
+                })
+            })
+        }
     }
 </script>
 

@@ -6,7 +6,7 @@
                     <div class="cover relative img-scale">
                         <router-link :to="`/music/playlist/${playlist.id}`">
                             <div class="img-box ">
-                                <img alt="背景图" :src="playlist.coverImgUrl+'?param=300y300'">
+                                <img alt="背景图" loading="lazy" :src="playlist.coverImgUrl+'?param=300y300'">
                             </div>
                         </router-link>
                         <div class="btn-play absolute-center" title="播放歌单">

@@ -40,5 +40,15 @@ export default {
                 }
             }, 100)
         }
+    },
+    onShow(el,callback) {
+        el = typeof el === 'string' ? document.querySelector(el) : el
+        let observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                callback()
+                observer.unobserve(el)
+            }
+        })
+        observer.observe(el)
     }
 }

@@ -143,7 +143,7 @@
             </div>
         </div>
         <div class="player-bg">
-            <img :src="song.al.picUrl+'?params108y72'" alt="" v-if="song.ar">
+            <img :src="song.al.picUrl+'?param=10y7'" alt="" v-if="song.ar">
         </div>
     </div>
 </template>

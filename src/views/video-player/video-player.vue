@@ -196,6 +196,8 @@
             let id = this.id
             reqLoginState().then(res => {
                 this.userInfo = res.profile
+            }).catch(err => {
+              err.toString()
             })
             reqVideoDetail(id).then(res => {
                 this.video = res.data

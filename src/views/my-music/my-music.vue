@@ -70,7 +70,8 @@
                 if (res.code === 200) {
                     next(vm => vm.id = res.profile.userId)
                 }
-            }).catch(() => {
+            }).catch((err) => {
+                err.toString()
                 next('/music')
             })
         }

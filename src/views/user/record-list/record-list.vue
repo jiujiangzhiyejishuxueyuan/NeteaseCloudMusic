@@ -51,6 +51,8 @@
                 reqLikeSong(res.profile.userId).then(res => {
                     this.likeIds = res.ids
                 })
+            }).catch(err => {
+              err.toString()
             })
         }
     }

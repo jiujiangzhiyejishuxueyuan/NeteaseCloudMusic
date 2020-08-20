@@ -34,12 +34,12 @@
 </template>
 
 <script>
-    import {
-        reqVideoCategoryList,
-        reqVideoTagList,
-        reqVideoList,
-        reqAllVideo
-    } from '@/api'
+import {
+  reqVideoCategoryList,
+  reqVideoTagList,
+  reqVideoList,
+  reqAllVideo, reqLoginState
+} from '@/api'
     import VideoList from "@/components/video-list/video-list";
 
     export default {
@@ -60,7 +60,6 @@
         },
         methods: {
             reqdata() {
-                console.log('掉我干啥')
                 reqVideoList(this.currentTag, this.offset).then(res => {
                     this.more = res.hasmore
                     res.datas.forEach(item => {
@@ -93,7 +92,7 @@
                         this.reqNum++
                         this.reqAlldata()
                     }
-                })
+                }).catch(()=>0)
                 this.offset += 8
             },
             render() {
@@ -120,6 +119,10 @@
             }
         },
         created() {
+            reqLoginState().then(()=>1).catch(() => {
+              this.$Message.error('请先登录')
+              this.$router.replace('/music')
+            })
             this.render()
             reqVideoCategoryList().then(res => {
                 if (res.code === 200) {

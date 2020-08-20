@@ -165,6 +165,8 @@
                 let id = this.$route.params.id || this.$route.query.id
                 reqLoginState().then(res => {
                     this.userInfo = res.profile
+                }).catch(err => {
+                  err.toString()
                 })
                 reqPlaylistComments(id, this.commentLimit, 0).then(res => {
                     this.comment = res

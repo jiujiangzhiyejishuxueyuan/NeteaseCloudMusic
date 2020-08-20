@@ -86,15 +86,14 @@
                 this.isplay = true
                 this.ready = true
                 this.$emit('ready')
-                let offsetLeft = document.querySelector('.left').offsetLeft
-                let $ = document.querySelector('.ivu-slider-wrap')
-                $.onmousemove = (e) => {
-                    this.left = e.x-offsetLeft
-                    let width = $.offsetWidth
+                let el = document.querySelector('.ivu-slider-wrap')
+              el.onmousemove = (e) => {
+                    this.left = e.x-el.getBoundingClientRect().left
+                    let width = el.offsetWidth
                     this.hvTime = parseInt(this.left/width*this.video.duration || 0)
                     this.hvTimeShow = true
                 }
-                $.onmouseleave = () => {
+              el.onmouseleave = () => {
                     this.hvTimeShow = false
                 }
             },

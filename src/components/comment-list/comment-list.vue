@@ -121,6 +121,8 @@
         created() {
             reqLoginState().then(res => {
                 this.userInfo = res.profile
+            }).catch(err => {
+              err.toString()
             })
         }
     }

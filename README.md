@@ -1,7 +1,7 @@
 # NeteaseCloundMusic
 #### vusjs开发网易云音乐pc端
 #### api地址: https://github.com/Binaryify/NeteaseCloudMusicApi
-#### 项目预览地址:http://music.pengwenli.top/ 最后打包时间7.31
+#### 项目预览地址:http://music.pengwenli.top/ 最后打包时间 8.20
 #### 本地运行此项目前请先运行api
 整个项目采用vuejs组件化开发,可复用组件多,在用户体验比较重要的地方都添加了骨架屏,适配大中(<1550)小(<1200)屏幕,代码简单易懂,新手入门必备项目,项目完成度较高,用来正常听歌看视频都没有问题,体验可能比云音乐官方网站还要好些
 ### 已实现功能
@@ -20,18 +20,12 @@
 - 搜索音乐、歌单、用户、视频、mv、专辑、歌词、电台
 - mv列表
 
-### 暂未实现功能
-- 专辑列表
-- 电台详情
-- 电台播放
-- 电台列表
-- 动态
-- 歌单编辑
 ### 技术栈
 
 - vuejs 
-- stylus css预编译器
-- iview ui框架
+- stylus 
+- iview 
+- axios
 
 #### 更新日志
 ###### 6.11已实现播放歌曲功能

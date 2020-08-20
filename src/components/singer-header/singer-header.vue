@@ -75,6 +75,8 @@
                         this.followed = !b
                     })
                 }
+            }).catch(err => {
+              err.toString()
             })
         },
         watch: {

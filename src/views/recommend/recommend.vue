@@ -100,6 +100,8 @@
                 reqLikeSong(id).then(res => {
                     this.likeCount = res.ids.length
                 })
+            }).catch(err => {
+              err.toString()
             })
             reqUserSubCount().then(res => {
                 this.artistCount = res.artistCount

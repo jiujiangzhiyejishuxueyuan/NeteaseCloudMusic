@@ -186,6 +186,8 @@
                         })
                     })
                 }
+            }).catch(err => {
+              err.toString()
             })
         },
         methods: {

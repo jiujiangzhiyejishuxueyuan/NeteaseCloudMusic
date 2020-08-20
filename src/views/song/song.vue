@@ -118,6 +118,8 @@
                         this.likeIds = res.ids
                     })
                 }
+            }).catch(err => {
+              err.toString()
             })
             reqSonglyric(this.id).then(res => {
                 if (res.lrc) {

@@ -7,7 +7,7 @@
             </div>
             <div class="form">
                 <Input v-model="loginBody.phone" clearable size="large" placeholder="手机号" style="width: 300px" />
-                <Input v-model="loginBody.pwd" password type="password" size="large" placeholder="密码" style="width: 300px" />
+                <Input v-model="loginBody.pwd" password type="password" size="large" placeholder="密码" style="width: 300px" @keydown.enter="login" />
             </div>
             <div class="button" @click="login">登陆</div>
         </div>
@@ -34,11 +34,9 @@
                     checkRegister(this.loginBody.phone).then(res => {
                         if(res.exist===1) {
                             phoneLogin(this.loginBody.phone,this.loginBody.pwd).then(res=> {
-                                if(res.code==200) {
+                                if(res.code===200) {
                                     this.$Message.success('登陆成功')
-                                    this.$emit('loginClose')
-                                    this.reload()
-                                    this.$store.commit('receive_userinfo',res.profile)
+                                    location.reload()
                                 } else {
                                     this.$Message.error(res.message)
                                 }
@@ -46,7 +44,7 @@
                         } else {
                             this.$Message.error('该手机号暂未注册，请先注册')
                         }
-                    })
+                    }).catch(() => 0)
 
                 }
             },

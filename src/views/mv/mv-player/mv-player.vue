@@ -193,6 +193,8 @@
             this.id = id
             reqLoginState().then(res => {
                 this.userInfo = res.profile
+            }).catch(err => {
+              err.toString()
             })
             reqMvDetail(id).then(res => {
                 this.subed = res.subed

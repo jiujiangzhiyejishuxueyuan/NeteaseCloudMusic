@@ -201,13 +201,6 @@ export default new VueRouter({
             component: () => import('@/views/video/video'),
             meta: {
                 title: '视频'
-            },
-            beforeEnter(to, from, next) {
-                reqLoginState().then(res => {
-                    next()
-                }).catch(() => {
-                    next('/music')
-                })
             }
         },
         {

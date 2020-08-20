@@ -190,16 +190,18 @@
             }
         },
         created() {
-            reqLoginState().then(res => {
+              reqLoginState().then(res => {
                 if (res.code === 200) {
-                    reqUserInfo(res.profile.userId).then(res => {
-                        this.userInfo = res.profile
-                        this.userInfo.level = res.level
-                    })
+                  reqUserInfo(res.profile.userId).then(res => {
+                    this.userInfo = res.profile
+                    this.userInfo.level = res.level
+                  })
                 }
-            }).catch(error => {
-                error.toString()
-            })
+              }).catch(err => {
+                err.toString()
+                // this.loginShow = true
+              })
+
             searchDefault().then(res => {
                 this.placeholder = res.data.showKeyword
                 this.keywords = res.data.realkeyword

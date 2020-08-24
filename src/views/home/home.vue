@@ -16,7 +16,7 @@
     import bannerSke from '@/views/home/banner/banner-ske'
     import recommendHot from '@/views/home/recommend-hot/recommend-hot'
     import recommendToday from '@/views/home/recommend-today/recommend-today'
-    import rank from "@/views/home/rank/rank/rank";
+    import rank from "@/views/home/rank/rank";
     import {reqBanner, reqHotSongList, reqLoginState} from "@/api";
     import NewAlbumList from "@/views/home/new-album-list/new-album-list";
     export default {

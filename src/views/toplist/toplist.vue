@@ -46,7 +46,7 @@
                     </div>
                     <p class="desc ellipse text-wrap" :title="currentToplist.description">{{currentToplist.description}}</p>
                     <playlist-control />
-                    <router-link :to="`/music/playlist/${toplistId}`" class="go-playlist">去歌单页查看</router-link>
+                    <router-link :to="`/music/playlist/${toplistId}`" class="go-playlist h-text-blue">去歌单页查看</router-link>
                 </div>
             </div>
             <header-info-ske s v-else />

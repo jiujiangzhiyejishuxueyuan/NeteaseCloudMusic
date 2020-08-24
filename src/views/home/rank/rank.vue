@@ -16,9 +16,9 @@
                 <div class="rank-items flex" v-if="list.length">
                     <div class="rank-item" v-for="(playlist,index) in list" :key="index" >
                         <div class="rank-item-header flex">
-                            <div class="img-box">
-                                <img :src="playlist.coverImgUrl + '?param=200y200'">
-                            </div>
+                            <router-link :to="`/music/toplist?id=${playlist.id}`" class="img-box">
+                                <img :src="playlist.coverImgUrl + '?param=200y200'" alt="" :title="playlist.name">
+                            </router-link>
                             <div class="rank-item-info">
                                 <h2 class="title">{{playlist.name}}</h2>
                                 <div class="btn-play-songlist" @click="play(index)">
@@ -32,13 +32,15 @@
                                 <li class="rank-inner-item flex" v-for="(song,index) in playlist.tracks.slice(0,10)" :key="index">
                                     <span class="num block">{{index+1}}</span>
                                     <div class="content flex justify-between">
-                                        <span class="song-name block">{{song.name}}</span>
-                                        <p class="singer block">
-                                            <span v-for="(singer,index) in song.ar" :key="index" @click="$router.push(`/music/artist/${singer.id}`)">
+                                        <router-link :to="`/music/song/${song.id}`" class="song-name block">{{song.name}}</router-link>
+                                        <ul class="singer flex">
+                                            <li v-for="(singer,index) in song.ar" :key="index">
+                                              <router-link :to="`/music/artist/${singer.id}`">
                                                 {{singer.name}}
-                                                <span v-if="index+1<song.ar.length">/</span>
-                                            </span>
-                                        </p>
+                                              </router-link>
+                                              <span v-if="index+1<song.ar.length">/ </span>
+                                            </li>
+                                        </ul>
                                     </div>
                                     <song-control :id="song.id" :like-ids="likeIds"/>
                                 </li>
@@ -219,7 +221,7 @@
                     text-overflow ellipsis
                     white-space nowrap
                     color rgba(51,51,51,.6)
-                .singer,.song-name
+                .singer a,.song-name
                     &:hover
                         color $red
 </style>

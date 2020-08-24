@@ -60,7 +60,8 @@
                         this.$Message.success('添加到歌单成功')
                         this.playlistsShow = false
                     } else if (res.code === 502) {
-                        this.$Message.info('歌单歌曲重复')
+                        this.$Message.info('歌单中已存在此歌曲')
+                      this.playlistsShow = false
                     } else {
                         this.$Message.error('操作失败')
                     }

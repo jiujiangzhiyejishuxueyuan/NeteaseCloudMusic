@@ -1,17 +1,32 @@
 <template>
-    <div id="fix-btn">
-        <a class="github" href="https://github.com/jiujiangzhiyejishuxueyuan/NeteaseCloudMusic" target="_blank">
-            <Icon type="logo-github"/>
+    <ul id="fix-btn">
+      <li  v-for="(link,index) in list"  :key="index">
+        <a :href="link.url" target="_blank" :title="link.name">
+          <Icon :type="link.icon"/>
         </a>
-        <a class="go-player" href="/music/player" target="_blank">
-            <Icon type="md-musical-notes" />
-        </a>
-    </div>
+      </li>
+    </ul>
 </template>
 
 <script>
     export default {
         name: "fix-btn",
+        data() {
+          return {
+            list: [
+              {
+                name: 'GitHub',
+                url: 'https://github.com/jiujiangzhiyejishuxueyuan/NeteaseCloudMusic',
+                icon: 'logo-github'
+              },
+              {
+                name: '播放器',
+                url: '/music/player',
+                icon: 'md-musical-notes'
+              }
+            ]
+          }
+        }
     }
 </script>
 

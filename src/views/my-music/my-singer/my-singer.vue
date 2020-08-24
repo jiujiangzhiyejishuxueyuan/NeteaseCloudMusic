@@ -7,7 +7,7 @@
             <li class="singer flex" v-for="(singer,index) in singers.data" :key="index">
                 <div class="avatar img-box">
                     <router-link :to="`/music/artist/${singer.id}`">
-                        <img :src="singer.picUrl+'?param=100y100'" alt="">
+                        <img :src="singer.picUrl+'?param=100y100'" alt="" :title="singer.name">
                     </router-link>
                 </div>
                 <div class="info">
@@ -43,7 +43,7 @@
     }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
     $blue = #00a1d6
     .my-singer
         .my-singer-list
@@ -61,6 +61,7 @@
                     .alialse
                         color #999
                         font-size 12px
+                        margin-left 8px
 
                     a:hover
                         color $blue

@@ -39,34 +39,34 @@
         </ul>
         <div class="songlist-inner" v-else>
             <div class="scroll">
-                <div :class="{active:song.id===pid}"
-                     :key="index"
-                     class="row flex align-center"
-                     v-for="(song,index) in songs"
-                >
+                  <div :class="{active:song.id===pid}"
+                       :key="index"
+                       class="row flex align-center"
+                       v-for="(song,index) in songs"
+                  >
                     <div @click="check(song)" class="song-check">
-                        <Icon type="ios-checkmark" v-show="value.indexOf(song.id)!==-1"/>
+                      <Icon type="ios-checkmark" v-show="value.indexOf(song.id)!==-1"/>
                     </div>
                     <div class="song-on" v-if="isplay&&song.id===pid">
                     </div>
                     <div class="song-index" v-else>
-                        {{index+1}}
+                      {{index+1}}
                     </div>
                     <div class="play" v-if="!isplay||song.id!==pid">
-                        <Icon @click="playmusic(song.id)" type="ios-play-outline"/>
+                      <Icon @click="playmusic(song.id)" type="ios-play-outline"/>
                     </div>
                     <!--歌名-->
                     <div class="song-name">
-                        <router-link :to="`/music/song/${song.id}`" v-if="!player">{{song.name}}</router-link>
-                        <a :href="`/music/song/${song.id}`" target="_blank" v-else>{{song.name}}</a>
+                      <router-link :to="`/music/song/${song.id}`" v-if="!player">{{song.name}}</router-link>
+                      <a :href="`/music/song/${song.id}`" target="_blank" v-else>{{song.name}}</a>
                     </div>
                     <!--歌手-->
                     <div class="singer ellipse">
                         <span
 
-                                :key="index"
-                                class="text-hv"
-                                v-for="(art,index) in (song.ar || song.artists)"
+                            :key="index"
+                            class="text-hv"
+                            v-for="(art,index) in (song.ar || song.artists)"
                         >
                             <router-link :to="`/music/artist/${art.id}`" v-if="!player">{{art.name}}</router-link>
                             <a :href="`/music/artist/${art.id}`" target="_blank" v-else>{{art.name}}</a>
@@ -75,26 +75,26 @@
                     </div>
                     <!--专辑-->
                     <div class="album text-hv ellipse">
-                        <router-link
-                                class="text-hv"
-                                :to="`/music/album/${song.al?song.al.id:song.album.id}`"
-                                v-if="!player"
-                        >
-                            《{{(song.al || song.album).name}}》
-                        </router-link>
-                        <a target="_blank" :href="`/music/album/${song.al?song.al.id:song.album.id}`" v-else>《{{(song.al
-                            || song.album).name}}》</a>
+                      <router-link
+                          class="text-hv"
+                          :to="`/music/album/${song.al?song.al.id:song.album.id}`"
+                          v-if="!player"
+                      >
+                        《{{(song.al || song.album).name}}》
+                      </router-link>
+                      <a target="_blank" :href="`/music/album/${song.al?song.al.id:song.album.id}`" v-else>《{{(song.al
+                          || song.album).name}}》</a>
                     </div>
                     <div class="song-control-box">
-                        <song-control
-                                :btns="btns"
-                                :id="song.id"
-                                :like-ids="likeIds"
-                                @ondelete="deleteOne"
-                        />
+                      <song-control
+                          :btns="btns"
+                          :id="song.id"
+                          :like-ids="likeIds"
+                          @ondelete="deleteOne"
+                      />
                     </div>
 
-                </div>
+                  </div>
             </div>
         </div>
         <!--        底部-->
@@ -194,7 +194,6 @@
             // 歌曲删除键
             deleteOne(id) {
                 this.$emit('ondelete', id)
-                console.log(id)
                 let index = this.value.indexOf(id)
                 if (index !== -1) {
                     this.value.splice(index, 1)
@@ -284,7 +283,6 @@
         padding-top 65px
         position relative
         height 100%
-
         &.isplayer
             padding-top 110px
 
@@ -402,6 +400,7 @@
                     display none
 
         .row
+            position relative
             box-sizing content-box
             height 33px
             text-align left

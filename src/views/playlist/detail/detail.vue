@@ -25,15 +25,18 @@
                         <span>播放量:</span>
                         {{songlist.playCount | playCount}}
                     </div>
-                    <div class="tags" v-if="songlist.tags.length">
+                    <div class="tags">
                         <span>标签:</span>
-                        <router-link :to="`/music/playlist?cat=${tag}`" v-for="(tag,index) in songlist.tags"
-                                     :key="index">{{tag}}
-                        </router-link>
+                        <template v-if="songlist.tags.length">
+                          <router-link :to="`/music/playlist?cat=${tag}`" v-for="(tag,index) in songlist.tags"
+                                       :key="index">{{tag}}
+                          </router-link>
+                        </template>
+                        <template v-else> 暂无</template>
                     </div>
-                    <div class="brief ellipse" v-if="songlist.description" :title="songlist.description">
+                    <div class="brief ellipse" :title="songlist.description">
                         <span>简介:</span>
-                        {{songlist.description}}
+                        {{songlist.description||'暂无'}}
                     </div>
                     <playlist-control
                             @allPlay="allPlay"

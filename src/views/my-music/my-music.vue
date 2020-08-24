@@ -154,7 +154,7 @@
                 .playlists:hover
                     background #fff
                 &>li
-                    font-size 14px
+                    font-size 18px
                     font-weight 600
                     cursor pointer
                     color #000

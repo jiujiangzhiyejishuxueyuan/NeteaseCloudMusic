@@ -2,7 +2,7 @@
     <header :class="{fixd:$route.meta.headerFixd}" >
         <div class="header flex container">
             <div class="logo" @click="$router.replace('/music')">
-                <h1 v-if="$route.path!=='/music/search'">网易云音乐</h1>
+                <h1 v-if="$route.path!=='/music/search'">阿立音乐</h1>
             </div>
             <div class="header-left">
                 <ul class="nav-container flex" v-if="$route.path!=='/music/search'">
@@ -232,7 +232,7 @@
                 width 170px
                 height 100%
                 color #000
-                background url("../../static/imgs/topbar.png")
+                //background url("../../static/imgs/topbar.png")
                 h1
                     display inline
                     font-size 20px

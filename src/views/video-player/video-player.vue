@@ -31,7 +31,7 @@
                     <div class="background-blur">
                         <img :src="video.coverUrl" alt="">
                     </div>
-                    <v-player :url="url" v-if="url" @ready="vReady = true"/>
+                    <v-player :url="url" @ready="vReady = true"/>
                 </div>
                 <div class="control flex">
                     <div class="praised" :class="{active:liked}" @click="jump('giveLike')">

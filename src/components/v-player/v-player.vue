@@ -1,5 +1,6 @@
 <template>
     <div class="v-player" @click="isplay=!isplay">
+        <div class="video-loading absolute-center" v-if="!ready">视频加载中...</div>
         <div class="inner flex align-center" :class="{lucency: !ready}" ref="videobox">
             <video
                     :src="url"
@@ -159,6 +160,8 @@
                 height 480px
             @media screen and (max-width: 1200px)
                 height 400px
+        .video-loading
+          color #fff
     .v-player
         position relative
         height 100%

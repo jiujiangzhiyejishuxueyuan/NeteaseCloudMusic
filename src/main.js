@@ -13,10 +13,6 @@ Vue.component('Input',Input)
 Vue.component('Slider',Slider )
 Vue.component('Spin',Spin )
 Vue.component('BackTop',BackTop )
-// Vue.component('Button',Button)
-// Vue.component('DropdownMenu',DropdownMenu)
-// Vue.component('DropdownItem',DropdownItem)
-// Vue.component('Dropdown',Dropdown)
 Vue.prototype.publicMethods = methods
 Vue.prototype.$Message = Message
 Vue.config.productionTip = false
@@ -24,9 +20,9 @@ Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
     LoadingBar.start()
     if (to.meta.title) {
-        document.title = to.meta.title + ' - 网易云音乐'
+        document.title = to.meta.title + ' - 阿立音乐'
     } else {
-        document.title = '网易云音乐'
+        document.title = '阿立音乐'
     }
     next()
 })

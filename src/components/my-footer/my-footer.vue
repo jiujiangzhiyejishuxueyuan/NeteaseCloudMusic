@@ -1,7 +1,7 @@
 <template>
     <footer id="footer">
         <div class="container">
-            <h1>网易云音乐</h1>
+            <h1>阿立音乐</h1>
         </div>
     </footer>
 </template>

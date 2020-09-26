@@ -11,20 +11,20 @@
                 <p class="name flex" v-if="video.creator">
                     <i class="mv" v-if="video.type===0" title="mv"></i>
                     <span class="by" v-else>by</span>
-                    <span class="users" v-if="video.creator.length">
-                    <router-link
-                            :to="video.type!==0?`/user/home?id=${art.userId}`:`/music/artist/${art.userId}`"
-                            class="text-hv ellipse"
-                            v-for="(art,index) in video.creator"
-                            :key="index"
-                            :title="art.userName"
-                    >
-                        {{art.userName}}
-                        <span v-if="index+1<video.creator.length">/</span>
-                    </router-link>
-                </span>
+                    <span class="users ellipse" v-if="video.creator.length">
+                      <router-link
+                              :to="video.type!==0?`/user/home?id=${art.userId}`:`/music/artist/${art.userId}`"
+                              class="text-hv ellipse"
+                              v-for="(art,index) in video.creator"
+                              :key="index"
+                              :title="art.userName"
+                      >
+                          {{art.userName}}
+                          <span v-if="index+1<video.creator.length">/</span>
+                      </router-link>
+                    </span>
                     <a
-                            class="text-hv ellipse"
+                            class="text-hv ellipse one"
                             :href="`/user/home?id=${video.creator.userId}`"
                             target="_blank"
                             :title="video.creator.nickname"
@@ -85,7 +85,7 @@
                 .users
                     width 85%
 
-                a
+                a.one
                     display block
     .disabled
         color: #000;

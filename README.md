@@ -49,6 +49,7 @@
 - video-control：视频互动组件
 - video-list： 视频列表组件
 - video-related： 相关视频列表组件
+- lyric：歌词组件
 - xxx-ske：骨架屏组件
 
 #### 更新日志
@@ -75,9 +76,4 @@ npm run serve
 ### 项目打包
 ```
 npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```

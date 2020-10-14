@@ -183,7 +183,7 @@
                 reqPlatlistDetail(id).then(res => {
                     this.songlist = res.playlist
                     this.subed = res.playlist.subscribed
-                    document.title = res.playlist.name + '-歌单-网易云音乐'
+                    document.title = res.playlist.name + '-歌单-阿立音乐'
                     let ids = []
                     let startCount = (page - 1) * 20
                     let residue = res.playlist.trackCount - startCount

@@ -23,10 +23,10 @@
             <album :albums="result.albums||[]" v-else-if="$route.query.type==='10'&&result!==0"/>
             <PlayList :playlists="result.playlists||[]" v-else-if="$route.query.type==='1000'&&result!==0"/>
             <userList :users="result.userprofiles||[]" v-else-if="$route.query.type==='1002'&&result.userprofiles"/>
-            <mv-list :mvs="result.mvs||[]" v-else-if="$route.query.type==='1004'&&result!==0"/>
+            <mv-list :skeCount="15" :mvs="result.mvs||[]" v-else-if="$route.query.type==='1004'&&result!==0"/>
             <lyric-list :songs="result.songs" v-else-if="$route.query.type==='1006'&&result.songs"/>
             <dj-list :djs="result.djRadios" v-else-if="$route.query.type==='1009'&&result.djRadios"/>
-            <video-list :videos="result.videos||[]" v-else-if="$route.query.type==='1014'&&result!==0"/>
+            <video-list :skeCount="15" :videos="result.videos||[]" v-else-if="$route.query.type==='1014'&&result!==0"/>
             <div class="ske container " v-else-if="result!==0">
                 <Spin></Spin>
             </div>

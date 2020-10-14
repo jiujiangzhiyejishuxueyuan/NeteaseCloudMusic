@@ -4,7 +4,6 @@
             <Icon type="md-heart" v-if="item.event==='onlove'&&like" title="取消喜欢"/>
             <Icon :type="item.icon" v-else :title="item.title"/>
         </span>
-        <!--        <add-song-plsylist v-if="showAdd" @close="addClose" :id="id" />-->
         <ul class="playlist-list" v-if="playlistsShow">
             <li v-for="(playlist,index) in playlists" :key="index" class="ellipse"
                 @click.stop="addToPlaylist(playlist.id)">
@@ -15,9 +14,7 @@
 </template>
 
 <script>
-    import addSongPlsylist from '@/components/addSong-playlist/addSong-playlist'
     import {changeplaylistSong, likeSong, reqLoginState, reqUserPlaylist} from "@/api";
-    import {mapState} from 'vuex'
     export default {
         props: {
             id: Number,
@@ -42,9 +39,6 @@
                     }
                 ]
             }
-        },
-        components: {
-
         },
         data() {
             return {
@@ -73,18 +67,20 @@
             },
             onadd() {
                 if (this.userInfo) {
-                    this.playlistsShow = true
-                    reqUserPlaylist(this.userInfo.userId).then(res => {
+                    if (!this.playlistsShow) {
+                      this.playlistsShow = true
+                      reqUserPlaylist(this.userInfo.userId).then(res => {
                         this.playlists = res.playlist.filter(item => {
-                            return !item.subscribed
+                          return !item.subscribed
                         })
-                    })
-                    setTimeout(() => {
+                      })
+                      setTimeout(() => {
                         window.onclick = () => {
-                            this.playlistsShow = false
-                            window.onclick = null
+                          this.playlistsShow = false
+                          window.onclick = null
                         }
-                    })
+                      })
+                    }
                 } else {
                     this.$Message.info('请先登录')
                 }
@@ -148,6 +144,7 @@
             z-index 11
             position absolute
             transform translateX(-100%)
+            top 0
             left 0
             text-align left
             background #ffffff

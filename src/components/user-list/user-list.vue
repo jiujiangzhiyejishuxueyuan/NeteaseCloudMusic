@@ -3,7 +3,7 @@
         <li class="user-item flex justify-between" v-for="(user,index) in users" :key="index">
             <div class="left flex">
                 <div class="avatar" @click="$router.push(`/user/home?id=${user.userId}`)" :title="user.nickname">
-                    <img :src="user.avatarUrl+'?param=80y80'" alt="">
+                    <img v-lazy="user.avatarUrl+'?param=80y80'" alt="头像">
                 </div>
                 <div class="info">
                     <p class="name"><a @click="$router.push(`/user/home?id=${user.userId}`)"> {{user.nickname}}</a></p>

@@ -1,7 +1,7 @@
 <template>
     <div class="user-card flex" v-if="user.profile">
         <a class="img-box" :href="`/user/home?id=${user.profile.userId}`" target="_blank">
-            <img :src="user.profile.avatarUrl" title="查看主页">
+            <img v-lazy="user.profile.avatarUrl" title="查看主页">
         </a>
         <div class="info">
             <router-link class="name" :to="`/user/home?id=${user.profile.userId}`">{{user.profile.nickname}}

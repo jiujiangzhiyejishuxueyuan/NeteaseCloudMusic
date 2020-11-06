@@ -6,11 +6,11 @@
                     <div class="cover relative img-scale">
                         <router-link :to="`/music/playlist/${playlist.id}`">
                             <div class="img-box ">
-                                <img alt="背景图" loading="lazy" :src="playlist.coverImgUrl+'?param=300y300'">
+                                <img alt="封面图" v-lazy="playlist.coverImgUrl+'?param=300y300'">
                             </div>
                         </router-link>
                         <div class="btn-play absolute-center" title="播放歌单">
-                            <img src="../../static/imgs/btn-play.png" alt="">
+                            <img src="../../static/imgs/btn-play.png" alt="播放按钮">
                         </div>
                     </div>
                     <div class="info ellipse">

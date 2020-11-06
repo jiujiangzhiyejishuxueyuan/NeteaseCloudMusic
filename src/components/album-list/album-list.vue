@@ -6,7 +6,7 @@
                         <div class="item-inner img-scale">
                             <div class="img-box">
                                 <router-link :to="`/music/album/${album.id}`">
-                                    <img :src="album.picUrl+'?param=250y250'">
+                                    <img v-lazy="album.picUrl+'?param=250y250'">
                                 </router-link>
                             </div>
                             <div class="playlist-all-btn-play absolute-center" title="播放专辑"

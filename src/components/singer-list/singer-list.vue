@@ -4,7 +4,7 @@
             <div class="singer-inner text-hv" :title="singer.name">
                 <div class="img-box img-scale">
                     <router-link :to="`/music/artist/${singer.id}`">
-                        <img :src="`${singer.img1v1Url}?param=240y240`" alt="歌手头像">
+                        <img v-lazy="`${singer.img1v1Url}?param=240y240`" alt="歌手头像">
                     </router-link>
                 </div>
                 <div class="info flex justify-between">

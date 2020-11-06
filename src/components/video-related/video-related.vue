@@ -4,7 +4,7 @@
             <li class="related-item flex" v-for="(video,index) in videos" :key="index">
                 <router-link :to="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`">
                     <div class="img-box video-shadow" :title="video.title">
-                        <img :src="(video.coverUrl || video.cover)+'?param=300y170'" alt="">
+                        <img v-lazy="(video.coverUrl || video.cover)+'?param=300y170'" alt="视频封面">
                     </div>
                 </router-link>
                 <div class="info">

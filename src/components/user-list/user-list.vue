@@ -41,6 +41,10 @@
         .user-item
             padding 20px 10px
             width 50%
+            border-radius 5px
+            transition background-color .2s
+            &:hover
+              background rgba(0,0,0,.05)
             .info
                 margin-left 20px
                 width 400px

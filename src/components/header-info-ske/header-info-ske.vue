@@ -29,7 +29,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     #header-info-ske
-        padding 40px 0
+        padding 50px 0
 
         &.s
             padding 0

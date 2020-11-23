@@ -155,6 +155,7 @@
             width 100%
 
             .user-face
+                flex-shrink 0
                 width 50px
                 height 50px
                 border-radius 50%

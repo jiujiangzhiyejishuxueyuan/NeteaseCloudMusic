@@ -6,7 +6,7 @@
                     <img v-lazy="user.avatarUrl+'?param=80y80'" alt="头像">
                 </div>
                 <div class="info">
-                    <p class="name"><a @click="$router.push(`/user/home?id=${user.userId}`)"> {{user.nickname}}</a></p>
+                    <p class="name"><router-link :to="`/user/home?id=${user.userId}`"> {{user.nickname}}</router-link></p>
                     <p class="count">
                         <span class="event-count">动态 <a>{{user.eventCount}} </a></span>|
                         <span class="follow-count">关注 <a @click="$router.push(`/user/follows?id=${user.userId}`)">{{user.follows}} </a></span>|

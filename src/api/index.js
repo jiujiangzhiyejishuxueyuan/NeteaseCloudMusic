@@ -59,7 +59,10 @@ export const reqUserFollows = (id, limit, offset) => ajax(`api/user/follows?uid=
 export const reqUserFolloweds = (id, limit, lasttime) => ajax(`api/user/followeds?uid=${id}&time=${lasttime}&limit=${limit}`)
 // 获取用户数据
 export const reqUserSubCount = () => ajax('api/user/subcount')
-
+// 获取用户动态
+export const reqDynamic = (data) => ajax(`api/user/event`,data)
+// 获取动态评论
+export const reqDynamicComment = (data) => ajax('api/comment/event',data)
 
 // 歌曲相关
 // 获取歌曲详情
@@ -171,5 +174,5 @@ export const subSinger = (id, t) => ajax(`api/artist/sub?id=${id}&t=${t}`)
 export const reqSubDj = (limit) => ajax(`api/dj/sublist?limit=${limit}`)
 
 // 其他
-//给电台,视频,mv点赞
-export const resourceLike = (id, type, t) => ajax(`api/resource/like?id=${id}&type=${type}&t=${t}`)
+//给资源点赞
+export const resourceLike = (data) => ajax(`api/resource/like`,data)

@@ -71,7 +71,7 @@
                 })
                 reqUserRecord(this.id).then(res => {
                     this.record = res.weekData
-                })
+                }).catch(err => err.toString())
 
                 reqUserPlaylist(this.id).then(res => {
                     res.playlist.forEach(item => {

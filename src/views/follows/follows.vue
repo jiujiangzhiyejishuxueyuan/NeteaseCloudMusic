@@ -43,9 +43,7 @@
                 let page = this.$route.query.page || 1
                 let limit = 20
                 let offset = (page-1) * limit
-                console.log(page)
                 reqUserFollows(this.id,limit,offset).then(res => {
-                    console.log(res)
                     this.follows = res.follow
                 })
             }

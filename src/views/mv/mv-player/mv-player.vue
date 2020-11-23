@@ -141,7 +141,7 @@
             },
             like() {
                 if (!this.count.liked) {
-                    resourceLike(this.id, 1, 1).then(res => {
+                    resourceLike({id:this.id,type:1,t:1}).then(res => {
                         if (res.code === 200) {
                             this.count.liked = true
                             this.count.likedCount++
@@ -150,7 +150,7 @@
                         }
                     })
                 } else {
-                    resourceLike(this.id, 1, 0).then(res => {
+                    resourceLike({id:this.id,type:1,t:0}).then(res => {
                         if (res.code === 200) {
                             this.count.liked = false
                             this.count.likedCount--

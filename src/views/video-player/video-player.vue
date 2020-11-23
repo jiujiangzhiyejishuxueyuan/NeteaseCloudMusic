@@ -152,7 +152,7 @@
             //点赞视频
             giveLike() {
                 if (!this.liked) {
-                    resourceLike(this.id, 5, 1).then(res => {
+                    resourceLike({id:this.id, type:5, t:1}).then(res => {
                         if (res.code === 200) {
                             this.liked = true
                             this.video.praisedCount++
@@ -163,7 +163,7 @@
                         this.$Message.info('操作失败')
                     })
                 } else {
-                    resourceLike(this.id, 5, 0).then(res => {
+                    resourceLike({id:this.id, type:5, t:0}).then(res => {
                         if (res.code === 200) {
                             this.liked = false
                             this.video.praisedCount--

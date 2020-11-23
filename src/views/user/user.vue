@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="info-count flex">
-                        <div class="item event-count">
+                        <div class="item event-count" @click="$router.push(`/user/dynamic?id=${user.profile.userId}`)">
                             <span class="count">{{user.profile.eventCount}}</span>
                             <span class="title">动态</span>
                         </div>

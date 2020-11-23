@@ -162,6 +162,11 @@ export default new VueRouter({
                     component: () => import('@/views/user/followeds/followeds')
                 },
                 {
+                    name: 'dynamic',
+                    path: 'dynamic',
+                    component: () => import('@/views/user/dynamic/dynamic')
+                },
+                {
                     path: '',
                     redirect: 'home',
                 }

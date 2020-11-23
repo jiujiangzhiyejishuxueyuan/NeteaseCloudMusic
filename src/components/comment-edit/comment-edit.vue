@@ -27,7 +27,7 @@
     export default {
         props: {
             id: String,
-            type: String,
+            type: String, /*资源类型*/
             reply: Boolean
         },
         data() {

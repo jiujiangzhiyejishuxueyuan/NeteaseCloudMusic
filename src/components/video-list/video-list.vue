@@ -62,6 +62,8 @@
             margin-bottom 20px
 
             .img-box
+                border-radius 10px
+                overflow hidden
                 height 130px
                 @media screen and (max-width: 1550px)
                     height 107px

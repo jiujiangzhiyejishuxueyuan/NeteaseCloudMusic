@@ -63,6 +63,8 @@
             .img-box
                 position relative
                 height 150px
+                overflow hidden
+                border-radius 10px
                 @media screen and (max-width: 1550px)
                     height 107px
                 @media screen and (max-width: 1200px)

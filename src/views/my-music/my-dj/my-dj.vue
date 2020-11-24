@@ -48,7 +48,10 @@
         .dj-list
             .dj
                 text-align left
-                padding 20px 0
+                margin 10px
+                padding 15px
+                border-radius 10px
+                box-shadow 0 0 10px rgba(0,0,0,.1)
                 &:hover
                     background rgba(0,0,0,.02)
                 .info

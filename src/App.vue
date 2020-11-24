@@ -74,7 +74,7 @@
 
 
     .view-enter-active, .view-leave-active
-        transition opacity .3s
+        transition opacity .2s
 
     .view-enter, .view-leave-to
         opacity 0

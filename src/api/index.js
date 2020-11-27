@@ -176,3 +176,5 @@ export const reqSubDj = (limit) => ajax(`api/dj/sublist?limit=${limit}`)
 // 其他
 //给资源点赞
 export const resourceLike = (data) => ajax(`api/resource/like`,data)
+// 听歌次数增加
+export const scrobble = (data) => ajax(`api/scrobble`,data)

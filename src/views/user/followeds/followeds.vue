@@ -1,15 +1,15 @@
 <template>
-    <div id="followeds" class="container">
-        <div class="section-header">
-            <div class="section-header-title">
-                被关注({{user&&user.followeds}})
-            </div>
+    <div id="followeds" class="container my-card">
+      <div class="section-header">
+        <div class="section-header-title">
+          被关注({{ user && user.followeds }})
         </div>
-        <user-list :users="followeds"/>
-        <Page
-                :total="user&&user.followeds"
-                :page-size="20"
-                @on-change="(page) => $router.replace(`/user/followeds?id=${id}&page=${page}`)"
+      </div>
+      <user-list :users="followeds"/>
+      <Page
+          :total="user&&user.followeds"
+          :page-size="20"
+          @on-change="(page) => $router.replace(`/user/followeds?id=${id}&page=${page}`)"
                 :current="parseInt($route.query.page)||1"
 
         />

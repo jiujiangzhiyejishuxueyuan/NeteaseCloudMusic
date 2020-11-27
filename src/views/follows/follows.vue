@@ -1,15 +1,15 @@
 <template>
-    <div id="follows" class="container">
-        <div class="section-header">
-            <div class="section-header-title">
-                关注({{user&&user.follows}})
-            </div>
+    <div id="follows" class="container my-card">
+      <div class="section-header">
+        <div class="section-header-title">
+          关注({{ user && user.follows }})
         </div>
-        <user-list :users="follows"/>
-        <Page
-                :total="user&&user.follows"
-                :page-size="20"
-                @on-change="(page) => $router.replace(`/user/follows?id=${id}&page=${page}`)"
+      </div>
+      <user-list :users="follows"/>
+      <Page
+          :total="user&&user.follows"
+          :page-size="20"
+          @on-change="(page) => $router.replace(`/user/follows?id=${id}&page=${page}`)"
                 :current="parseInt($route.query.page)||1"
                 v-if="user&&user.follows>20"
         />

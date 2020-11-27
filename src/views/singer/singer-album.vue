@@ -1,5 +1,5 @@
 <template>
-    <div id="singer-album">
+    <div id="singer-album" class="my-card">
         <div class="singer-title" ref="top">
             全部专辑({{count}}张)
         </div>

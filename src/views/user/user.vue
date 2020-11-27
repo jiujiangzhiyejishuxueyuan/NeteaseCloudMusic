@@ -4,9 +4,9 @@
             <div class="background-blur" v-if="user">
                 <img :src="(user.profile.backgroundUrl||user.profile.avatarUrl)+'?param=100y100'">
             </div>
-            <div class="container header-inner flex">
+            <div class="container header-inner flex my-card">
                 <div class="avatar-box" @click="$router.replace(`/user/home?id=${user.profile&&user.profile.userId}`)">
-                    <img :src="user.profile&&user.profile.avatarUrl+'?param=400y400'" alt="" title="主页">
+                    <img :src="user.profile&&user.profile.avatarUrl+'?param=400y400'" alt="头像" title="主页">
                 </div>
                 <div class="info-inner" v-if="user.profile">
                     <div class="info-inner-header flex align-center">

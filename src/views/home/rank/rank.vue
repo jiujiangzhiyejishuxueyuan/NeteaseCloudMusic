@@ -1,6 +1,6 @@
 <template>
-    <div class="home-rank">
-        <div class="container">
+    <div class="home-rank container my-card">
+        <div class="">
             <div class="section-header flex justify-between">
                 <div class="title">
                     <h1>排行榜</h1>
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="rank-bg" >
-            <div class="container" v-if="list.length===3">
+            <div class="" v-if="list.length===3">
                 <div class="rank-items flex" v-if="list.length">
                     <div class="rank-item" v-for="(playlist,index) in list" :key="index" >
                         <div class="rank-item-header flex">

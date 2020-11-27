@@ -104,11 +104,11 @@
                     <Icon type="ios-checkmark" v-show="allChecked"/>
                 </div>
                 <div class="song-index">全选</div>
-                <div class="button" :class="{active:value.length}" @click="playmusic(value)">
+                <div class="button-card" :class="{active:value.length}" @click="playmusic(value)">
                     <Icon type="ios-play-outline"/>
                     播放选中歌曲
                 </div>
-                <div class="button relative" :class="{active:value.length}" @click="switchPlaylistsShow('bottom')">
+                <div class="button-card relative" :class="{active:value.length}" @click="switchPlaylistsShow('bottom')">
                     <Icon type="md-add"/>
                     添加到
                     <ul class="playlist-list playlist-list-bottom" v-if="playlistsShow==='bottom'">
@@ -212,7 +212,9 @@
                 index !== -1 ? this.value.splice(index, 1) : this.value.push(song.id)
             },
             playmusic(ids) {
-                if (!this.player) {
+                if (ids.length === 0) {
+                  this.$Message.error('请选中歌曲')
+                } else if (!this.player) {
                     this.publicMethods.playMusic(ids, this.$Message)
                 } else {
                     this.$emit('play', ids)
@@ -283,6 +285,7 @@
         padding-top 65px
         position relative
         height 100%
+
         &.isplayer
             padding-top 110px
 
@@ -292,7 +295,8 @@
             .song-check
                 color #fff !important
                 border-color rgba(255, 255, 255, .8) !important
-
+        .button-card
+          margin-right 10px
         .songlist-ske
             .song
                 border-radius 15px

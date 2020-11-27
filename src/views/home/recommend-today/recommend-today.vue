@@ -1,6 +1,6 @@
 <template>
     <div class="recommend-today recommend-item section">
-        <div class="container" v-if="playlists.length">
+        <div class="container my-card" v-if="playlists.length">
             <div class="section-header flex justify-between">
                 <div class="title">
                     <h1>个性化推荐</h1>

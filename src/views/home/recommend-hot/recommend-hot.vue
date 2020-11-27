@@ -1,6 +1,6 @@
 <template>
     <div class="recommend-hot recommend-item section">
-        <div class="container">
+        <div class="container my-card">
             <div class="section-header flex justify-between">
                 <div class="title">
                     <h1>{{title}}</h1>

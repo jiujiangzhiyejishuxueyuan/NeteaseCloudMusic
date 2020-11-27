@@ -1,7 +1,7 @@
 <template>
     <div class="playlist">
         <div class="songlist-tag">
-            <div class="container">
+            <div class="container my-card">
                 <ul class="hotTags flex justify-center">
                     <li class="hottag_til">热门歌单</li>
                     <li class="hottag" v-for="(tag,index) in hotTags" :key="index">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="songlist-main">
-            <div class="container hidden">
+            <div class="container hidden my-card">
                 <div class="songlist-title flex justify-between">
                     <div class="type">
                         <h1>{{this.cat}}</h1>
@@ -196,6 +196,8 @@
     $red = #E60026
     .playlist
         margin-bottom 20px
+        .songlist-main
+          margin-top 20px
 
         .recommend-hot .list-inner
             .item
@@ -254,7 +256,7 @@
                             padding 3px 6px 4px
         .songlist-title
             padding 0 14px
-            margin 50px 0 28px
+            margin 0 0 28px
             color #191919
             .type
                 position relative

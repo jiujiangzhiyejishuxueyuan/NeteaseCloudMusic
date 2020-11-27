@@ -92,7 +92,30 @@ div a
   cursor pointer
   color #E60026 !important
   border-color #E60026 !important
-
+.my-card
+  box-sizing border-box
+  padding 20px
+  box-shadow 0 0 10px rgba(0,0,0,.1)
+  border-radius 10px
+  &>.songlist-header
+    padding 0 20px
+  .container
+    width  initial
+.button-card
+  padding 10px
+  box-shadow 0 0 10px rgba(0,0,0,.05)
+  border-radius 10px
+  font-size 12px
+  line-height 18px
+  color #999
+  cursor pointer
+  transition all .2s
+  &.active
+    color #444
+    &:hover
+      color #000
+      box-shadow 0 0 10px rgba(255,255,255,.3)
+      background rgba(0,0,0,.05)
 .absolute-center
   position absolute
   top 50%

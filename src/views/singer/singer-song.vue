@@ -1,5 +1,5 @@
 <template>
-    <div id="singer-song">
+    <div id="singer-song" class="my-card">
         <div class="singer-title">
             热门歌曲({{songs.length}}首)
         </div>

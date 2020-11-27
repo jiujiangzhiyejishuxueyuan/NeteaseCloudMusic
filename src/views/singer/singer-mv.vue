@@ -1,5 +1,5 @@
 <template>
-    <div id="singer-mv">
+    <div id="singer-mv" class="my-card">
         <div class="singer-title" ref="top">
             全部mv({{count}}个)
         </div>

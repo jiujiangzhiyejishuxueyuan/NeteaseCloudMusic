@@ -26,6 +26,7 @@
         </div>
         <song-control
             :id="song.id"
+            :like-ids="[]"
         />
       </div>
       <div class="lyric-box">
@@ -55,15 +56,12 @@ export default {
   },
   methods: {
     render() {
-      this.songs.forEach((item, index) => {
-        item.lyrics.range.forEach(num => {
-          item.lyrics.txt = item.lyrics.txt.replace('周杰伦', `<font color=#e91e63>周杰伦</font>`)
-        })
-        let lyric = {
-          txt: item.lyrics.txt.split("\n"),
+      let key = this.$route.query.keywords
+      this.songs.forEach(item => {
+        item.lyrics = {
+          txt: item.lyrics.txt.replace(key, `<font color=#e91e63>${key}</font>`).split("\n"),
           show: false
         }
-        this.songs[index].lyrics = lyric
       })
     },
     play(id) {

@@ -4,17 +4,17 @@
             <div class="background-blur">
                 <img :src="(album.blurPicUrl||album.picUrl)+'?param=140y140'">
             </div>
-            <div class="album-header-inner container flex" v-if="album">
-                <div class="img-inner">
-                    <div class="cover header-info-img">
-                        <img :src="(album.blurPicUrl||album.picUrl)+'?param=280y280'" alt="">
-                    </div>
-                    <div class="album-cover"><img src="../../static/imgs/album-details-cover.png" alt=""></div>
+            <div class="album-header-inner container flex my-card" v-if="album">
+              <div class="img-inner">
+                <div class="cover header-info-img">
+                  <img :src="(album.blurPicUrl||album.picUrl)+'?param=280y280'" alt="">
                 </div>
-                <div class="info flex direction-column justify-between">
-                    <div class="inner">
-                        <h2 class="name">{{album.name}}{{album.alias.length?` (${album.alias[0]})`:''}}</h2>
-                        <p class="singer">歌手:
+                <div class="album-cover"><img src="../../static/imgs/album-details-cover.png" alt=""></div>
+              </div>
+              <div class="info flex direction-column justify-between">
+                <div class="inner">
+                  <h2 class="name">{{ album.name }}{{ album.alias.length ? ` (${album.alias[0]})` : '' }}</h2>
+                  <p class="singer">歌手:
                             <router-link :to="`/music/artist/${singer.id}`" v-for="(singer,index) in album.artists"
                                          :key="index">{{singer.name}}
                             </router-link>
@@ -37,22 +37,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="album-control flex">
-                        <div class="button active" @click="allPlay">
-                            <Icon type="ios-play-outline"/>
-                            全部播放
-                        </div>
-                    </div>
+                <div class="album-control flex">
+                  <div class="button-card active" @click="allPlay">
+                    <Icon type="ios-play-outline"/>
+                    全部播放
+                  </div>
                 </div>
+              </div>
             </div>
         </div>
-        <header-info-ske v-else/>
-        <song-list :songs="songs" class="container"/>
-        <div class="other-album container">
-            <h2 class="title bb">歌手其他专辑</h2>
-            <album-list :albums="otherAlbums" is-singer v-if="otherAlbums.length"/>
-            <album-ske :row="1" hidden-header v-else/>
-        </div>
+      <header-info-ske v-else/>
+      <song-list :songs="songs" class="container my-card"/>
+      <div class="other-album container my-card">
+        <h2 class="title bb">歌手其他专辑</h2>
+        <album-list :albums="otherAlbums" is-singer v-if="otherAlbums.length"/>
+        <album-ske :row="1" hidden-header v-else/>
+      </div>
     </div>
 </template>
 

@@ -1,39 +1,39 @@
 <template>
     <div class="user-home">
-        <div class="record container" v-if="record.length">
-            <div class="record-header section-header" ref="record">
+        <div class="record container my-card" v-if="record.length">
+          <div class="record-header section-header" ref="record">
                 <span class="section-header-title">
                     听歌排行
-                    <span class="total">累计听歌{{user.listenSongs}}首</span>
+                    <span class="total">累计听歌{{ user.listenSongs }}首</span>
                 </span>
-                <div class="control">
-                    <span class="item" @click="recordType='week'" :class="{disabled: recordType!=='week'}">最近一周 </span>|
-                    <span class="item " @click="recordType='all'" :class="{disabled: recordType!=='all'}"> 所有时间</span>
-                </div>
+            <div class="control">
+              <span class="item" @click="recordType='week'" :class="{disabled: recordType!=='week'}">最近一周 </span>|
+              <span class="item " @click="recordType='all'" :class="{disabled: recordType!=='all'}"> 所有时间</span>
             </div>
+          </div>
             <record-list :songs="recordMore?record:record.slice(0,10)" :loading="recordLoading"/>
             <div class="record-footer">
                 <a class="text-hv" @click="cutRecordMore">{{recordMore?'收起':'查看更多'}}</a>
             </div>
         </div>
-        <div class="my-playlist container">
-            <div class="section-header">
+      <div class="my-playlist container my-card">
+        <div class="section-header">
                 <span class="section-header-title">
-                    {{user.profile&&user.profile.nickname}}创建的歌单
-                    ({{createdPlaylist.length}})
+                    {{ user.profile && user.profile.nickname }}创建的歌单
+                    ({{ createdPlaylist.length }})
                 </span>
-            </div>
-            <play-list :playlists="createdPlaylist"/>
         </div>
-        <div class="sub-playlist container" v-if="subPlaylist.length">
-            <div class="section-header">
+        <play-list :playlists="createdPlaylist"/>
+      </div>
+      <div class="sub-playlist container my-card" v-if="subPlaylist.length">
+        <div class="section-header">
                 <span class="section-header-title">
-                    {{user.profile&&user.profile.nickname}}收藏的歌单
-                    ({{subPlaylist.length}})
+                    {{ user.profile && user.profile.nickname }}收藏的歌单
+                    ({{ subPlaylist.length }})
                 </span>
-            </div>
-            <play-list :playlists="subPlaylist" />
         </div>
+        <play-list :playlists="subPlaylist"/>
+      </div>
     </div>
 </template>
 
@@ -109,5 +109,6 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
+.sub-playlist
+  margin-top 20px
 </style>

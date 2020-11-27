@@ -199,6 +199,7 @@
                 }
               }).catch(err => {
                 err.toString()
+                this.$Message.info('登录可获得最佳体验')
                 // this.loginShow = true
               })
 

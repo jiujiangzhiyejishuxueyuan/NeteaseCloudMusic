@@ -1,14 +1,14 @@
 <template>
-    <div id="desc" v-if="desc">
-        <div class="title bb">歌手简介</div>
-        <div class="text desc">
-            {{desc.briefDesc}}
+    <div id="desc" v-if="desc" class="my-card">
+      <div class="title bb">歌手简介</div>
+      <div class="text desc">
+        {{ desc.briefDesc }}
+      </div>
+      <div class="section" v-for="(item,index) in desc.introduction" :key="index">
+        <div class="m-title">{{ item.ti }}</div>
+        <div class="text" v-html="item.txt">
         </div>
-        <div class="section" v-for="(item,index) in desc.introduction" :key="index">
-            <div class="m-title">{{item.ti}}</div>
-            <div class="text" v-html="item.txt">
-            </div>
-        </div>
+      </div>
     </div>
     <div class="ske container" v-else>
         <spin/>

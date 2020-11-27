@@ -1,18 +1,18 @@
 <template>
     <div id="mv-all">
-        <div class="mv-all-header container">
-            <mv-selector
-                    :title="item.title"
-                    :query="item.query"
-                    :list="item.list"
-                    v-for="(item,index) in selector"
-                    :key="index"
-            />
+        <div class="mv-all-header container my-card">
+          <mv-selector
+              :title="item.title"
+              :query="item.query"
+              :list="item.list"
+              v-for="(item,index) in selector"
+              :key="index"
+          />
         </div>
-        <div class="mv-all-inner container">
-            <mv-list :mvs="mvs" :ske-count="25"/>
-            <video-list-ske :count="20" v-if="loading"/>
-        </div>
+      <div class="mv-all-inner container my-card">
+        <mv-list :mvs="mvs" :ske-count="25"/>
+        <video-list-ske :count="20" v-if="loading"/>
+      </div>
     </div>
 </template>
 

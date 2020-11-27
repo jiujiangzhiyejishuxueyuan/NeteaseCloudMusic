@@ -1,13 +1,13 @@
 <template>
-    <div id="mv-rank" class="container">
-        <mv-list-header
-                title="MV排行榜"
-                @changeArea="mvRankChangeArea"
-                show-area
-                hidden-more
-                :updateTime="updateTime"
-        />
-        <mv-rank :mvs="mvs"/>
+    <div id="mv-rank" class="container my-card">
+      <mv-list-header
+          title="MV排行榜"
+          @changeArea="mvRankChangeArea"
+          show-area
+          hidden-more
+          :updateTime="updateTime"
+      />
+      <mv-rank :mvs="mvs"/>
     </div>
 </template>
 

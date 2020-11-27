@@ -1,16 +1,16 @@
 <template>
     <div class="artist container">
-        <div class="artist-header">
-            <ul class="type flex">
-                <li
-                        v-for="(type,index) in types"
-                        :class="{active: type.value===currentType}"
-                        :key="index"
-                        @click="$router.replace(`/music/artist?type=${type.value}${currentStyle!==-1?`&style=${currentStyle}`:''}${str?`&str=${str}`:''}`)"
-                >
-                    <a>{{type.text}}</a>
-                </li>
-            </ul>
+        <div class="artist-header my-card">
+          <ul class="type flex">
+            <li
+                v-for="(type,index) in types"
+                :class="{active: type.value===currentType}"
+                :key="index"
+                @click="$router.replace(`/music/artist?type=${type.value}${currentStyle!==-1?`&style=${currentStyle}`:''}${str?`&str=${str}`:''}`)"
+            >
+              <a>{{ type.text }}</a>
+            </li>
+          </ul>
             <ul class="style flex">
                 <li v-for="(style,index) in styles" :class="{active: style.value===currentStyle}" :key="index"
                     @click="$router.replace(`/music/artist?style=${style.value}${currentType!==-1?`&type=${currentType}`:''}${str?`&str=${str}`:''}`)">
@@ -26,7 +26,7 @@
                 </li>
             </ul>
         </div>
-        <singer-list :singers="singers"/>
+      <singer-list :singers="singers" class="my-card"/>
         <div class="page-skip flex justify-center">
             <div class="previous" :class="{disable: page===1 }" @click="page!=1&&changePage(-1)">上一页</div>
             <div class="next" :class="{disable: !more}" @click="more&&changePage(1)">下一页</div>

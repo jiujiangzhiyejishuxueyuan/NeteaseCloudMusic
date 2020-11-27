@@ -1,7 +1,7 @@
 <template>
     <div id="singer">
         <singer-header/>
-        <router-view class="container"></router-view>
+        <router-view class="container "></router-view>
     </div>
 </template>
 

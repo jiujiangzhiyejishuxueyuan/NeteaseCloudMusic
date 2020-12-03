@@ -167,11 +167,6 @@ export default {
     render() {
       const page = this.$route.query.page || 1
       let id = this.$route.params.id || this.$route.query.id
-      reqLoginState().then(res => {
-        this.userInfo = res.profile
-      }).catch(err => {
-        err.toString()
-      })
       reqPlaylistComments(id, this.commentLimit, 0).then(res => {
         this.comment = res
         if (res.hotComments && res.hotComments.length) {
@@ -208,6 +203,11 @@ export default {
     }
   },
   created() {
+    reqLoginState().then(res => {
+      this.userInfo = res.profile
+    }).catch(err => {
+      err.toString()
+    })
     this.render()
   },
   watch: {

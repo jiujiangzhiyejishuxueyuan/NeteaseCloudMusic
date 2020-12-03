@@ -117,11 +117,7 @@
             }
         },
         created() {
-            reqLoginState().then(res => {
-                this.userInfo = res.profile
-            }).catch(err => {
-              err.toString()
-            })
+            this.userInfo = window.localStorage.getItem('userInfo') || ''
         }
     }
 </script>

@@ -32,7 +32,6 @@
 <script>
     import songControl from '@/components/song-control/song-control'
     import {reqLikeSong, reqLoginState} from "@/api";
-    import {mapState} from 'vuex'
     export default {
         props: {
             songs: Array,

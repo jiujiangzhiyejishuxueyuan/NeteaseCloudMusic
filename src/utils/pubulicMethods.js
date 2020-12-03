@@ -4,6 +4,7 @@ export default {
     playMusic(ids) {
         if (ids) {
             let musics = JSON.parse(window.localStorage.getItem('musics')) || {}
+            let echoTime = 100
             musics = musics.ids || []
             if (typeof ids === 'object') {
                 musics = [...ids, ...musics]
@@ -18,6 +19,7 @@ export default {
                     type: 'adds',
                     count: ids.length
                 }
+                echoTime = 1000
             } else {
                 let index = musics.indexOf(ids)
                 if (index !== -1) {
@@ -29,6 +31,7 @@ export default {
                     type: 'add',
                     index
                 }
+                echoTime = 100
             }
             window.localStorage.setItem('musics', JSON.stringify(musics))
             setTimeout(() => {
@@ -38,7 +41,7 @@ export default {
                 } else {
                     window.open('/music/player')
                 }
-            }, 100)
+            }, echoTime)
         }
     },
     onShow(el,callback) {

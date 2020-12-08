@@ -15,7 +15,9 @@
     <div class="search-result-content container">
       <ul class="nav flex">
         <li v-for="(item,index) in type" :key="index" :class="{active:$route.query.type==item.key}">
-          <a @click="$router.replace(`${$route.path}?keywords=${$route.query.keywords}&type=${item.key}`)">{{ item.text }}</a>
+          <a @click="$router.replace(`${$route.path}?keywords=${$route.query.keywords}&type=${item.key}`)">
+            {{ item.text }}
+          </a>
         </li>
       </ul>
       <template v-if="$route.query.type==='1'&&result!==0">

@@ -195,9 +195,11 @@
                   reqUserInfo(res.profile.userId).then(res => {
                     this.userInfo = res.profile
                     this.userInfo.level = res.level
+                    window.localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
                   })
                 }
               }).catch(err => {
+                window.localStorage.removeItem('userInfo')
                 err.toString()
                 this.$Message.info('登录可获得最佳体验')
                 // this.loginShow = true

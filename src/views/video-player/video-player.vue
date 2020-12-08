@@ -101,7 +101,6 @@ import {
   subVideo
 } from "@/api";
 import VPlayer from "@/components/v-player/v-player";
-import {mapState} from 'vuex'
 import CommentList from "@/components/comment-list/comment-list";
 import CommentEdit from "@/components/comment-edit/comment-edit";
 import UserCard from "@/components/user-card/user-card";

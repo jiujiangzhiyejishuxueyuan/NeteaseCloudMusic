@@ -22,7 +22,6 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex'
     import {reqLoginState, submitComment} from "@/api";
     export default {
         props: {

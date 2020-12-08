@@ -59,7 +59,6 @@
 
 <script>
     import {giveCommentLike, reqLoginState, submitComment} from "@/api";
-    import {mapState} from 'vuex'
     import commentEdit from '@/components/comment-edit/comment-edit'
     export default {
         props: {

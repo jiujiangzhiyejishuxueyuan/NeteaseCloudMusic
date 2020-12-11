@@ -84,7 +84,7 @@
           />
         </div>
       </div>
-      <video-related :videos="relatedVideos" class="my-card"/>
+      <video-related :videos="relatedVideos" class=""/>
     </div>
   </div>
 </template>
@@ -268,7 +268,7 @@ $blueh = #00b5e5
 
   .video-player-header.my-card,
   .video-player-header-ske.my-card
-    padding 10px 20px
+    padding 15px 20px
     margin-bottom 20px
 
   #video-related

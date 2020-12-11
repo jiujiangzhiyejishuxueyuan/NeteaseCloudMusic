@@ -1,17 +1,18 @@
 <template>
     <div id="video-related">
         <ul class="related-list" v-if="videos.length>=10">
-            <li class="related-item flex" v-for="(video,index) in videos" :key="index">
-                <router-link :to="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`">
-                    <div class="img-box video-shadow" :title="video.title">
-                        <img v-lazy="(video.coverUrl || video.cover)+'?param=300y170'" alt="视频封面">
-                    </div>
+            <li class="related-item flex" :class="{'my-card':$route.name === 'video-player'}"
+                v-for="(video,index) in videos" :key="index">
+              <router-link :to="video.type!==0?`/video/${video.vid}`:`/mv/${video.vid}`">
+                <div class="img-box video-shadow" :title="video.title">
+                  <img v-lazy="(video.coverUrl || video.cover)+'?param=300y170'" alt="视频封面">
+                </div>
+              </router-link>
+              <div class="info">
+                <router-link :to="`/video/${video.vid}`" class="title ellipse" :title="video.title">
+                  {{ video.title }}
                 </router-link>
-                <div class="info">
-                    <router-link :to="`/video/${video.vid}`" class="title ellipse" :title="video.title">
-                        {{video.title}}
-                    </router-link>
-                    <div class="name" v-if="video.artists&&video.artists.length">
+                <div class="name" v-if="video.artists&&video.artists.length">
                         <a :href="`/music/singer/${art.id}`" class="text-hv" v-for="(art,index) in video.artists"
                            :key="index">
                             {{art.name}}
@@ -35,14 +36,15 @@
             </li>
         </ul>
         <ul class="related-list related-ske" v-else>
-            <li v-for="index in 10" :key="index" class="flex related-item">
-                <div class="img-box"></div>
-                <div class="info">
-                    <div class="title"></div>
-                    <div class="name"></div>
-                    <div class="play-count"></div>
-                </div>
-            </li>
+          <li v-for="index in 10" :key="index" class="flex related-item"
+              :class="{'my-card':$route.name === 'video-player'}">
+            <div class="img-box"></div>
+            <div class="info">
+              <div class="title"></div>
+              <div class="name"></div>
+              <div class="play-count"></div>
+            </div>
+          </li>
         </ul>
     </div>
 </template>
@@ -89,8 +91,11 @@
                     height 12px
 
         .related-item
-            font-size 14px
-            margin-bottom 10px
+          font-size 14px
+          margin-bottom 10px
+
+          &.my-card
+            padding 10px
 
         .img-box
             width 150px

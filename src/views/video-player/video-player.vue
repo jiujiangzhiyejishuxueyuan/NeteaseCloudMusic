@@ -1,6 +1,6 @@
 <template>
   <div class="video-player">
-    <div class="video-player-header container flex justify-between" v-if="video.title">
+    <div class="video-player-header container flex justify-between align-center my-card" v-if="video.title">
       <div class="info">
         <h2 class="title">{{ video.title }}</h2>
         <p class="time" v-if="video.publishTime">发布时间:{{ video.publishTime | dataFormat }}</p>
@@ -11,7 +11,7 @@
       </div>
       <user-card :id="video.creator.userId" v-if="video.creator"/>
     </div>
-    <div class="video-player-header-ske flex justify-between container" v-else>
+    <div class="video-player-header-ske flex justify-between container align-center my-card" v-else>
       <div class="info">
         <div class="title"></div>
         <div class="time"></div>
@@ -84,7 +84,7 @@
           />
         </div>
       </div>
-      <video-related :videos="relatedVideos"/>
+      <video-related :videos="relatedVideos" class="my-card"/>
     </div>
   </div>
 </template>
@@ -266,6 +266,11 @@ $blueh = #00b5e5
   margin-top 20px
   text-align left
 
+  .video-player-header.my-card,
+  .video-player-header-ske.my-card
+    padding 10px 20px
+    margin-bottom 20px
+
   #video-related
     margin-left 10px
 
@@ -290,7 +295,7 @@ $blueh = #00b5e5
       max-width 740px
 
     .my-card.center
-      margin: 20px 0
+      margin 20px 0
       padding: 0 20px 10px
 
     .control
@@ -379,6 +384,9 @@ $blueh = #00b5e5
     .info
       width 70%
 
+      .count
+        margin 0
+
       div
         margin-bottom 10px
         animation ske .8s linear infinite alternate
@@ -392,7 +400,6 @@ $blueh = #00b5e5
         width 20%
 
       .count
-        margin-bottom 15px
         width 30%
 
   .video-player-header
@@ -404,9 +411,6 @@ $blueh = #00b5e5
     .time, .count
       margin-top 10px
       color #999
-
-    .count
-      margin-bottom 15px
 
     .play-count
       margin-right 20px

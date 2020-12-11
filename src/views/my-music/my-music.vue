@@ -83,14 +83,13 @@ export default {
     })
   },
   beforeRouteEnter(to, from, next) {
-    reqLoginState().then(res => {
-      if (res.code === 200) {
-        next(vm => vm.id = res.profile.userId)
-      }
-    }).catch((err) => {
-      err.toString()
-      next('/music')
-    })
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || ''
+    if (userInfo) {
+      next(vm => vm.id = userInfo.userId)
+    } else {
+      next(false)
+      this.$Message.warning('还没有登录呢')
+    }
   }
 }
 </script>

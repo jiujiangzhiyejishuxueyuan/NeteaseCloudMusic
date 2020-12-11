@@ -20,17 +20,17 @@ export default new VueRouter({
             , component: home
         },
         {
-            path: '/my', /*我的音乐*/
+            path: '/my', /*我的*/
             beforeEnter(to, from, next) {
-                reqLoginState().then(res => {
-                    let id = res.profile.userId
-                    reqUserPlaylist(id).then(res => {
+                let userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || ''
+                if (userInfo) {
+                    reqUserPlaylist(userInfo.userId).then(res => {
                         let id = res.playlist[0].id
                         next({path: `/my/m/playlist?id=${id}`})
                     })
-                }).catch(() => {
-                    next('/music')
-                })
+                } else {
+                    next(false)
+                }
             }
         },
         {

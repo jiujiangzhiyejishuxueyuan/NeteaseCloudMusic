@@ -185,10 +185,10 @@ export default {
     }
   },
   created() {
-    reqLoginState().then(res => {
-      this.userInfo = res.profile
-    }).catch(err => toString(err))
-
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || ''
+    if (userInfo) {
+      this.userInfo = userInfo
+    }
   }
 }
 </script>

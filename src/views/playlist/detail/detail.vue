@@ -203,11 +203,10 @@ export default {
     }
   },
   created() {
-    reqLoginState().then(res => {
-      this.userInfo = res.profile
-    }).catch(err => {
-      err.toString()
-    })
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || ''
+    if (userInfo) {
+      this.userInfo = userInfo
+    }
     this.render()
   },
   watch: {

@@ -112,15 +112,13 @@ export default {
       this.song = res.songs[0]
       document.title = (this.song.alia && this.song.alia.length ? this.song.name + ` (${this.song.alia[0]})` : this.song.name) + '-网易云音乐'
     })
-    reqLoginState().then(res => {
-      if (res.code === 200) {
-        reqLikeSong(res.profile.userId).then(res => {
-          this.likeIds = res.ids
-        })
-      }
-    }).catch(err => {
-      err.toString()
-    })
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || ''
+    if (userInfo) {
+      reqLikeSong(userInfo.userId).then(res => {
+        this.likeIds = res.ids
+      })
+    }
+
     reqSonglyric(this.id).then(res => {
       if (res.lrc) {
         let lrc = res.lrc.lyric.split('\n')

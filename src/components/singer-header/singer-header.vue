@@ -66,18 +66,15 @@ export default {
     reqSingerDesc(id).then(res => {
       this.desc = res
     })
-    reqLoginState().then(res => {
-      if (res.code === 200) {
-        reqSubSinger().then(res => {
-          let b = res.data.every(item => {
-            return item.id !== id
-          })
-          this.followed = !b
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || ''
+    if (userInfo) {
+      reqSubSinger().then(res => {
+        let b = res.data.every(item => {
+          return item.id !== id
         })
-      }
-    }).catch(err => {
-      err.toString()
-    })
+        this.followed = !b
+      })
+    }
   },
   watch: {
     $route() {

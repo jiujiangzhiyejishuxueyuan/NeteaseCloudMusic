@@ -197,11 +197,10 @@ export default {
   created() {
     this.id = this.$route.params.id
     let id = this.id
-    reqLoginState().then(res => {
-      this.userInfo = res.profile
-    }).catch(err => {
-      err.toString()
-    })
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo')) || ''
+    if (userInfo) {
+      this.userInfo = userInfo
+    }
     reqVideoDetail(id).then(res => {
       this.video = res.data
       document.title = this.video.title + '- 视频 - 网易云音乐'

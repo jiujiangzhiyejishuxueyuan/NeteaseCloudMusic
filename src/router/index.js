@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
-import {reqLoginState, reqUserPlaylist} from "@/api";
+import {reqUserPlaylist} from "@/api";
 import home from "@/views/home/home";
+import {LoadingBar,Message} from "view-design";
 
 Vue.use(VueRouter)
 const routerPush = VueRouter.prototype.push
@@ -29,6 +30,8 @@ export default new VueRouter({
                         next({path: `/my/m/playlist?id=${id}`})
                     })
                 } else {
+                    LoadingBar.finish();
+                    Message.warning('请先登陆')
                     next(false)
                 }
             }

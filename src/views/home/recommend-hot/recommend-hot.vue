@@ -18,10 +18,6 @@
                                 <div class="img-box  playlist-min-imgbox">
                                     <img :src="item.coverImgUrl+'?param=200y200'">
                                 </div>
-                                <div class="playlist-all-btn-play absolute-center" title="播放歌单"
-                                     @click.prevent="play(item)">
-                                    <img src="../../../static/imgs/btn-play.png" alt="">
-                                </div>
                                 <p class="play-count" :title="'播放量:'+item.playCount">
                                     <Icon type="ios-headset"/>
                                     {{item.playCount | playCount}}
@@ -40,21 +36,11 @@
 
 <script>
 
-    import {reqPlatlistDetail} from "@/api";
-
     export default {
         props: {
             list: Array,
             title: String
         },
-        methods: {
-            play(playlist) {
-                reqPlatlistDetail(playlist.id).then(res => {
-                    let ids = res.playlist.trackIds.map(item => item.id)
-                    this.publicMethods.playMusic(ids)
-                })
-            }
-        }
 
     }
 </script>

@@ -9,9 +9,6 @@
                                 <img alt="封面图" v-lazy="playlist.coverImgUrl+'?param=300y300'">
                             </div>
                         </router-link>
-                        <div class="btn-play absolute-center" title="播放歌单">
-                            <img src="../../static/imgs/btn-play.png" alt="播放按钮">
-                        </div>
                     </div>
                     <div class="info ellipse">
                         <a class="text-hv" :title="playlist.name">{{playlist.name}}</a>
@@ -59,22 +56,6 @@
                     @media screen and (max-width: 1550px)
                         width 212px
                         height 212px
-                .btn-play
-                    z-index 20
-                    transition all .4s
-                    opacity 0
-                    width 60px
-                    height 60px
-                    line-height 60px
-                    border-radius 50%
-                    cursor pointer
-                    overflow hidden
-                    img
-                        width 100%
-                        height 100%
-                    &:hover
-                        background #000
-
             .info
                 text-align left
                 margin-top 15px

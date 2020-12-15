@@ -31,10 +31,6 @@
                                 <div class="img-box playlist-min-imgbox">
                                     <img :src="playlist.picUrl+'?param=200y200'" alt="">
                                 </div>
-                                <div class="playlist-all-btn-play absolute-center" title="播放歌单"
-                                     @click.prevent="play(playlist)">
-                                    <img src="../../../static/imgs/btn-play.png" alt="">
-                                </div>
                                 <p class="play-count">
                                     <Icon type="ios-headset"/>
                                     {{playlist.playcount | playCount}}
@@ -97,14 +93,6 @@
                     td: date.getDate(),
                     ch: day
                 }
-            }
-        },
-        methods: {
-            play(playlist) {
-                reqPlatlistDetail(playlist.id).then(res => {
-                    let ids = res.playlist.trackIds.map(item => item.id)
-                    this.publicMethods.playMusic(ids)
-                })
             }
         },
         created() {

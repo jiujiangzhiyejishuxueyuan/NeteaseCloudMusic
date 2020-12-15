@@ -9,10 +9,6 @@
                                     <img v-lazy="album.picUrl+'?param=250y250'">
                                 </router-link>
                             </div>
-                            <div class="playlist-all-btn-play absolute-center" title="播放专辑"
-                                 @click.prevent="play(album)">
-                                <img src="../../static/imgs/btn-play.png">
-                            </div>
                             <i class="album-cover"></i>
                         </div>
                         <div class="item-info">
@@ -48,14 +44,6 @@
         props: {
             albums: Array,
             isSinger: Boolean
-        },
-        methods: {
-            play(album) {
-                reqAlbumDetail(album.id).then(res => {
-                    let ids = res.songs.map(item => item.id)
-                    this.publicMethods.playMusic(ids)
-                })
-            }
         }
     }
 </script>

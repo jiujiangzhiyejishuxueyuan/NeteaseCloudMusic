@@ -1,4 +1,4 @@
-# AliMusic
+# AliMusic 项目太久未维护，已废弃
 #### api地址: https://github.com/Binaryify/NeteaseCloudMusicApi
 #### 项目预览地址:http://music.pengwenli.top/ 最后打包时间 12.11
 #### 本地运行此项目前请先运行api 并在vue.config.js中填入地址
